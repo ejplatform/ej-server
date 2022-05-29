@@ -85,10 +85,12 @@
         </li>
         {% endif %}
     </ul>
+
+    <hr class="nav-divider">
     
     <ul class="menu-padding nav-categories">
         <h3 id="menu-communication">{{ _('Segmented Comunication') }}</h3>
-        <li><a href="{{ url('boards:dataviz-communication',  **conversation.get_url_kwargs()) }}">{{_("Channels")}}</a></li>
+        <li><a href="{{ url('boards:dataviz-communication',  **conversation.get_url_kwargs()) }}">{{_("Chats")}}</a></li>
     </ul>
 
 <script>

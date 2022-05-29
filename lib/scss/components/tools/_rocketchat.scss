@@ -1,0 +1,32 @@
+.modal {
+    z-index: 9999;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal--backdrop {
+    background-color: #00000087;
+}
+
+.modal--close {
+    float: right;
+}
+
+.modal__iframe iframe,
+.modal__iframe {
+    height: 98%;
+    width: 100%;
+}
+
+.modal__content {
+    position: relative;
+    max-width: 1200px;
+    background: $color-white;
+    border-radius: 5px;
+    margin: auto;
+    top: 2rem;
+    padding: 1rem;
+    height: 80vh;
+}
+

@@ -3,7 +3,22 @@
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
 
 {% block main %}
-    <div id="rocketchat" >
-        <iframe src="http://192.168.0.18:3000" style="width:100%; height: 100vh" ></iframe>
+<div class="modal modal--backdrop">
+    <div class="modal__content">
+        <div class="modal--close" onclick="closeModal()"><i class="fas fa-times"></i></div>
+        <div class="modal__iframe">
+            <iframe src={{ROCKETCHAT_HOST}}></iframe>
+        </div>
     </div>
+</div>
+<script charset="utf-8">
+    window.onload = function() {
+        document.querySelector("body").style.overflow = "hidden";
+    }
+
+    function closeModal () {
+        document.querySelector(".modal").style.display = "none";
+        window.location.href = "{{dashboard_location}}";
+    }
+</script>
 {% endblock %}

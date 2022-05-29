@@ -1,6 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import PermissionDenied
 from rest_framework.authtoken.models import Token
+from django.shortcuts import reverse
 
 
 class AbstractTool:
@@ -148,7 +149,9 @@ class RocketChat(AbstractTool):
         self.description: str = _(
             "Rocket.Chat instance for segmented communication with conversation participants."
         )
-        self.link: str = ""
+        self.link: str = reverse(
+            "dataviz:communication", kwargs={"conversation": conversation, "slug": conversation.slug}
+        )
         self.about: str = "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
         self.is_active = is_active
 
