@@ -112,6 +112,7 @@ class UserMixin(ConversationMixin):
         extend_fields=(),
         convergence=True,
         participation=True,
+        conversation=None,
     ):
         """
         Return a dataframe with basic voting statistics.
@@ -121,9 +122,9 @@ class UserMixin(ConversationMixin):
         """
 
         if votes is None and comments is None:
-            votes = db.votes.filter(author__in=self)
+            votes = db.votes.filter(author__in=self, comment__conversation=conversation)
         if votes is None:
-            votes = comments.votes().filter(author__in=self)
+            votes = comments.votes().filter(author__in=self, comment__conversation=conversation)
 
         votes = votes.dataframe("comment", "author", "choice")
         stats = user_statistics(votes, participation=participation, convergence=convergence, ratios=True)
@@ -156,9 +157,23 @@ class UserMixin(ConversationMixin):
         stats = stats[cols]
 
         # Add phone number to data
-        phone_numbers = [user.profile.phone_number if hasattr(user, "profile") else " " for user in self]
-        stats.insert(1, _("Phone number"), phone_numbers, True)
+        phone_numbers = [
+            user.profile.phone_number if user.profile.phone_number else str(_("No phone number"))
+            for user in self
+        ]
 
+        groups = []
+        date_joined = []
+        for user in self:
+            date_joined.append(user.date_joined)
+            users_conversation_cluster = user.clusters.filter(clusterization__conversation=conversation)
+            if users_conversation_cluster.exists():
+                groups.append(users_conversation_cluster.first().name)
+            else:
+                groups.append(str(_("No group")))
+        stats.insert(1, _("Group"), groups, True)
+        stats.insert(7, _("Phone number"), phone_numbers, True)
+        stats.insert(8, _("Date joined"), date_joined, True)
         # Use better values for extended columns
         for field, transform in transforms.items():
             stats[field] = stats[field].apply(transform)

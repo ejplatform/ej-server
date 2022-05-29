@@ -55,9 +55,18 @@ def comments_table(conversation, request=None, **kwargs):
 
 @html.register(models.Conversation, role="participants-stats-table")
 def participants_table(conversation, **kwargs):
-    data = conversation.users.statistics_summary_dataframe(normalization=100, convergence=False)
+    data = conversation.users.statistics_summary_dataframe(
+        normalization=100, convergence=False, conversation=conversation
+    )
+    data.insert(
+        0,
+        _("PARTICIPANT"),
+        data[["name", "email", _("Phone number")]].agg("\n".join, axis=1),
+        True,
+    )
+    data.drop(["name", "email", _("Phone number")], inplace=True, axis=1)
     data = data.sort_values("agree", ascending=False)
-    return prepare_dataframe(data, pc=True)
+    return prepare_dataframe(data, id="participants-table-report", pc=True)
 
 
 #
@@ -76,7 +85,7 @@ if apps.is_installed("ej_clusters"):
 #
 # Auxiliary functions
 #
-def prepare_dataframe(df, pc=False):
+def prepare_dataframe(df, id="stats-table", pc=False):
     """
     Renders dataframe in a HTML table.
     """
@@ -85,9 +94,7 @@ def prepare_dataframe(df, pc=False):
         for col, data in df.items():
             if data.dtype == float:
                 df[col] = data.apply(lambda x: "-" if np.isnan(x) else "%d%%" % x)
-    return render_dataframe(
-        df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6", id_="stats-table"
-    )
+    return render_dataframe(df, col_display=TABLE_COLUMN_NAMES, class_="table long text-6", id_=id)
 
 
 def render_dataframe(df, index=False, *, col_display=None, **kwargs):
