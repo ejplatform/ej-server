@@ -117,6 +117,7 @@
         
         th {
             background: $color-theme-report-light-blue !important;
+            padding: 0 1.5rem;
         }
         th:first-child {
             border-top-left-radius: 5px;
@@ -135,6 +136,7 @@
             border-bottom: 1px solid $color-theme-report-light-gray;
             font-size: 1.25rem;
             height: 60px;
+            padding: 0 1.5rem;
         }
         a {
             text-decoration: underline;

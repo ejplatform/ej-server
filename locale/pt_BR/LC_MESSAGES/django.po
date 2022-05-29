@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-20 17:44-0300\n"
+"POT-Creation-Date: 2022-05-26 15:24-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -98,7 +98,7 @@ msgstr "Seu progresso: {n} de {total}"
 msgid "Conversations"
 msgstr "Conversas"
 
-#: src/ej/routes.py:58 src/ej_dataviz/roles.py:150
+#: src/ej/routes.py:58 src/ej_dataviz/roles.py:157
 msgid "Votes"
 msgstr "Votos"
 
@@ -288,7 +288,7 @@ msgid "Manage personas"
 msgstr "Gerenciar personas"
 
 #: src/ej_clusters/models/cluster.py:24 src/ej_clusters/models/stereotype.py:20
-#: src/ej_dataviz/constants.py:211 src/ej_dataviz/roles.py:141
+#: src/ej_dataviz/constants.py:211 src/ej_dataviz/roles.py:148
 msgid "Name"
 msgstr "Nome"
 
@@ -316,8 +316,8 @@ msgstr ""
 "capturar. Esta informação é opcional e não é pública."
 
 #: src/ej_clusters/models/stereotype_vote.py:20
-#: src/ej_conversations/roles/comments.py:99 src/ej_dataviz/roles.py:134
-#: src/ej_dataviz/roles.py:135
+#: src/ej_conversations/roles/comments.py:99 src/ej_dataviz/roles.py:141
+#: src/ej_dataviz/roles.py:142
 msgid "Comment"
 msgstr "Comentar"
 
@@ -447,17 +447,17 @@ msgid "Violates terms of service of the platform"
 msgstr "Viola os termos de uso da plataforma"
 
 #: src/ej_conversations/enums.py:24 src/ej_conversations/roles/comments.py:36
-#: src/ej_dataviz/roles.py:145 src/ej_dataviz/roles.py:162
+#: src/ej_dataviz/roles.py:152 src/ej_dataviz/roles.py:169
 msgid "Skip"
 msgstr "Pular"
 
 #: src/ej_conversations/enums.py:25 src/ej_conversations/roles/comments.py:37
-#: src/ej_dataviz/roles.py:130 src/ej_dataviz/roles.py:155
+#: src/ej_dataviz/roles.py:137 src/ej_dataviz/roles.py:162
 msgid "Agree"
 msgstr "Concorda"
 
 #: src/ej_conversations/enums.py:26 src/ej_conversations/roles/comments.py:35
-#: src/ej_dataviz/roles.py:137 src/ej_dataviz/roles.py:160
+#: src/ej_dataviz/roles.py:144 src/ej_dataviz/roles.py:167
 msgid "Disagree"
 msgstr "Discorda"
 
@@ -489,10 +489,31 @@ msgstr "Conversas promovidas aparecem no mural principal."
 msgid "Mark to make the conversation invisible."
 msgstr "Selecione para fazer conversa invisível."
 
-#: src/ej_conversations/mixins.py:160 src/ej_profiles/models.py:40
+#: src/ej_conversations/mixins.py:161
+#, fuzzy
+msgid "No phone number"
+msgstr "Sem número de telefone"
+
+#: src/ej_conversations/mixins.py:173
+#, fuzzy
+msgid "No group"
+msgstr "Novo grupo"
+
+#: src/ej_conversations/mixins.py:174 src/ej_dataviz/roles.py:64
+#, fuzzy
+msgid "Group"
+msgstr "Grupo"
+
+#: src/ej_conversations/mixins.py:175 src/ej_dataviz/roles.py:64
+#: src/ej_dataviz/roles.py:67 src/ej_profiles/models.py:40
 #: src/ej_profiles/tests/test_models.py:49
 msgid "Phone number"
 msgstr "Número de telefone"
+
+#: src/ej_conversations/mixins.py:176
+#, fuzzy
+msgid "Date joined"
+msgstr "data de ingresso"
 
 #: src/ej_conversations/models/comment.py:25
 msgid "awaiting moderation"
@@ -754,63 +775,68 @@ msgstr "Raça"
 msgid "State"
 msgstr "Estado"
 
-#: src/ej_dataviz/roles.py:131
+#: src/ej_dataviz/roles.py:63
+#, fuzzy
+msgid "PARTICIPANT"
+msgstr "PARTICIPANTES"
+
+#: src/ej_dataviz/roles.py:138
 msgid "Author"
 msgstr "Autor"
 
-#: src/ej_dataviz/roles.py:132
+#: src/ej_dataviz/roles.py:139
 msgid "Approved"
 msgstr "Aprovado"
 
-#: src/ej_dataviz/roles.py:133
+#: src/ej_dataviz/roles.py:140
 msgid "Average"
 msgstr "Média"
 
-#: src/ej_dataviz/roles.py:136
+#: src/ej_dataviz/roles.py:143
 msgid "Convergence"
 msgstr "Convergëncia"
 
-#: src/ej_dataviz/roles.py:138
+#: src/ej_dataviz/roles.py:145
 msgid "Divergence"
 msgstr "Divergência"
 
-#: src/ej_dataviz/roles.py:139
+#: src/ej_dataviz/roles.py:146
 msgid "Entropy"
 msgstr "Entropia"
 
-#: src/ej_dataviz/roles.py:140
+#: src/ej_dataviz/roles.py:147
 msgid "Missing"
 msgstr "Faltando"
 
-#: src/ej_dataviz/roles.py:142 src/ej_dataviz/roles.py:161
+#: src/ej_dataviz/roles.py:149 src/ej_dataviz/roles.py:168
 msgid "Participation ratio"
 msgstr "Índice de participação"
 
-#: src/ej_dataviz/roles.py:143
+#: src/ej_dataviz/roles.py:150
 msgid "Pending"
 msgstr "Esperando"
 
-#: src/ej_dataviz/roles.py:144
+#: src/ej_dataviz/roles.py:151
 msgid "Rejected"
 msgstr "Rejeitado"
 
-#: src/ej_dataviz/roles.py:146 src/ej_dataviz/roles.py:163
+#: src/ej_dataviz/roles.py:153 src/ej_dataviz/roles.py:170
 msgid "Skipped"
 msgstr "Pulados"
 
-#: src/ej_dataviz/roles.py:147
+#: src/ej_dataviz/roles.py:154
 msgid "Text"
 msgstr "Texto"
 
-#: src/ej_dataviz/roles.py:148
+#: src/ej_dataviz/roles.py:155
 msgid "Total"
 msgstr "Total"
 
-#: src/ej_dataviz/roles.py:149
+#: src/ej_dataviz/roles.py:156
 msgid "User"
 msgstr "Usuário"
 
-#: src/ej_dataviz/roles.py:158
+#: src/ej_dataviz/roles.py:165
 msgid ""
 "Agreement level\n"
 "0%: votes are evenly split\n"
@@ -1366,7 +1392,7 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/tools.py:79 src/ej_tools/tools.py:156 src/ej_tools/views.py:217
+#: src/ej_tools/tools.py:79 src/ej_tools/tools.py:158 src/ej_tools/views.py:217
 #: src/ej_tools/views.py:270
 msgid "Mautic"
 msgstr ""
@@ -1380,10 +1406,6 @@ msgstr ""
 "Integre esta conversa com a API da plataforma Mautic, permitindo que "
 "usuários que participarem desta conversa sejam automaticamente sincronizados "
 "com a base de contatos do Mautic."
-
-#: src/ej_tools/tools.py:86
-msgid "/docs/?page=user-docs/tools-mautic.html"
-msgstr ""
 
 #: src/ej_tools/tools.py:95
 #, fuzzy
@@ -1405,34 +1427,32 @@ msgstr ""
 "a EJ Permite votar, comentar e visualizar os grupos diretamente em páginas "
 "html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
-#: src/ej_tools/tools.py:131
-msgid "/docs/?page=user-docs/tools-opinion-component.html"
-msgstr ""
-
-#: src/ej_tools/tools.py:148
+#: src/ej_tools/tools.py:149
 msgid ""
 "Rocket.Chat instance for segmented communication with conversation "
 "participants."
-msgstr "Integração com o Rocket.Chat para comunicação segmentada com os participantes da conversa."
+msgstr ""
+"Integração com o Rocket.Chat para comunicação segmentada com os "
+"participantes da conversa."
 
-#: src/ej_tools/tools.py:157
+#: src/ej_tools/tools.py:159
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/tools.py:161
+#: src/ej_tools/tools.py:163
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:162
+#: src/ej_tools/tools.py:164
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_tools/tools.py:167 src/ej_tools/views.py:46
+#: src/ej_tools/tools.py:169 src/ej_tools/views.py:46
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:169
+#: src/ej_tools/tools.py:171
 msgid ""
 "Generates a html template of this conversation, for mailing marketing "
 "campaigns."
@@ -1440,10 +1460,6 @@ msgstr ""
 "Gere um template html desta conversa, e faça coletas de opinião via disparo "
 "de email. Útil para campanhas de marketing com ferramentas como mautic e "
 "mailchimp."
-
-#: src/ej_tools/tools.py:172
-msgid "/docs/?page=user-docs/tools-mail-template.html"
-msgstr ""
 
 #: src/ej_users/admin.py:14
 msgid "Permissions"
@@ -1940,6 +1956,7 @@ msgstr "entradas"
 #: src/ej_boards/jinja2/ej_boards/environment/admin-filters.jinja2:16
 #: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:14
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:18
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:14
 msgid "order by"
 msgstr "ordenar por"
 
@@ -2225,6 +2242,7 @@ msgid "No, I want to go back"
 msgstr "Não, quero voltar"
 
 #: src/ej_clusters/jinja2/ej_clusters/edit/new-cluster-form.jinja2:3
+#, fuzzy
 msgid "New group"
 msgstr "Novo grupo"
 
@@ -2768,7 +2786,8 @@ msgstr ""
 "            representadas por pontos distantes."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:8
-msgid "Do data available"
+#, fuzzy
+msgid "No data available"
 msgstr "Nenhum dado disponível"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:9
@@ -2785,7 +2804,7 @@ msgstr "(Filtrado de _MAX_ entradas)"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:12
 msgid "Show _MENU_ entries"
-msgstr "Mostra _MENU_ entradas"
+msgstr "Mostrar _MENU_ entradas"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:13
 msgid "Loading..."
@@ -2795,10 +2814,6 @@ msgstr "Carregando dados..."
 #, fuzzy
 msgid "Processing..."
 msgstr "Processando..."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:15
-msgid "Search"
-msgstr "Busca"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:16
 msgid "No entry found"
@@ -2837,12 +2852,6 @@ msgstr "Relatório de comentários"
 msgid "see all"
 msgstr "ver todos"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:12
-#: src/ej_tools/jinja2/ej_tools/telegram/poll_bot.jinja2:11
-#, fuzzy
-msgid "Group"
-msgstr "Grupo"
-
 #: src/ej_dataviz/jinja2/ej_dataviz/report/comments-report.jinja2:19
 #, fuzzy
 msgid "The cluster has no comments"
@@ -2876,10 +2885,26 @@ msgstr "Utilize esse link para realizar a coleta no telegram."
 msgid "Go to Tools"
 msgstr "Ir para Ferramentas"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:9
 #, fuzzy
 msgid "Users report"
 msgstr "Relatório de Participantes"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:17
+#, fuzzy
+msgid "group"
+msgstr "grupo"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:19
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:20
+#, fuzzy
+msgid "skip"
+msgstr "pulados"
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/users.jinja2:22
+#, fuzzy
+msgid "creation date"
+msgstr "data de criação"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/channels-chart.jinja2:3
 #, fuzzy
@@ -3003,11 +3028,6 @@ msgstr "data de fim deve ser maior que data de inicio"
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:4
 msgid "Voting"
 msgstr "Votação"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/voting.jinja2:19
-#, fuzzy
-msgid "skip"
-msgstr "pulados"
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/word-cloud-card.jinja2:3
 msgid "Word cloud"
@@ -4792,9 +4812,6 @@ msgstr "Autenticação"
 #~ "Indica se este usuário é considerado ativo. Desmarque aqui em vez de "
 #~ "apagar contas."
 
-#~ msgid "date joined"
-#~ msgstr "data de ingresso"
-
 #~ msgid "No %(verbose_name)s found matching the query"
 #~ msgstr "Nenhum nome %(verbose_name)s encontrado"
 
@@ -5269,9 +5286,6 @@ msgstr "Autenticação"
 #~ msgstr ""
 #~ "Com os poderes de Ativista de Minoria e Ponte de Diálogo, você ganhará "
 #~ "mais poder de fala, aumentando a visibilidade dos seus comentários!"
-
-#~ msgid "CONTINUE PARTICIPATING"
-#~ msgstr "Continue participando"
 
 #~ msgid "Edit Board"
 #~ msgstr "Editar mural"

@@ -3,16 +3,16 @@
     window.addEventListener('load', function () {
         $('.table').DataTable({
             "scrollX": true,
-            order: [],
+            order: [[0, 'asc']],
             language: {
-                emptyTable: "{{ _('Do data available') }}",
+                emptyTable: "{{ _('No data available') }}",
                 info: "{{ _('Showing from _START_ to _END_ of _TOTAL_ entries') }}",
                 infoEmpty: "{{ _('No entries found') }}",
                 infoFiltered: "{{ _('(Filtered from _MAX_ entries)') }}",
                 lengthMenu: "{{ _('Show _MENU_ entries') }}",
                 loadingRecords: "{{ _('Loading...') }}",
                 processing: "{{ _('Processing...') }}",
-                search: "{{ _('Search') }}",
+                search: "<i class='icon-search'></i>",
                 zeroRecords: "{{ _('No entry found') }}",
 
                 paginate: {

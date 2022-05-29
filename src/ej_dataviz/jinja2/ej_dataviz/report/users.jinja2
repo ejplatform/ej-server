@@ -3,13 +3,62 @@
 
 
 {% block report %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
     <div class="title-export">
-        
         <h1 class="h2 text-accent">{{ _('Users report') }}</h1>
-        
-        {{ export_modal(can_view_detail, conversation, type_data, conversation.slug) }}
+    </div>
+    <div id="order-participants">
+        <span id="divider">|</span>
+        <span class="order-select-params">
+            {{_("order by")}}
+            <select id="select-order-participant" name="order-participant" onchange="updateOrder(this.value)">
+                <option value="0">{{_("name")}}</option>
+                <option value="1">{{_("group")}}</option>
+                <option value="2">{{_("agree")}}</option>
+                <option value="3">{{_("disagree")}}</option>
+                <option value="4">{{_("skip")}}</option>
+                <option value="5">{{_("participation")}}</option>
+                <option value="6">{{_("creation date")}}</option>
+            </select>
+        </span>
+
+        <span id="sort-icons">
+            <a onclick="updateSortFilter('asc', event.target, 'sort-up-icon')"><i id="sort-down-icon" class="fa fa-sort-down fa-lg pink-selected-sort"></i></a>
+            <a onclick="updateSortFilter('desc', event.target, 'sort-down-icon')"><i id="sort-up-icon" class="fa fa-sort-up fa-lg"></i></a>
+        </span>
     </div>
     
     {{ conversation|role('participants-stats-table') }}
     
+    <script>
+        let currentOrder = 0;
+        const TABLE_COLUMN_COUNT = 7;
+
+        function updateOrder(column){
+            if(column < TABLE_COLUMN_COUNT){
+                const table = $('table').DataTable();
+                table.order(column, 'desc');
+                table.draw();
+                currentOrder = column;
+            }
+        }
+
+        function updateSortFilter(direction, target, previous){
+            const table = $('table').DataTable();
+            let previousIcon = document.getElementById(previous);
+
+            table.order(currentOrder, direction);
+            table.draw();
+
+            target.classList.add("pink-selected-sort");
+            previousIcon.classList.remove("pink-selected-sort");
+        }
+
+        $(document).ready(function () {
+            const orderFilter = document.getElementById('order-participants');
+            document.getElementById("participants-table-report_length").append(orderFilter);
+        });
+    
+    </script>
 {% endblock %}
