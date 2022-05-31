@@ -1,0 +1,17 @@
+{% from "ej_admin/environment/paginator.jinja2" import pagination %}
+<table>
+    <tr class="search-table__header">
+        <th class="search-table__title">{{_("User")}}</th>
+        <th class="search-table__title search-table__title--width-sm search-table__text--align">{{_("Boards")}}</th>
+        <th class="search-table__title search-table__title--width-sm search-table__text--align">{{_("Conversations")}}</th>
+    </tr>
+    {% for user in page_object %}
+        <tr class="search-table__row">
+            <td class="search-table__text--align"><span class="search-table__text--ellipse">{{user.name}}</span></td>
+            <td class="search-table__text--align">{{user.boards.count()}}</td>
+            <td class="search-table__text--align">{{user.conversations.count()}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{{ pagination(page_object, 'updateUserSearch', _("users")) }}
+</div>

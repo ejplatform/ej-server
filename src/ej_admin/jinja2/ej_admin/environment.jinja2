@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="pad-x3">
-    {% include 'ej_boards/environment/environment-statistics.jinja2' %}
+    {% include 'ej_admin/environment/environment-statistics.jinja2' %}
     <div id="favorite-boards-section"></div>
     <h1 class="h2 text-accent environment__title--align">{{_("Latest boards")}}</h1>
     <div class="recent-boards__filter">
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div id="recent-boards"></div>
-    {% include 'ej_boards/environment/admin-filters.jinja2' %}
+    {% include 'ej_admin/environment/admin-filters.jinja2' %}
     <div id="advanced-search"></div>
 </div>
 

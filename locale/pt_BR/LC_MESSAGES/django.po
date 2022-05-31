@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-30 20:34-0300\n"
+"POT-Creation-Date: 2022-05-25 10:32-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -197,11 +197,11 @@ msgstr "Mural"
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:237
+#: src/ej_boards/routes.py:74
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:268 src/ej_conversations/views.py:88
+#: src/ej_boards/routes.py:105 src/ej_conversations/views.py:86
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -1867,6 +1867,142 @@ msgstr "Mais informações"
 #: src/ej/templates/jinja2/pages/info.jinja2:43
 msgid "Execution environment"
 msgstr "Ambiente de execução"
+
+#: src/ej_admin/jinja2/ej_admin/environment.jinja2:11
+#, fuzzy
+msgid "Latest boards"
+msgstr "Murais mais recentes"
+
+#: src/ej_admin/jinja2/ej_admin/environment.jinja2:15
+msgid "Show only active boards"
+msgstr "Exibir apenas murais ativos"
+
+#: src/ej_admin/jinja2/ej_admin/environment.jinja2:16
+msgid "This option shows only boards that have created conversations"
+msgstr "Essa opção mostra apenas murais que tenham conversas criadas."
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:2
+#, fuzzy
+msgid "Advanced Search"
+msgstr "Busca Avançada"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:5
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:3
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:7
+#, fuzzy
+msgid "show"
+msgstr "ver tudo"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:12
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:14
+msgid "inputs"
+msgstr "entradas"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:16
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/filter-section.jinja2:14
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/filter-section.jinja2:18
+msgid "order by"
+msgstr "ordenar por"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:18
+#, fuzzy
+msgid "date"
+msgstr "data"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:19
+#, fuzzy
+msgid "total of comments"
+msgstr "número de comentários"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:20
+#, fuzzy
+msgid "total of conversations"
+msgstr "número de conversas"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:31
+#, fuzzy
+msgid "search for"
+msgstr "buscar por"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:34
+#, fuzzy
+msgid "board"
+msgstr "mural"
+
+#: src/ej_admin/jinja2/ej_admin/environment/admin-filters.jinja2:35
+#, fuzzy
+msgid "conversation"
+msgstr "conversa"
+
+#: src/ej_admin/jinja2/ej_admin/environment/environment-statistics.jinja2:2
+msgid "Environment statistics"
+msgstr "Estatísticas do ambiente"
+
+#: src/ej_admin/jinja2/ej_admin/environment/environment-statistics.jinja2:5
+#, fuzzy
+msgid "Boards count"
+msgstr "Total de murais"
+
+#: src/ej_admin/jinja2/ej_admin/environment/environment-statistics.jinja2:9
+#, fuzzy
+msgid "Conversations count"
+msgstr "Total de conversas"
+
+#: src/ej_admin/jinja2/ej_admin/environment/environment-statistics.jinja2:13
+#, fuzzy
+msgid "Users count"
+msgstr "Total de usuários"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "Showing"
+msgstr "Mostrando"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_clusters/jinja2/ej_clusters/stereotype-votes/pagination.jinja2:35
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "to"
+msgstr "a"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:3
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
+msgid "of"
+msgstr "de"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:6
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:5
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:22
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:5
+msgid "Previous"
+msgstr "Anterior"
+
+#: src/ej_admin/jinja2/ej_admin/environment/paginator.jinja2:18
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:17
+#: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:21
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:11
+msgid "Next"
+msgstr "Próximo"
+
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards-paginator.jinja2:2
+#: src/ej_admin/jinja2/ej_admin/environment/searched-boards.jinja2:13
+#, fuzzy
+msgid "boards"
+msgstr "murais"
+
+#: src/ej_admin/jinja2/ej_admin/environment/recent-boards.jinja2:6
+#: src/ej_admin/jinja2/ej_admin/environment/searched-boards.jinja2:8
+#: src/ej_admin/jinja2/ej_admin/environment/searched-conversations.jinja2:16
+#, fuzzy
+msgid "conversations"
+msgstr "conversas"
+
+#: src/ej_admin/jinja2/ej_admin/environment/searched-users.jinja2:17
+#, fuzzy
+msgid "users"
+msgstr "usuários"
 
 #: src/ej_boards/jinja2/ej_boards/board-create.jinja2:6
 msgid "Create board"

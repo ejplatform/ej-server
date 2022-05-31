@@ -16,7 +16,7 @@
             {{_("Manage")}}
         </h3>
         <ul class="board-list">
-            <li><a href="{{ url('boards:environment')}}">{{ _("EJ Environment") }}</a></li>
+            <li><a href="{{ url('administration:index')}}">{{ _("EJ Environment") }}</a></li>
         </ul>
     {% endif %}
 </nav>
@@ -27,7 +27,7 @@
     let backgroundColor = document.querySelector("." + selectedBoard);
 
     if (backgroundColor) {
-         backgroundColor.className = "selected-board";
+        backgroundColor.className = "selected-board";
         document.getElementById(selectedBoard + "-link").click();
     }
 </script>
