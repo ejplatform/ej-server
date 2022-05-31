@@ -10,3 +10,4 @@ Guia de usuário
    user-report
    user-vote
    tools
+   user-environment

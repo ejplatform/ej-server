@@ -57,6 +57,9 @@ def get_urlpatterns():
         *with_app("ej_dataviz", "conversations/", namespace="dataviz"),
         *with_app("ej_dataviz", "conversations/", routes="routes_report", namespace="report"),
         #
+        # Administration Routes
+        path("administration/", include("ej_admin.urls", namespace="administration")),
+        #
         #  Global stereotype and cluster management
         path("conversations/", include("ej_clusters.urls", namespace="cluster")),
         *with_app("ej_clusters", "stereotypes/", routes="routes_stereotypes", namespace="stereotypes"),
