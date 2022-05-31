@@ -2,7 +2,7 @@ from logging import getLogger
 
 from django.db import transaction
 from django.db.models import F
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -11,6 +11,7 @@ from ej_conversations.models import conversation
 from hyperpython import a
 from django.contrib.auth.decorators import login_required
 from rest_framework import status
+import json
 
 from ej_boards.models import Board
 from ej_users.models import SignatureFactory
@@ -31,6 +32,7 @@ from ej.decorators import (
     can_edit_conversation,
     can_moderate_conversation,
     can_acess_list_view,
+    is_superuser,
 )
 
 log = getLogger("ej")
@@ -305,6 +307,39 @@ def check_comment(request, conversation_id, slug, board_slug):
         return HttpResponse(status=200)
     except Comment.DoesNotExist:
         return HttpResponse(status=204)
+
+
+@login_required
+@is_superuser
+def update_favorite_boards(request, board_slug):
+    user = request.user
+    board = Board.objects.get(slug=board_slug)
+
+    try:
+        update_option = request.GET.get("updateOption", None)
+        if update_option == "add":
+            user.favorite_boards.add(board)
+        elif update_option == "remove":
+            user.favorite_boards.remove(board)
+        else:
+            return HttpResponse(status=404)
+    except Exception:
+        return HttpResponse(status=404)
+
+    return HttpResponse(status=200)
+
+
+@login_required
+@is_superuser
+def is_favorite_board(request, board_slug):
+    user = request.user
+    board = Board.objects.get(slug=board_slug)
+
+    try:
+        user.favorite_boards.get(id=board.id)
+        return JsonResponse({"is_favorite_board": True})
+    except Board.DoesNotExist:
+        return JsonResponse({"is_favorite_board": False})
 
 
 def login_link(content, obj):

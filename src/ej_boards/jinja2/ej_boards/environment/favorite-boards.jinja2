@@ -1,0 +1,10 @@
+<h1 class="h2 text-accent start-align-title">{{_("Favorite Boards")}}<span class="favorite-boards__count"> ({{favorite_boards.count()}})<span></h1>
+<div class="favorite-boards__container">
+    {% for board in favorite_boards %}
+        <div class="environment-card--large">
+            <a class="environment-card__title" href="{{ url('boards:conversation-list', board_slug=board.slug) }}">{{board.title}}</a>
+            <p class="environment-card__owner">{{board.owner}}</p>
+            <p class="environment-card__conversation-count">{{board.conversation_set.count()}} {{_("conversations")}}</p>
+        </div>
+    {% endfor %}
+</div>

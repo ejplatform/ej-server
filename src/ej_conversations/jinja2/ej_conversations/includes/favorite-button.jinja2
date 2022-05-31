@@ -1,0 +1,47 @@
+{% if request.user.is_superuser %}
+    <div class="button--favorite hide" id="favorite-board-button">
+        <a class="button" onclick="updateFavoriteBoard('add', addFavoriteBoard)"><i class="far fa-star fa-lg"></i>{{ _("favorite") }}</a>
+    </div>
+    <div class="button--remove-favorite" id="rm-favorite-board-button">
+        <a class="button" onclick="updateFavoriteBoard('remove', removeFavoriteBoard)"><i class="fas fa-star fa-lg"></i>{{ _("remove favorite") }}</a>
+    </div>
+{% endif %}
+
+<script>
+    let favoriteButton = document.getElementById("favorite-board-button");
+    let rmFavoriteButton = document.getElementById("rm-favorite-board-button");
+    
+    function addFavoriteBoard() {
+        favoriteButton.classList.add("hide");
+        rmFavoriteButton.classList.remove("hide");
+    }
+    function removeFavoriteBoard() {
+        favoriteButton.classList.remove("hide");
+        rmFavoriteButton.classList.add("hide");
+    }
+
+    function updateFavoriteBoard(updateOption, callbackFunc) {
+        $.ajax({
+            url: `update-favorite-boards/?updateOption=${updateOption}`,
+            success: function(data) {
+                callbackFunc();
+            }
+        })
+    }
+
+    function checkFavoriteBoard() {
+        $.ajax({
+            url: `is-favorite-board/`,
+            success: function(data) {
+                if (data["is_favorite_board"] == false) {
+                    removeFavoriteBoard();
+                }
+            }
+        })
+    }
+
+    window.onload = function () {
+        checkFavoriteBoard();
+    }
+
+</script>

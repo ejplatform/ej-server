@@ -80,3 +80,12 @@ def can_acess_list_view(view_func):
         return redirect("auth:login")
 
     return wrapper_func
+
+
+def is_superuser(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if request.user.is_superuser:
+            return view_func(request, *args, **kwargs)
+        return redirect("auth:login")
+
+    return wrapper_func

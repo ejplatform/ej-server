@@ -10,9 +10,11 @@
 }
 
 .board-container {
-    margin: 0 6rem;
+    padding: 0 6rem;
+    max-width: 80%;
     @media only screen and (max-width: 667px) {
-        margin: 0 1.5rem 1rem;
+        padding: 0 1.5rem 1rem;
+        max-width: unset;
     }
 }
 
