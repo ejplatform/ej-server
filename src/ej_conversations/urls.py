@@ -45,4 +45,14 @@ urlpatterns = [
         views.create,
         name="create",
     ),
+    path(
+        f"update-favorite-boards/",
+        views.update_favorite_boards,
+        name="update-favorite-boards",
+    ),
+    path(
+        f"is-favorite-board/",
+        views.is_favorite_board,
+        name="is-favorite-board",
+    ),
 ]

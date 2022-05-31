@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from .utils import statistics
 from model_utils.models import TimeStampedModel
 from boogie.rest import rest_api
+from ej_users.models import User
 
 from ej.utils.url import SafeUrl
 
@@ -33,6 +34,7 @@ class Board(TimeStampedModel):
     description = models.TextField(_("Description"), blank=True)
     palette = models.CharField(_("Palette"), max_length=10, choices=PALETTE_CHOICES, default="Blue")
     image = models.ImageField(_("Image"), blank=True, null=True)
+    users_favorite = models.ManyToManyField(User, default=[], related_name="favorite_boards")
 
     statistics = statistics
 

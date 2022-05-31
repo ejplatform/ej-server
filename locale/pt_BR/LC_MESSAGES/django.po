@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-26 15:24-0300\n"
+"POT-Creation-Date: 2022-05-30 20:34-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,7 +17,6 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
-#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -131,7 +130,7 @@ msgstr "Boas vindas!"
 msgid "Page {slug} not found"
 msgstr "Página {slug} não encontrada"
 
-#: src/ej_boards/apps.py:7 src/ej_boards/models.py:49
+#: src/ej_boards/apps.py:7 src/ej_boards/models.py:51
 msgid "Boards"
 msgstr "Murais"
 
@@ -145,64 +144,64 @@ msgstr "Você não pode alterar este valor depois"
 msgid "My Board"
 msgstr "Meu mural"
 
-#: src/ej_boards/models.py:23
+#: src/ej_boards/models.py:24
 msgid "Default"
 msgstr "Padrão"
 
-#: src/ej_boards/models.py:24
+#: src/ej_boards/models.py:25
 msgid "Alternative"
 msgstr "Alternativo"
 
-#: src/ej_boards/models.py:25
+#: src/ej_boards/models.py:26
 msgid "Grey"
 msgstr "Cinza"
 
-#: src/ej_boards/models.py:26
+#: src/ej_boards/models.py:27
 msgid "Green"
 msgstr "Verde"
 
-#: src/ej_boards/models.py:27
+#: src/ej_boards/models.py:28
 msgid "Orange"
 msgstr "Laranja"
 
-#: src/ej_boards/models.py:28
+#: src/ej_boards/models.py:29
 msgid "Purple"
 msgstr "Roxa"
 
-#: src/ej_boards/models.py:30
+#: src/ej_boards/models.py:31
 msgid "Slug"
 msgstr "Identificador"
 
-#: src/ej_boards/models.py:32 src/ej_conversations/models/conversation.py:48
+#: src/ej_boards/models.py:33 src/ej_conversations/models/conversation.py:48
 msgid "Title"
 msgstr "Título"
 
-#: src/ej_boards/models.py:33 src/ej_clusters/models/cluster.py:26
+#: src/ej_boards/models.py:34 src/ej_clusters/models/cluster.py:26
 #: src/ej_clusters/models/stereotype.py:25
 msgid "Description"
 msgstr "Descrição"
 
-#: src/ej_boards/models.py:34
+#: src/ej_boards/models.py:35
 msgid "Palette"
 msgstr "Paleta"
 
-#: src/ej_boards/models.py:35
+#: src/ej_boards/models.py:36
 msgid "Image"
 msgstr "Imagem"
 
-#: src/ej_boards/models.py:48
+#: src/ej_boards/models.py:50
 msgid "Board"
 msgstr "Mural"
 
-#: src/ej_boards/models.py:63
+#: src/ej_boards/models.py:65
 msgid "Slug already exists."
 msgstr "Identificador já existe."
 
-#: src/ej_boards/routes.py:218
+#: src/ej_boards/routes.py:237
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:249 src/ej_conversations/views.py:86
+#: src/ej_boards/routes.py:268 src/ej_conversations/views.py:88
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -499,7 +498,7 @@ msgstr "Sem número de telefone"
 msgid "No group"
 msgstr "Novo grupo"
 
-#: src/ej_conversations/mixins.py:174 src/ej_dataviz/roles.py:64
+#: src/ej_conversations/mixins.py:174
 #, fuzzy
 msgid "Group"
 msgstr "Grupo"
@@ -747,11 +746,11 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:44
+#: src/ej_conversations/views.py:46
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/views.py:64 src/ej_conversations/views.py:105
+#: src/ej_conversations/views.py:66 src/ej_conversations/views.py:107
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2009,6 +2008,19 @@ msgstr "Total de conversas"
 msgid "Users count"
 msgstr "Total de usuários"
 
+#: src/ej_boards/jinja2/ej_boards/environment/favorite-boards.jinja2:1
+#, fuzzy
+msgid "Favorite Boards"
+msgstr "Murais Favoritos"
+
+#: src/ej_boards/jinja2/ej_boards/environment/favorite-boards.jinja2:7
+#: src/ej_boards/jinja2/ej_boards/environment/recent-boards.jinja2:6
+#: src/ej_boards/jinja2/ej_boards/environment/searched-boards.jinja2:8
+#: src/ej_boards/jinja2/ej_boards/environment/searched-conversations.jinja2:15
+#, fuzzy
+msgid "conversations"
+msgstr "conversas"
+
 #: src/ej_boards/jinja2/ej_boards/environment/paginator.jinja2:3
 #: src/ej_boards/jinja2/ej_boards/environment/recent-boards-paginator.jinja2:2
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comment_report/paginator.jinja2:2
@@ -2048,14 +2060,7 @@ msgstr "Próximo"
 msgid "boards"
 msgstr "murais"
 
-#: src/ej_boards/jinja2/ej_boards/environment/recent-boards.jinja2:6
-#: src/ej_boards/jinja2/ej_boards/environment/searched-boards.jinja2:8
-#: src/ej_boards/jinja2/ej_boards/environment/searched-conversations.jinja2:17
-#, fuzzy
-msgid "conversations"
-msgstr "conversas"
-
-#: src/ej_boards/jinja2/ej_boards/environment/searched-users.jinja2:18
+#: src/ej_boards/jinja2/ej_boards/environment/searched-users.jinja2:17
 #, fuzzy
 msgid "users"
 msgstr "usuários"
@@ -2644,6 +2649,16 @@ msgstr "aprovar"
 #: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:79
 msgid "Go to conversation"
 msgstr "Voltar para conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/favorite-button.jinja2:3
+#, fuzzy
+msgid "favorite"
+msgstr "favoritar"
+
+#: src/ej_conversations/jinja2/ej_conversations/includes/favorite-button.jinja2:6
+#, fuzzy
+msgid "remove favorite"
+msgstr "remover favorito"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:20
 msgid "Back to conversations"
@@ -4737,9 +4752,6 @@ msgstr "Autenticação"
 #, fuzzy
 #~ msgid "Typical comments"
 #~ msgstr "{count} comentários"
-
-#~ msgid "Unfavorite"
-#~ msgstr "Desfavoritar"
 
 #~ msgid "Favorite"
 #~ msgstr "Favorito"

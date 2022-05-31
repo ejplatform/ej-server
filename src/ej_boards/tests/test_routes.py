@@ -1,5 +1,6 @@
 import email
 from django.test import Client
+from django.urls import reverse
 from ej_conversations.mommy_recipes import ConversationRecipes
 from ej_conversations import create_conversation
 from ej_boards.models import Board
@@ -282,3 +283,22 @@ class TestEnvironment(ConversationRecipes):
         response = logged_admin.get(url)
         searched_conversations = response.context["page_object"]
         assert len(searched_conversations) == 1
+
+    def test_get_all_favorite_boards(self, db, logged_admin, admin_user):
+        user = User.objects.create_user("user1@email.br", "password")
+        board = Board.objects.create(slug="board1", owner=user, description="board")
+        board_2 = Board.objects.create(slug="board2", owner=user, description="board2")
+        board_3 = Board.objects.create(slug="board3", owner=admin_user, description="board3")
+
+        admin_user.favorite_boards.add(board)
+        admin_user.favorite_boards.add(board_2)
+        admin_user.favorite_boards.add(board_3)
+
+        url = reverse("boards:get-favorite-boards")
+        response = logged_admin.get(url)
+        favorite_boards = response.context["favorite_boards"]
+
+        assert favorite_boards.count() == 3
+        assert favorite_boards[0] == board_3
+        assert favorite_boards[1] == board_2
+        assert favorite_boards[2] == board

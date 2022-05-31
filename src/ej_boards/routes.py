@@ -203,6 +203,25 @@ def get_searched_conversations(request):
     )
 
 
+@urlpatterns.route(
+    board_profile_admin_url + "environment/favorite-boards/",
+    login=True,
+    perms=["ej.can_access_environment_management"],
+)
+def get_favorite_boards(request):
+    user = request.user
+
+    favorite_boards = user.favorite_boards.order_by("-created")
+
+    return render(
+        request,
+        "ej_boards/environment/favorite-boards.jinja2",
+        {
+            "favorite_boards": favorite_boards,
+        },
+    )
+
+
 @urlpatterns.route(board_profile_admin_url + "add/", login=True)
 def board_create(request):  # TODO arrumar o navigation dele
     form = BoardForm(request=request)

@@ -67,26 +67,30 @@
 
 <hr>
 
-    <div class="alternate-cards">
-        {% for conversation in conversations %}
-            <div class="margin-y3">{{ conversation|role('card',url=conversation.url('dataviz:dashboard')) }}</div>
-        {% endfor %}
-    </div>
-    <script>
-        cards = document.querySelector(".cards-divider");
-        modalBg = document.getElementById('bg-modal');
+<div class="alternate-cards">
+    {% for conversation in conversations %}
+        <div class="margin-y3">{{ conversation|role('card',url=conversation.url('dataviz:dashboard')) }}</div>
+    {% endfor %}
+</div>
 
-        function toggleStatisticsMenu(){
-            let classToAdd = cards.classList.contains('hide-board-statistics') ? "hide-board-statistics" : "show-board-statistics";
-            let classToRemove = classToAdd === 'hide-board-statistics' ? "show-board-statistics" : "hide-board-statistics";
+{% include 'ej_conversations/includes/favorite-button.jinja2' %}
 
-            cards.classList.toggle(classToAdd);
-            modalBg.classList.toggle(classToAdd);
+<script>
+    cards = document.querySelector(".cards-divider");
+    modalBg = document.getElementById('bg-modal');
 
-            setTimeout( () => {
-                modalBg.classList.toggle(classToRemove);
-                cards.classList.toggle(classToRemove);
-            }, 150);
-        }
-    </script>
+    function toggleStatisticsMenu(){
+        let classToAdd = cards.classList.contains('hide-board-statistics') ? "hide-board-statistics" : "show-board-statistics";
+        let classToRemove = classToAdd === 'hide-board-statistics' ? "show-board-statistics" : "hide-board-statistics";
+
+        cards.classList.toggle(classToAdd);
+        modalBg.classList.toggle(classToAdd);
+
+        setTimeout( () => {
+            modalBg.classList.toggle(classToRemove);
+            cards.classList.toggle(classToRemove);
+        }, 150);
+    }
+
+</script>
 {% endblock %}

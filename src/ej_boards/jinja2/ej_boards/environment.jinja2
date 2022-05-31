@@ -7,7 +7,7 @@
 
 <div class="pad-x3">
     {% include 'ej_boards/environment/environment-statistics.jinja2' %}
-
+    <div id="favorite-boards-section"></div>
     <h1 class="h2 text-accent environment__title--align">{{_("Latest boards")}}</h1>
     <div class="recent-boards__filter">
         <input class="recent-boards__input" id="check-active-boards" type="checkbox" onchange="updateBoards('1')" checked/>
@@ -59,10 +59,20 @@ function updateConversationSearch(page, numEntries, orderBy, sort, searchString)
         }
     })
 }
+        
+function getFavoriteBoards() {
+    $.ajax({
+        url: 'favorite-boards',
+        success: function(data) {
+            $("#favorite-boards-section").html(data);
+        }
+    })
+}
 
 window.onload = function () {
     updateBoards('1');
     changeFilter();
+    getFavoriteBoards();
 }
 
 </script>
