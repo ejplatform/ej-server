@@ -195,7 +195,7 @@ class TestReportRoutes(ClusterRecipes):
         )
         Cluster.objects.create(name="name", clusterization=clusterization)
 
-        url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
+        url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(url)
         assert (
             "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
@@ -216,7 +216,7 @@ class TestReportRoutes(ClusterRecipes):
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=author_db)
         cluster.stereotypes.add(stereotype)
 
-        url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
+        url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(url)
         assert (
             not "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
@@ -514,7 +514,7 @@ class TestReportRoutes(ClusterRecipes):
         )
         comment.vote(conversation.author, "agree")
         comment.save()
-        dashboard_url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
+        dashboard_url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(dashboard_url)
         assert response.status_code == 200
         assert response.context["biggest_cluster_data"].get("name") == "cluster"
@@ -531,7 +531,7 @@ class TestReportRoutes(ClusterRecipes):
         cluster_db.users.add(cluster_db.clusterization.conversation.author)
         cluster_db.save()
         conversation = cluster_db.conversation
-        dashboard_url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
+        dashboard_url = reverse("boards:dataviz-dashboard", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(dashboard_url)
         assert response.status_code == 200
         assert response.context["biggest_cluster_data"] == {}

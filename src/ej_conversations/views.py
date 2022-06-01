@@ -161,7 +161,7 @@ def create(request, board_slug, context=None, **kwargs):
             conversation = form.save_comments(user, **kwargs)
 
         kwargs = conversation.get_url_kwargs()
-        return redirect(reverse("boards:dataviz-index", kwargs=kwargs))
+        return redirect(reverse("boards:dataviz-dashboard", kwargs=kwargs))
 
     context = {
         "form": form,
