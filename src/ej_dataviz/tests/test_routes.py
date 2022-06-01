@@ -1,13 +1,14 @@
+import pytest
+import json
+import datetime
+from django.urls import reverse
+from django.test import RequestFactory
+from django.test import Client
 from ej_clusters.enums import ClusterStatus
 from ej_clusters.models.cluster import Cluster
 from ej_clusters.models.stereotype import Stereotype
 from ej_clusters.mommy_recipes import ClusterRecipes
 from ej_conversations.models.conversation import Conversation
-import pytest
-import json
-import datetime
-from django.test import RequestFactory
-from django.test import Client
 
 from ej.testing import UrlTester
 from ej_conversations.mommy_recipes import ConversationRecipes
@@ -30,13 +31,9 @@ BASE_URL = "/api/v1"
 
 
 class TestRoutes(ConversationRecipes, UrlTester):
-    user_urls = [
-        "/conversations/1/conversation/scatter/",
-        "/conversations/1/conversation/dashboard/words.json",
-    ]
     admin_urls = [
-        "/conversations/1/conversation/reports/users/",
-        "/conversations/1/conversation/reports/comments-report/",
+        "/conversations/1/conversation/report/users/",
+        "/conversations/1/conversation/report/comments-report/",
         "/conversations/1/conversation/dashboard/",
     ]
 
@@ -128,7 +125,8 @@ class TestReportRoutes(ClusterRecipes):
         conversation = conversation_with_votes
         today = datetime.datetime.now().date()  # 2022-04-04
         one_week_ago = today - datetime.timedelta(days=7)
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/votes-over-time/?startDate={one_week_ago}&endDate={today}"
+        url = reverse("boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs())
+        url = url + f"?startDate={one_week_ago}&endDate={today}"
         response = logged_client.get(url)
         data = json.loads(response.content)["data"]
 
@@ -155,7 +153,8 @@ class TestReportRoutes(ClusterRecipes):
         conversation.board = board
         conversation.save()
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/votes-over-time/?startDate=2021-10-13&endDate=2021-10-06"
+        url = reverse("boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs())
+        url = url + f"?startDate=2021-10-13&endDate=2021-10-06"
         response = logged_client.get(url)
         assert json.loads(response.content) == {"error": "end date must be gratter then start date."}
 
@@ -166,19 +165,19 @@ class TestReportRoutes(ClusterRecipes):
         conversation.board = board
         conversation.save()
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/votes-over-time/"
+        base_url = reverse("boards:dataviz-votes_over_time", kwargs=conversation.get_url_kwargs())
+        response = logged_client.get(base_url)
+        assert json.loads(response.content) == {
+            "error": "end date and start date should be passed as a parameter."
+        }
+
+        url = base_url + f"?startDate=2021-10-06"
         response = logged_client.get(url)
         assert json.loads(response.content) == {
             "error": "end date and start date should be passed as a parameter."
         }
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/votes-over-time/?startDate=2021-10-06"
-        response = logged_client.get(url)
-        assert json.loads(response.content) == {
-            "error": "end date and start date should be passed as a parameter."
-        }
-
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/reports/votes-over-time/?endDate=2021-10-13"
+        url = base_url + f"?endDate=2021-10-13"
         response = logged_client.get(url)
         assert json.loads(response.content) == {
             "error": "end date and start date should be passed as a parameter."
@@ -196,7 +195,7 @@ class TestReportRoutes(ClusterRecipes):
         )
         Cluster.objects.create(name="name", clusterization=clusterization)
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/dashboard/"
+        url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(url)
         assert (
             "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
@@ -217,7 +216,7 @@ class TestReportRoutes(ClusterRecipes):
         stereotype, _ = Stereotype.objects.get_or_create(name="name", owner=author_db)
         cluster.stereotypes.add(stereotype)
 
-        url = f"/{conversation.board.slug}/conversations/{conversation.id}/{conversation.slug}/dashboard/"
+        url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(url)
         assert (
             not "Your conversation still does not have defined personas. Without personas, it is not possible to generate opinion groups."
@@ -366,7 +365,7 @@ class TestReportRoutes(ClusterRecipes):
 
     def test_cards_per_page(self, conversation_with_comments, logged_client):
         conv = conversation_with_comments
-        base_url = f"/{conv.board.slug}/conversations/{conv.id}/{conv.slug}/reports/comments-report/comments-pagination/"
+        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
         url = f"{base_url}?cardsPerPage=1"
 
         response = logged_client.get(url)
@@ -419,7 +418,7 @@ class TestReportRoutes(ClusterRecipes):
 
     def test_get_general_comments(self, conversation_with_comments, logged_client):
         conv = conversation_with_comments
-        base_url = f"/{conv.board.slug}/conversations/{conv.id}/{conv.slug}/reports/comments-report/comments-pagination/"
+        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
         response = logged_client.get(base_url)
         comments = list(response.context["comments"])
         assert comments == general_comments
@@ -436,7 +435,7 @@ class TestReportRoutes(ClusterRecipes):
         )
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
 
-        base_url = f"/{conv.board.slug}/conversations/{conv.id}/{conv.slug}/reports/comments-report/comments-pagination/"
+        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
         url = f"{base_url}?clusterFilters=general,{cluster.name}&cardsPerPage=12"
         response = logged_client.get(url)
         comments = list(response.context["comments"])
@@ -449,7 +448,7 @@ class TestReportRoutes(ClusterRecipes):
         )
         cluster = Cluster.objects.create(name="name", clusterization=clusterization)
 
-        base_url = f"/{conv.board.slug}/conversations/{conv.id}/{conv.slug}/reports/comments-report/comments-pagination/"
+        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
         url = f"{base_url}?clusterFilters={cluster.name}"
         response = logged_client.get(url)
         comments = list(response.context["comments"])
@@ -457,7 +456,7 @@ class TestReportRoutes(ClusterRecipes):
 
     def test_get_page(self, conversation_with_comments, logged_client):
         conv = conversation_with_comments
-        base_url = f"/{conv.board.slug}/conversations/{conv.id}/{conv.slug}/reports/comments-report/comments-pagination/"
+        base_url = reverse("boards:dataviz-comments_report_pagination", kwargs=conv.get_url_kwargs())
         url = f"{base_url}?cardsPerPage=1&page=1"
 
         response = logged_client.get(url)
@@ -515,7 +514,7 @@ class TestReportRoutes(ClusterRecipes):
         )
         comment.vote(conversation.author, "agree")
         comment.save()
-        dashboard_url = conversation.url("dataviz:dashboard")
+        dashboard_url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(dashboard_url)
         assert response.status_code == 200
         assert response.context["biggest_cluster_data"].get("name") == "cluster"
@@ -532,7 +531,7 @@ class TestReportRoutes(ClusterRecipes):
         cluster_db.users.add(cluster_db.clusterization.conversation.author)
         cluster_db.save()
         conversation = cluster_db.conversation
-        dashboard_url = conversation.url("dataviz:dashboard")
+        dashboard_url = reverse("boards:dataviz-index", kwargs=conversation.get_url_kwargs())
         response = logged_client.get(dashboard_url)
         assert response.status_code == 200
         assert response.context["biggest_cluster_data"] == {}

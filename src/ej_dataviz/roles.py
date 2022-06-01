@@ -1,9 +1,11 @@
 from django.apps import apps
 from django.contrib.auth import get_user_model
+from django.conf.urls import url
 from django.utils.translation import gettext as _
 from hyperpython import html, div
 from hyperpython.components import html_table, html_map, fa_icon
 from sidekick import import_later
+from ej_dataviz.views_report import votes_data
 
 from ej.roles import with_template
 from ej_conversations import models
@@ -11,14 +13,13 @@ from ej_conversations import models
 np = import_later("numpy")
 User = get_user_model()
 
-
 #
 # Conversation roles
 #
 @with_template(models.Conversation, role="download-data")
 def conversation_download_data(conversation, *, which, formats=None, cluster=None, **url_kwargs):
     if ":" not in which:
-        which = f"report:{which}"
+        which = f"boards:dataviz-{which}"
         if cluster is not None:
             which += "-cluster"
 
@@ -29,8 +30,8 @@ def conversation_download_data(conversation, *, which, formats=None, cluster=Non
 
     format_lst = []
     for format, name in (formats or DEFAULT_FORMATS).items():
-        url = conversation.url(which, fmt=format, **url_kwargs)
-        format_lst.append((format, name, url))
+        path = url(f"{which}.{format}", votes_data, **url_kwargs)
+        format_lst.append((format, name, path))
 
     return {"conversation": conversation, "formats": format_lst}
 

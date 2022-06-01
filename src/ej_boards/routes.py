@@ -12,11 +12,12 @@ from ej_signatures.models import SignatureFactory
 from ej_tools.urls import urlpatterns as conversation_tools_urlpatterns
 from ej_conversations.urls import urlpatterns as conversation_urlpatterns
 from ej_clusters.urls import urlpatterns as cluster_urlpatterns
+from ej_dataviz.urls import urlpatterns as dataviz_urlpatterns
 from ej_signatures.urls import urlpatterns as signatures_urlpatterns
 from .forms import BoardForm
 from ej_tools.models import RasaConversation, ConversationMautic
-from ej_dataviz import routes as dataviz
-from ej_dataviz import routes_report as report
+from ej_dataviz import views_dataviz as dataviz
+from ej_dataviz import views_report as report
 from ej_clusters import views as cluster
 
 from ej_conversations.urls import conversation_url
@@ -110,14 +111,10 @@ def tour(request, board):
     }
 
 
-#   When app uses boogie routes, we use register_app_routes
-#
-register_app_routes(dataviz, board_base_url, urlpatterns, "dataviz")
-register_app_routes(report, board_base_url, urlpatterns, "report")
-
 #   When app uses django views, we use patched_register_app_routes
 #
 patched_register_app_routes(urlpatterns.urls, conversation_tools_urlpatterns, "conversation-tools")
 patched_register_app_routes(urlpatterns.urls, conversation_urlpatterns, "conversation")
 patched_register_app_routes(urlpatterns.urls, cluster_urlpatterns, "cluster")
 patched_register_app_routes(urlpatterns.urls, signatures_urlpatterns, "signatures", "<slug:board_slug>/")
+patched_register_app_routes(urlpatterns.urls, dataviz_urlpatterns, "dataviz")

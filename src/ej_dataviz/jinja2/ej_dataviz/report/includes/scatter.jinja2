@@ -36,7 +36,7 @@
     <script defer>
         window.addEventListener('load', function () {
             // Load main data from json.
-            $.ajax("{{conversation.url('dataviz-scatter')}}pca.json").then(function (data) {
+            $.ajax("{{url('boards:dataviz-scatter_pca_json',  **conversation.get_url_kwargs())}}").then(function (data) {
                 // Prepare container
                var $container = $("#scatter-container");
                var dom = $container[0], chart = echarts.init(dom);

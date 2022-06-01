@@ -54,8 +54,7 @@ def get_urlpatterns():
         *with_app("ej_profiles", "profile/", namespace="profile"),
         #
         #  Data visualization
-        *with_app("ej_dataviz", "conversations/", namespace="dataviz"),
-        *with_app("ej_dataviz", "conversations/", routes="routes_report", namespace="report"),
+        path("conversations/", include("ej_dataviz.urls", namespace="dataviz")),
         #
         # Administration Routes
         path("administration/", include("ej_admin.urls", namespace="administration")),

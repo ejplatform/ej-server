@@ -23,7 +23,7 @@
             </div>
         </section>
         <div class="conversation-dashboard__button">
-            <a class="button square is-primary float-right" href="{{conversation.url('report:comments-report')}}">{{_("comments report")}}</a>
+            <a class="button square is-primary float-right" href="{{url('boards:dataviz-comments_report',  **conversation.get_url_kwargs())}}">{{_("comments report")}}</a>
         </div>
     </div>
 </div>
