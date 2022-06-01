@@ -1,13 +1,20 @@
 from django.core.paginator import PageNotAnInteger, EmptyPage
-from django.http import HttpResponse, Http404
+from django.apps import apps
+from django.http import HttpResponse, Http404, JsonResponse
+from typing import Callable
+
 from django.shortcuts import get_object_or_404
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _, gettext as __
 from sidekick import import_later
 from django.conf import settings
+from django.utils.text import slugify
+
 
 from ej_clusters.models import Cluster
 from .constants import EXPOSED_PROFILE_FIELDS
 from .constants import *
+
+from ej_conversations.utils import check_promoted
 
 pd = import_later("pandas")
 stop_words = import_later("stop_words")
@@ -180,7 +187,7 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
     response = HttpResponse(content_type=f"text/{fmt}")
     if translate:
         data = data.copy()
-        data.columns = [_(x) for x in data.columns]
+        data.columns = [__(x) for x in data.columns]
     response["Content-Disposition"] = f"attachment; filename={filename}.{fmt}"
     if fmt == "json":
         data.to_json(response, orient="records", date_format="iso")
@@ -230,6 +237,8 @@ def comments_data_common(comments, votes, filename, fmt):
     ]
     df = df[columns]
     df.columns = ["comment", "comment_id", "author", "author_id", *columns[4:]]
+    if not fmt:
+        return df
     return data_response(df, fmt, filename)
 
 
@@ -322,3 +331,120 @@ def get_biggest_cluster(clusterization):
         clusters = clusterization.clusters().annotate(size=Count(F("users")))
         return clusters.order_by("-size").first()
     return None
+
+
+def create_stereotype_coords(conversation, table, comments: list, transformer: Callable, kwargs: dict):
+    if apps.is_installed("ej_clusters") and getattr(conversation, "clusterization", None):
+        from ej_clusters.models import Stereotype
+
+        labels = conversation.clusterization.clusters.all().dataframe("name", index="users")
+        if labels.shape != (0, 0):
+            table["cluster"] = labels.loc[labels.index.values != None]
+            table["cluster"].fillna(__("*Unknown*"), inplace=True)
+            kwargs["labels"] = labels
+
+            # Stereotype votes
+            stereotypes = conversation.clusters.all().stereotypes()
+            names = dict(Stereotype.objects.values_list("id", "name"))
+            votes_ = stereotypes.votes_table()
+            missing_cols = set(comments) - set(votes_.columns)
+            for col in missing_cols:
+                votes_[col] = float("nan")
+            votes_ = votes_[comments]
+            points = transformer(votes_)
+
+            for pk, (x, y) in zip(votes_.index, points):
+                yield {
+                    "name": names[pk],
+                    "symbol": "circle",
+                    "coord": [x, y, names[pk], None, None],
+                    "label": {"show": True, "formatter": names[pk], "color": "black"},
+                    "itemStyle": {"opacity": 0.75, "color": "rgba(180, 180, 180, 0.33)"},
+                    "tooltip": {"formatter": _("{} persona").format(names[pk])},
+                }
+
+
+def format_echarts_option(data, user_coords, stereotype_coords, extra_fields: list, labels=None):
+    """
+    Format option JSON for echarts.
+    """
+    visual_map = [
+        {"dimension": n, **FIELD_DATA[f]["visual_map"]} for n, f in enumerate(extra_fields[1:], 3)
+    ]
+    if labels is not None:
+        clusters = [*pd.unique(labels.values.flat), _("*Unknown*")]
+        visual_map.append(
+            {
+                **PIECEWISE_OPTIONS,
+                "dimension": len(visual_map) + 3,
+                "categories": clusters,
+                "inRange": {"color": COLORS[: len(clusters)]},
+            }
+        )
+
+    axis_opts = {"axisTick": {"show": False}, "axisLabel": {"show": False}}
+    return JsonResponse(
+        {
+            "option": {
+                "tooltip": {
+                    "showDelay": 0,
+                    "axisPointer": {
+                        "show": True,
+                        "type": "cross",
+                        "lineStyle": {"type": "dashed", "width": 1},
+                    },
+                },
+                "xAxis": axis_opts,
+                "yAxis": axis_opts,
+                "series": [
+                    {
+                        "type": "scatter",
+                        "name": _("PCA data"),
+                        "symbolSize": 18,
+                        "markPoint": {
+                            "data": [
+                                {
+                                    "name": _("You!"),
+                                    "coord": [*user_coords, _("You!"), None, None],
+                                    "label": {"show": True, "formatter": _("You!")},
+                                    "itemStyle": {"color": "black"},
+                                    "tooltip": {"formatter": _("You!")},
+                                },
+                                *stereotype_coords,
+                            ]
+                        },
+                        "data": data.values.tolist(),
+                    }
+                ],
+                "grid": {"left": 10, "right": 10, "top": 10, "bottom": 30},
+            },
+            "visualMap": visual_map,
+        }
+    )
+
+
+def clusters(request, conversation):
+    """
+    Returns the cluster data as json format to render groups on frontend.
+    """
+    from ej_clusters.views import get_json_shape_user_group_from_clusterization
+
+    clusterization = getattr(conversation, "clusterization", None)
+    clusters_data = get_json_shape_user_group_from_clusterization(clusterization, request.user)
+    clusters_shapes = clusters_data.get("json_data")
+    return clusters_shapes
+
+
+def get_dashboard_biggest_cluster(request, conversation, clusterization):
+    biggest_cluster = get_biggest_cluster(clusterization)
+    if biggest_cluster:
+        biggest_cluster_df = comments_data_cluster(request, conversation, None, biggest_cluster.id)
+        return get_biggest_cluster_data(biggest_cluster, biggest_cluster_df)
+    return {}
+
+
+def comments_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
+    check_promoted(conversation, request)
+    cluster = get_cluster_or_404(cluster_id, conversation)
+    filename = conversation.slug + f"-{slugify(cluster.name)}-comments"
+    return comments_data_common(conversation.comments, cluster.votes, filename, fmt)

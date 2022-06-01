@@ -159,7 +159,9 @@ def create(request, board_slug, context=None, **kwargs):
     if form.is_valid_post():
         with transaction.atomic():
             conversation = form.save_comments(user, **kwargs)
-        return redirect(conversation.url("dataviz:dashboard"))
+
+        kwargs = conversation.get_url_kwargs()
+        return redirect(reverse("boards:dataviz-index", kwargs=kwargs))
 
     context = {
         "form": form,

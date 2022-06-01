@@ -8,7 +8,7 @@
         </li>
 
         <li class="menu-item">
-            <a href={{conversation.url("dataviz:dashboard")}}><span>{{ conversation.title }}</span></a>
+            <a href={{url('boards:dataviz-index', **conversation.get_url_kwargs())}}><span>{{ conversation.title }}</span></a>
         </li>
         
         {% if request.user.has_perm('ej.can_edit_conversation', conversation) %}
@@ -54,14 +54,14 @@
                 {% if request.user.has_perm("ej.can_view_report", conversation) %}
                     <li>
                         <div id="comments-report" class="comments-item">
-                            <a href=" {{ conversation.url('report:comments-report') }}">
+                            <a href=" {{ url('boards:dataviz-comments_report',  **conversation.get_url_kwargs()) }}">
                                 {{ _('Comments report') }}
                             </a>
                         </div>
                     </li>
                     <li>
                         <div id="participants-report" class="users-item">
-                            <a href=" {{ conversation.url('report:users') }}">
+                            <a href=" {{ url('boards:dataviz-users',  **conversation.get_url_kwargs()) }}">
                                 {{ _('Participants report') }}
                             </a>
                         </div>
@@ -75,7 +75,7 @@
                     </li>
                     <li>
                         <div id="scatter" class="scatter-item">
-                            <a href=" {{ conversation.url('dataviz:scatter') }}">
+                            <a href=" {{ url('boards:dataviz-scatter',  **conversation.get_url_kwargs()) }}">
                                 {{ _('Scatter plot') }}
                             </a>
                         </div>
@@ -88,7 +88,7 @@
     
     <ul class="menu-padding nav-categories">
         <h3 id="menu-communication">{{ _('Segmented Comunication') }}</h3>
-        <li><a href="{{ conversation.url('dataviz:communication') }}">{{_("Channels")}}</a></li>
+        <li><a href="{{ url('boards:dataviz-communication',  **conversation.get_url_kwargs()) }}">{{_("Channels")}}</a></li>
     </ul>
 
 <script>
