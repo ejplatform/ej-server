@@ -5,6 +5,10 @@ stages:
     - test
     - deploy
 
+variables:
+    GITLAB_INFRA_TOKEN: 'gitlab+deploy-token-1093201:zQBUtxqVTA5PyWUyGyEC'
+    GITLAB_EJ_TOKEN: 'gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct'
+
 install_dependencies:
     stage: prepare
     script:
@@ -22,7 +26,7 @@ check_style:
 run_tests:
     stage: test
     script:
-        - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct@gitlab.com/pencillabs/ej/ej-application.git'
+        - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://$GITLAB_EJ_TOKEN@gitlab.com/pencillabs/ej/ej-application.git'
         - cd ej-application
         - pip install poetry
         - poetry run pip install 'setuptools==61.2.0'
@@ -34,7 +38,7 @@ run_tests:
 deploy_to_dev:
     stage: deploy
     script:
-        - /bin/sh -c 'git clone -b stable --depth=1 https://gitlab+deploy-token-155341:xWz-bGxYnvTLcZCzsHEG@gitlab.com/pencillabs/infraestructure/core.git'
+        - /bin/sh -c 'git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
         - bin/pencilctl build ej -e dev -b develop -c prod --no-cache --push
     only:
@@ -46,7 +50,7 @@ deploy_to_dev:
 deploy_to_prod:
     stage: deploy
     script:
-        - /bin/sh -c 'git clone -b stable --depth=1 https://gitlab+deploy-token-155341:xWz-bGxYnvTLcZCzsHEG@gitlab.com/pencillabs/infraestructure/core.git'
+        - /bin/sh -c 'git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
         - bin/pencilctl build ej -e prod -b prod -c prod --no-cache --push
     only:
