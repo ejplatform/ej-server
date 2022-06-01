@@ -149,9 +149,7 @@ class RocketChat(AbstractTool):
         self.description: str = _(
             "Rocket.Chat instance for segmented communication with conversation participants."
         )
-        self.link: str = reverse(
-            "dataviz:communication", kwargs={"conversation": conversation, "slug": conversation.slug}
-        )
+        self.link: str = reverse("boards:dataviz-communication", kwargs=conversation.get_url_kwargs())
         self.about: str = "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
         self.is_active = is_active
 

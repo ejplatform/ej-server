@@ -10,7 +10,7 @@ urlpatterns = [
     path(
         conversation_url + "dashboard/",
         views_dataviz.index,
-        name="index",
+        name="dashboard",
     ),
     path(
         conversation_url + "communication/",
