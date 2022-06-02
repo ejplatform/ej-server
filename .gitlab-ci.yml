@@ -6,7 +6,6 @@ stages:
     - deploy
 
 variables:
-    GITLAB_INFRA_TOKEN: 'gitlab+deploy-token-1093201:zQBUtxqVTA5PyWUyGyEC'
     GITLAB_EJ_TOKEN: 'gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct'
 
 install_dependencies:
