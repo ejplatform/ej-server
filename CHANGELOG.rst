@@ -4,6 +4,20 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+3.3.0 release
+====================
+* Date: Jun 02, 2022
+* Features
+
+- Adds favorite board feature on ej_admin new app;
+- Adds "call to action" button on Blog editor;
+- Refactoring participants report;
+- Adds new django app ej_admin;
+- Removes django-boogie from ej_dataviz app;
+- Integrates EJ with Rocket.Chat instance;
+- Improves blog for mobile;
+- Refactoring advanced search on ej_admin app;
+
 3.2.0 release
 ====================
 * Date: May 04, 2022
