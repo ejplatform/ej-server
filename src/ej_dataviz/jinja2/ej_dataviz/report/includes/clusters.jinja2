@@ -46,9 +46,13 @@
             window.addEventListener('load', function () {
                 var $canvas = $('#cluster-canvas'),
                     $canvasContainer = $('.clusters-section__clusters'),
-                    size = Math.min($canvasContainer.width(), 500);
+                    size = $canvasContainer.width();
+                    width = size;
 
-                $canvas.css({width: size, maxWidth: 500, height: $canvasContainer.height()});
+                if(size >= 667) {
+                    width = 500;
+                }
+                $canvas.css({width: width, height: 400});
                 initializeForceLayout('#cluster-canvas', {{ json_data | safe }});
             });
         </script>

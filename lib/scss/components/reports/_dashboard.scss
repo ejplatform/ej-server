@@ -359,7 +359,8 @@
         }
 
         &__clusters {
-            width: calc(55vw - (109px + 280px));
+            width: calc(55vw - (106px + 280px));
+            text-align: center;
         }
 
         &__detail {
@@ -385,6 +386,9 @@
             }
 
             &--filled {
+                h2 {
+                    font-size: 1.5rem;
+                }
                 max-width: 280px;
             }
 
@@ -393,7 +397,10 @@
             }
         }
 
-        &__comment-percentage,
+        &__comment-percentage {
+            font-size: 2.25rem;
+        }
+
         &__main-comment {
             font-size: 1.25rem;
         }
@@ -673,5 +680,28 @@
 
     .time-chart {
         margin: 0 0 1rem 0;
+    }
+}
+
+@media (max-width: 559px) {
+    .conversation-dashboard .clusters-section__clusters {
+        margin: .1rem 0 .1rem 0;
+        width: 350px !important;
+    }
+    .conversation-dashboard .clusters-section__detail--filled {
+        max-width: 500px;
+        margin: auto;
+    }
+    .conversation-dashboard .clusters-section__detail--filled h2 {
+        max-width: 90vw;
+        margin: auto;
+        font-size: 1.25rem;
+    }
+
+    .conversation-dashboard .clusters-section__comment-percentage {
+        font-size: 1.5rem;
+    }
+    .conversation-dashboard .clusters-section__main-comment {
+        font-size: 0.875rem;
     }
 }
