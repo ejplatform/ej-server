@@ -101,81 +101,97 @@ A Duda precisa que o usuário envie a mensagem *start <ID da conversa>* para pod
 
 Webchat
 ==========================================
+O Webchat é uma das ferramentas de coleta da EJ e permite integrar o bot de opinião em uma página web.
+Essa página pode ser desde um post em um blog até uma plataforma de e-commerce. 
 
-O que é o WebChat?
-------------------
+Como posso utilizar a ferramenta?
+----------------------------------
 
-O WebChat é um chat em uma página web, em formato de chatbot. Com ele, você pode realizar a coleta de opiniões integrando as suas conversas que estão cadastradas na EJ. 
-Esta ferramenta cria um chat web na página html em que ele for incluído, permitindo que usuários que cheguem à pagina participem de uma coleta.
+Exitem duas formas de utilizar o Webchat.
 
-Quando usar o WebChat? 
-----------------------
+1. Utilizando um link que a própria EJ disponibiliza. Esse link pode ser compartilhado com o seu público,
+   que irá conseguir participar de uma coleta sem que você tenha que fazer qualquer outro procedimento.
+   Basta ir na área da ferramenta, clicar no botão **Compartilhar Bot** e o link para a coleta será 
+   copiado para a área de transferência.
+   Ao clicar nesse link, o usuário é redirecionado para uma página da EJ com o WebChat integrado. 
+   A partir dai, basta ele participar da coleta. 
+   O botão **Iniciar Coleta** é um atalho para que o criador da conversa possa testar a integração com o Webchat.
 
-O WebChat é recomendado se você deseja que as coletas de opinião sejam realizadas com seu público alvo sem que eles precisem sair da sua página web. 
-Ou seja, você precisa possuir um site ou plataforma disponível. Desta forma, todo o processo de coleta com o público estará centralizado no seu domínio.
+.. figure:: ../images/ej-webchat-integrado.png
 
-
-Como posso integrar o webchat ao meu site?
--------------------------------------------
-
-Para fazer coletas de opinião via chatbot, o administrador da conversa pode configurar em seu site ou plataforma o WebChat. 
-O seguinte *snippet* pode ser utilizado para integrar o webchat à Duda.
-
+2. Integrando o script do Webchat em uma página html qualquer. Essa opção permite que você integre o Webchat no seu site, o que facilita a jornada do usuário, já que ele não será redirecionado para uma página da EJ. O script de integração permite que o Webchat, mesmo rodando fora da EJ, apresente a conversa que você criou.
+Caso opte por integrar o Webchat no seu site, o seguinte script pode ser utilizado como ponto de partida da integração. Note que você estará sujeito aos limites de uso do plano gratutito, caso seja o seu caso.
 
 .. code-block:: html
 
-  <html>
-    <head></head>
-    <body></body>
-    <script>!(function () {
-      localStorage.removeItem("chat_session");
+   <html>
+      <head></head>
+      <body></body>
+      <script>!(function () {
+         localStorage.removeItem("chat_session");
       let e = document.createElement("script"),
-        t = document.head || document.getElementsByTagName("head")[0];
-      socketEnviroment = document.getElementById("socket-url").value;
+         t = document.head || document.getElementsByTagName("head")[0];
       (e.src =
-        "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
-        (e.async = !0),
-        (e.onload = () => {
-          window.WebChat.default(
-            {
-              initPayload: window.location.href,
-              title: "Duda",
-              socketUrl: "https://rasadefault.pencillabs.com.br?token=thisismysecret",
-              profileAvatar: "path-from-your-chosen-avatar>",
-              embedded: true
-            },
+            "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js"),
+            (e.async = !0),
+            (e.onload = () => {
+            window.WebChat.default(
+               {
+                  initPayload: window.location.href,
+                  title: "Duda",
+                  socketUrl: https://rasadefault.pencillabs.com.br?token=thisismysecret,
+                  profileAvatar: "/static/img/icons/duda.png",
+                  embedded: true
+               },
             null
-          );
-        }),
-        t.insertBefore(e, t.firstChild);
+      );
+      }),
+      t.insertBefore(e, t.firstChild);
       })();
-    </script>
-    <style>
-    #rasaWebchatPro {
-      height: 100vh;
-    }
+      </script>
+      <style>
+   #rasaWebchatPro {
+   height: 100vh;
+   width: 80vw;
+   margin: auto;
+   }
 
-    .rw-avatar {
+   .rw-avatar {
       width: 3rem !important;
       height: 3rem !important;
       border-radius: 100%;
       margin-right: 6px;
       position: relative;
       bottom: 5px;
-    }
+   }
 
-    #main-content {
-      display: none;
-    }
-    </style>
-  </html>
+   #main-content {
+   display: none;
+   }
+
+   #instance-error-webchat {
+   margin: 30px;
+   }
+      </style>
+   </html>
 
 
-Uma vez configurado o script na página, o administrador precisa registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante. 
+Uma vez configurado o script na página, será necessário registrar na EJ a URL em que o webchat está integrado. Dessa forma, o bot saberá qual conversa da EJ ele deve apresentar para o visitante.
 
-Para realizar esse registro, basta acessar a área de **ferramentas** da conversa, clicar em **Bots de Opinião** e selecionar a ferramenta **WebChat**. Cadastre então a URL em que o script foi configurado. Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
+Para realizar esse registro, basta acessar a área de **ferramentas** da conversa, clicar em **Bots de Opinião** e selecionar a ferramenta **WebChat**. Cadastre então a URL em que o script foi configurado.
+Essa URL tem que ser exatamente igual à url em que o script do Webchat será configurado.
+Feito isso, o webchat irá apresentar para os visitantes a conversa integrada.
 
 .. figure:: ../images/ej-docs-webchat.png 
+
+
+Quando devo utilizar o WebChat? 
+--------------------------------
+
+Recomendamos utilizar o Webchat para situações em que utilizar o Telegram não é uma opção. 
+O usuário irá participar votando nos comentários e poderá adicionar um novo comentário, que será solicitado pelo bot. 
+Uma das vantagens do Webchat em relação ao Telegram é que ele pode ser integrado ao seu site ou plataforma web.
+
 
 Rocket.chat
 ==========================================
