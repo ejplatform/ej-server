@@ -6,6 +6,10 @@ A EJ permite realizar coletas de opinião através de uma interface conversacion
 participante vota nos comentários e adiciona comentários,  que ficam disponíveis para os demais
 participantes votarem. Essa estrutura de chat permite realizar coletas no Telegram, WhatsApp ou página web.
 
+O bot de opinião é especialmente útil para usuários que gerenciam grupos no Telegram ou WhatsApp e
+desejam que os integrantes participem das coletas sem sair dos applicativos de mensageria.
+Também é possível utilizar o bot de opinião em páginas html, por meio da ferramenta :ref:`Webchat`.
+
 Para instruções técnicas de como rodar o chatbot da EJ em
 um ambiente de homologação, acesse https://gitlab.com/pencillabs/ej/ej-bot.
 
@@ -16,6 +20,7 @@ Telegram
 Para participar de uma coleta no Telegram é necessário gerar o link de participação. Esse link é
 uma URL que aponta para o chat da Duda, nosso bot de opinião disponível no plano gratuito da ferramenta.
 Para gerar o link de participação acesse a área de **Ferramentas > Bot de Opinião > Telegram**.
+A área de ferramentas pode ser encontrada na página interna de uma conversa.
 
 .. figure:: ../images/ej-bot-de-opiniao.png 
 
@@ -73,6 +78,8 @@ A Duda precisa que o usuário envie a mensagem *start <ID da conversa>* para pod
 .. figure:: ../images/coleta-whatsapp.png
   :align: center 
 
+
+.. _Webchat:
 
 Webchat
 ==========================================
