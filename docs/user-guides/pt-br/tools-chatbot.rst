@@ -2,17 +2,22 @@
 Duda: O chatbot oficial da EJ
 ##############################
 
+.. _Bot de Opinião:
+
 A EJ permite realizar coletas de opinião através de uma interface conversacional em que o
 participante vota nos comentários e adiciona comentários,  que ficam disponíveis para os demais
 participantes votarem. Essa estrutura de chat permite realizar coletas no Telegram, WhatsApp ou página web.
 
-O bot de opinião é especialmente útil para usuários que gerenciam grupos no Telegram ou WhatsApp e
-desejam que os integrantes participem das coletas sem sair dos applicativos de mensageria.
-Também é possível utilizar o bot de opinião em páginas html, por meio da ferramenta :ref:`Webchat`.
-
 Para instruções técnicas de como rodar o chatbot da EJ em
 um ambiente de homologação, acesse https://gitlab.com/pencillabs/ej/ej-bot.
 
+
+Quando devo utilizar o Bot de Opinião?
+========================================
+
+O bot de opinião é especialmente útil para usuários que gerenciam grupos no Telegram ou WhatsApp e
+desejam que os integrantes participem das coletas sem sair dos applicativos de mensageria.
+Também é possível utilizar o bot de opinião em páginas html, por meio da ferramenta :ref:`Webchat`.
 
 Telegram
 ==========================================

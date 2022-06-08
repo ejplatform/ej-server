@@ -1,13 +1,12 @@
 ========================================================
-EjGroupsBot: O chatbot oficial do bot de enquetes da EJ
+EjGroupsBot: O bot de enquetes da EJ
 ========================================================
 
-O EjGroupsBot é um bot de enquetes que tem como objetivo realizar coletas sem que 
-os participantes precisem ser encaminhados para o privado. Na enquete criada, cada pergunta 
-é um comentário da EJ e o tema da enquete é o título da conversa.
+O EjGroupsBot é um bot de enquetes que permite realizar coletas no Telegram sem que 
+os participantes precisem ser encaminhados para um chat privado, como é o caso do :ref:`Bot de Opinião`. 
+Na enquete gerada, cada pergunta é um comentário e o tema da enquete é o título da conversa.
 
-Telegram
-==========================================
+.. figure:: ../images/bot-de-enquetes.png 
 
 Como faço para localizar o bot no Telegram?
 -------------------------------------------

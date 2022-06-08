@@ -1,6 +1,10 @@
+
+{% macro opinion_bot(conversation, tool, type, image) %}
+{% from "ej_tools/includes/help-card.jinja2" import help_card %}
+
 <div class="tools-card-container tools-card-expand tools-share-content">
     <div class="tools-card-body">
-      <div class="tools-card-body-img"><img class="avatar" src="{{ static('/img/icons/duda.png') }}"/></div>
+      <div class="tools-card-body-img"><img class="avatar" src="{{ image }}"/></div>
       <div class="tools-card-content">
         <span class="tools-card-title">{{_("Opinion Bot")}}</span>
         <p class="helptext">{{_("Collect your audience's opinion using our guided bot, also known as Duda. Allows user to vote in comments without leaving Telegram.")}}</p>
@@ -37,6 +41,7 @@
 {{ help_card(_("When should I use the opinion bot?"), "/docs/user-guides/pt-br/tools-chatbot.html")}}
 
 <script charset="utf-8">
+
 function selectOpinionBot(target) {
   let buttons = document.querySelector(".bots-buttons").children;
   for (let button of buttons) {
@@ -49,13 +54,24 @@ function selectOpinionBot(target) {
   }
 }
 
+function getLinkByPlatform(type, botName){
+  if(type === "telegram"){
+    return `https://t.me/${botName}?start={{conversation.id}}`;
+  }else if(type === "whatsapp"){
+    const number = botName === "DudaEjBot" ? "{{tool.options[1][1]}}" : "{{tool.options[0][1]}}";
+    return `https://web.whatsapp.com/send?phone=${number}&text=start+{{conversation.id}}`;
+  }
+}
+
 function getOpinionBotLink(target="") {
   let botLink = document.querySelector("#bot-link");
   let botName = "DudaEjBot";
   if (target) {
       botName = target.value;
   }
-  let link = `https://t.me/${botName}?start={{conversation.id}}`;
+  tokens = window.location.href.split("/");
+  plataform = tokens[tokens.length - 1];
+  let link = getLinkByPlatform(plataform, botName);
   botLink.href = link;
   return link;
 }
@@ -98,3 +114,6 @@ window.onload = function() {
   });
 };
 </script>
+
+
+{% endmacro %}}
