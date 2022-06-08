@@ -16,7 +16,7 @@ from ej_conversations.models import Conversation, Comment, Vote
 from ej_conversations.serializers import (
     ConversationSerializer,
     CommentSerializer,
-    ConversationTextSerializer,
+    PartialConversationSerializer,
     VoteSerializer,
 )
 from ej_conversations.models.vote import Vote
@@ -64,7 +64,7 @@ class ConversationViewSet(RestAPIBaseViewSet):
         if request.user.is_superuser or conversation.author == request.user:
             return Response(self.get_serializer(conversation).data)
 
-        response = ConversationTextSerializer(conversation)
+        response = PartialConversationSerializer(conversation)
         return Response(response.data)
 
     def list(self, request):

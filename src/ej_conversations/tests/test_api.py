@@ -1,4 +1,3 @@
-import email
 import pytest
 from django.utils.translation import gettext_lazy as _
 from rest_framework.test import APIClient
@@ -57,14 +56,18 @@ class TestGetRoutes:
     def test_conversations_endpoint_not_authenticated(self, conversation, api):
         path = BASE_URL + f"/conversations/{conversation.id}/"
         data = api.get(path)
-        assert data == {"text": conversation.text}
+        assert len(data) == 2
+        assert data.get("text") == conversation.text
+        assert data.get("statistics")
 
     def test_conversations_endpoint_other_user(self, conversation, other_user):
         path = BASE_URL + f"/conversations/{conversation.id}/"
         api = authenticate_user_api({"email": other_user.email, "name": other_user.name})
 
         data = api.get(path, format="json").data
-        assert data == {"text": conversation.text}
+        assert len(data) == 2
+        assert data.get("text") == conversation.text
+        assert data.get("statistics")
 
     def test_comments_endpoint(self, comment):
         path = BASE_URL + f"/comments/{comment.id}/"

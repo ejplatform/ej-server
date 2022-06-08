@@ -78,11 +78,12 @@ class ConversationSerializer(BaseApiSerializer):
         return Conversation(**validated_data)
 
 
-class ConversationTextSerializer(BaseApiSerializer):
+class PartialConversationSerializer(BaseApiSerializer):
     class Meta:
         model = Conversation
         fields = [
             "text",
+            "statistics",
         ]
 
 
