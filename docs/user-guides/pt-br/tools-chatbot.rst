@@ -2,57 +2,32 @@
 Duda: O chatbot oficial da EJ
 ##############################
 
-Para iniciar a configuração do chatbot, primeiramente é necessário
-ter uma instância do Rasa_ rodando. O Rasa é plataforma de inteligência artificial 
-utilizada para construir a personalidade do chatbot, e para integrá-lo
-a API da EJ. Para instruções técnicas de como rodar o chatbot da EJ em
+A EJ permite realizar coletas de opinião através de uma interface conversacional em que o
+participante vota nos comentários e adiciona comentários,  que ficam disponíveis para os demais
+participantes votarem. Essa estrutura de chat permite realizar coletas no Telegram, WhatsApp ou página web.
+
+Para instruções técnicas de como rodar o chatbot da EJ em
 um ambiente de homologação, acesse https://gitlab.com/pencillabs/ej/ej-bot.
 
 
 Telegram
 ==========================================
 
-Como faço para localizar o bot no Telegram?
--------------------------------------------
+Para participar de uma coleta no Telegram é necessário gerar o link de participação. Esse link é
+uma URL que aponta para o chat da Duda, nosso bot de opinião disponível no plano gratuito da ferramenta.
+Para gerar o link de participação acesse a área de **Ferramentas > Bot de Opinião > Telegram**.
 
-Para começar a interagir com a Duda a partir do Telegram, clique no campo de busca do Telegram e digite DudaEjBot ou se preferir acesse http://t.me/dudaejbot
-
-* O bot está denominado como Duda - Empurrando Juntas.
-
-
-Como gerar um link de participação?
------------------------------------
-
-Para fazer a coleta de opinião é necessário gerar um link de participação que será enviado para grupos, canais ou pessoas específicas. A geração do 
-link é feita na Plataforma EJ pelo administrador da conversa.  Ao clicar no link gerado, o usuário do Telegram é direcionado para o bot, e inicia
-sua participação na coleta. Para gerar o link de participação, execute os seguintes passos:
-
-1. Como administrador, selecione uma conversa para realizar a coleta de opinião e, dentro do menu lateral dessa conversa, vá até a seção **Ferramentas**.
-
-2. Depois, entre na seção **Bot de Opinião**.
-
-3. Selecione a plataforma **Telegram**.
-
-4. Escolha qual dos bots disponíveis será utilizado para fazer a coleta. Basta selecionar um dos botões.
-
-5. Copie o texto e o link de participação clicando no botão **Compartilhar Bot**, conforme mostra a figura. 
+.. figure:: ../images/ej-bot-de-opiniao.png 
 
 
-O link gerado fica no seguinte formato de exemplo: *http://t.me/DudaEjBot?start=<ID da conversa>*.
+Nessa tela, você terá duas opções:
 
-.. figure:: ../images/ferramenta-chatbot_12.png 
-.. figure:: ../images/ferramenta-chatbot_3.png
-.. figure:: ../images/ferramenta-chatbot_41.png 
+1. Iniciar a coleta da conversa em questão no Telegram, por meio do botão **Iniciar Coleta**.
+2. Gerar o link da coleta, por meio do botão **Compartilhar Bot**. Esse botão irá copiar para a área
+   de transferência o link de participação e um texto de convie, que poderá ser alterado posteriormente.
 
-Como iniciar uma conversa com a Duda?
--------------------------------------
+Ao clicar no link, o participante é direcionado para o chat privado com o Bot.
 
-Repita os passos de 1 à 4 do item anterior *Como gerar um link de participação?*
-
-5. Para iniciar a conversa diretamente no bot, selecione o botão **Iniciar Coleta**.
-
-
-.. figure:: ../images/ferramenta-chatbot_42.png 
 .. figure:: ../images/coleta-telegram.png 
   :align: center
 
