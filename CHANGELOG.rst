@@ -4,6 +4,16 @@ CHANGELOG of EJPlatform releases
 
 Here you can follow all the fixes and new features on every EJPlatform release.
 
+3.3.1 release
+====================
+* Date: Jun 09, 2022
+* Features
+
+- Fixes 404 error when clicking help cards, on tools pages;
+- Review Opinion Component documentation;
+- Review Telegram, WhatsApp and Webchat documentation;
+- Review Poll Bot documentation;
+
 3.3.0 release
 ====================
 * Date: Jun 02, 2022
