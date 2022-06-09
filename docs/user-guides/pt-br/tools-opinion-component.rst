@@ -2,102 +2,137 @@
 Componente de opinião
 ######################
 
-O componente de opinião permite que você faça coletas de opinião em sites e blogs sem
-que o seu público perca a experiência de usuário, evitando o redirecionamento para outro
-sistema. O seu visitante poderá votar, adicionar novos comentários e visualizar
-informações relacionadas aos grupos de opinião formados durante a conversa. O componente possui
-duas configurações chave, que são o método de autenticação e o tema visual quer será utilizado.
+O componente de opinião é uma ferramenta de coleta que pode ser integrada em páginas html. 
+A ferramenta permite que usuários que acessem a página votem em uma conversa e adicionem novos
+comentários. Estes comentários poderão ser moderados na área **Gerenciar comentários** e ficarão disponíveis 
+para outros participantes, caso o dono da conversa aprove.
+Todos os votos e comentários feitos no componente ficam disponíveis no *dashboard* da conversa.
+
+
+Quando devo utilizar o Componente de Opinião?
+==============================================
+
+O Componente de Opinião é especialmente útil para usuários que possuem sites, blogs ou plataformas
+web e querem que seu público participe de coletas nestes ambientes. Assim como o Componente de Opinião,
+a ferramenta :ref:`Webchat` também pode ser integrada em páginas html.
+Diferente de outras ferramentas de coleta, o Componente de Opinião oferece dois mecanismos de
+autenticação, que serão abordados a seguir.
+
+O componente possui duas configurações-chave, o método de autenticação e o tema visual que será utilizado.
 
 Autenticação
 -------------
 
-Como o visitante não é redirecionado para a EJ mas ainda precisa estar autenticado para participar de uma conversa, o componente oferece três métodos de autenticação.
+Como o visitante não é redirecionado para a EJ, mas precisa estar autenticado para participar 
+de uma conversa, o Componente oferece dois métodos de autenticação.
 
-* **registro por nome e email**: O usuário irá informar um nome e um email para se registrar na EJ. Uma senha será gerada a partir dessas duas informações. A partir do registro, ele segue para a próxima tela e pode então participar.
+* **registro por nome e email**: O usuário irá informar um nome e um email para se registrar na EJ. 
+  Uma senha será gerada a partir dessas duas informações. 
+  Uma vez registrado, o usuário segue para a próxima tela e pode então participar.
 
-* **analytics**: O usuário não irá precisar informar nada para participar, mas o gestor do site irá precisar configurar uma *tag* do analytics, para que via cookie este usuário possa ser autenticado na API da EJ. Esse cookie poderá ser utilizado em um segundo momento pelo administrador da conversa, para cruzar dados de opinião com o comportamento do usuário no site, tendo mais pontos de informação sobre o seu público.
-
-* **mautic**: O usuário não irá precisar informar nada para participar, mas o gestor do site irá precisar configurar uma *tag* do mautic, para que via cookie, este usuário possa ser autenticado na API da EJ. Esse cookie poderá ser utilizado em um segundo momento pelo administrador da conversa, para cruzar dados de opinião com dados existentes na instância do mautic que está sendo utilizado.
+* **padrão**: O usuário precisará informar nada para participar, o próprio componente irá
+  gerar credenciais aleatórias para autenticação. Esse método é util se você não deseja identificar
+  seus participantes e, por não ter tela de login, a experiência de votação é mais fluida.
 
 
 Temas
 -------------
 
-O componente possui quatro temas visuais que podem ter escolhidos na tela de configuração da ferramenta.
+O Componente possui quatro temas visuais que podem ser escolhidos na tela de configuração da ferramenta.
 
 .. figure:: ../images/ej-opinion-component-theme.png
 
+
+Como posso utilizar a ferramenta?
+----------------------------------
+
+Exitem duas formas de utilizar o Componente de Opinião.
+
+1. Utilizando a página integrada da EJ. Com ela, você não precisa ter um site ou sistema web para
+   realizar coletas com o Componente de Opinião. Basta acessar **Ferramentas > Componente de Opinião**
+   e clicar no botão **Iniciar Coleta**. A página integrada da EJ utiliza o mecanismo de autenticação
+   padrão, comentado anteriormente. A vantagem dessa opção é que você pode copiar a URL da EJ e utilizá-la
+   em publicações para redes sociais ou mensagens diretas para os usuários. Quem clicar no link, irá
+   ser redirecionado para a página da EJ e conseguirá particiar da coleta. Essa forma democratiza
+   o acesso à ferramenta, já que mesmo que você não tenha um site ainda assim conseguirá fazer a coleta.
+
+.. figure:: ../images/ej-opinion-component-start.png
+
+2. :ref:`Configurando o script do Componente no seu site ou página html`.
+
+
+.. _Configurando o script do Componente no seu site ou página html:
 
 Incluíndo o componente em uma pagina
 -------------------------------------
 Para incluir o componente de opinião em uma página basta copiar o script abaixo e substituir as variáveis pelos valores desejados:
 
-* **host**: `https://www.ejplatform.org` ou outra instancia da EJ.
-* **cid**: Identificador da conversa na EJ.
-* **theme**: Tema.
-* **authenticate-with**: Metodo de autenticação.
+* **$CONVERSATION_ID**: Identificador da conversa na EJ.
+* **$THEME**: Tema.
+* **$AUTHENTICATION**: Metodo de autenticação.
 
-.. code-block:: shell
+O **$CONVERSATION_ID** e o **$THEME** a serem utilizados podem ser encontrados na url da pagina da ferramenta:
+
+.. figure:: ../images/ej-opinion-component-link.png
+.. figure:: ../images/ej-opinion-component-link1.png
+
+
+A variável ``$AUTHENTICATION`` aceita os seguintes valores:
+
+* ``default`` (autenticação por nome e email)
+* ``register`` (autenticação pela tela de registro)
+
+Caso queria utilizar uma versão diferente ou verificar qual a última versão publicada no npm acesse:
+https://www.npmjs.com/package/ej-conversations
+
+.. code-block:: html
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/ej-conversations@1.9.2/dist/conversations/conversations.esm.js" type="module" ></script>
+  <script src="https://unpkg.com/ej-conversations/dist/conversations/conversations.esm.js" type="module" ></script>
   <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-  <link href="http://localhost:8000/static/css/fontawesome-all.min.css" rel="stylesheet">
+  <link href="https://www.ejparticipe.org/static/css/fontawesome-all.min.css" rel="stylesheet">
   <style>
       /* https://github.com/ionic-team/stencil/issues/2072 */
   @font-face {
   font-family: Folio;
   font-style: normal;
   font-weight: 400;
-  src: url(https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
+  src: url(https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
   }
 
   @font-face {
   font-family: Helvetica;
   font-style: normal;
   font-weight: 400;
-    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
+    src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
   }
 
   @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/fa-regular-400.ttf');
+    src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/fa-regular-400.ttf');
   }
 
   @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/fa-brands-400.ttf');
+    src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/fa-brands-400.ttf');
   }
 
   @font-face {
   font-family: 'Font Awesome 5 Free';
   font-style: normal;
   font-weight: 400;
-    src: url('https://unpkg.com/ej-conversations@1.9.1-beta/dist/conversations/assets/fonts/fa-solid-900.ttf');
+    src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/fa-solid-900.ttf');
   }
   </style>
 
-  <ej-conversation host="$HOST" cid="$CONVERSATION_ID" theme="$THEME" authenticate-with="$AUTHENTICATION"></ej-conversation>
+  <!-- elemento responsável por carregar o componente de opinião na página html -->
+  <ej-conversation host="https://www.ejparticipe.org" cid="$CONVERSATION_ID" theme="$THEME" authenticate-with="$AUTHENTICATION"></ej-conversation>
 
 
-O **cid** e o **theme** a serem utilizados podem ser encontrados na url da pagina de coleta via componente de opinião:
-
-.. figure:: ../images/ej-opinion-component-link.png
-.. figure:: ../images/ej-opinion-component-link1.png
-
-
-O atributo ``authenticate-with`` aceita os seguintes valores:
-
-* ``default`` (autenticação por nome e email)
-* ``analytics``
-* ``mautic``
-
-Caso queria utilizar uma versão diferente ou verificar qual a última versão publicada no npm acesse:
-https://www.npmjs.com/package/ej-conversations
 
 Correções de css na pagina do componente
 ----------------------------------------
