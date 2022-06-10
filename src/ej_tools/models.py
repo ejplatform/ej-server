@@ -336,6 +336,7 @@ class WebchatHelper:
         "http://localhost:8000": "http://localhost:5006/?token=thisismysecret",
         "https://ejplatform.pencillabs.com.br": "https://rasadefaultdev.pencillabs.com.br/?token=thisismysecret",
         "https://www.ejplatform.org": "https://rasadefault.pencillabs.com.br/?token=thisismysecret",
+        "https://www.ejparticipe.org": "https://rasadefault.pencillabs.com.br/?token=thisismysecret",
     }
 
     @staticmethod
