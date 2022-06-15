@@ -20,7 +20,6 @@ class UsersViewSet(viewsets.ModelViewSet):
         try:
             user = User.objects.get(email=request.data.get("email"))
             return self.get_user_token(user, request)
-
         except:
             return self.create_user(request)
 
