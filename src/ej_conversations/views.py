@@ -83,12 +83,6 @@ def list_view(
     board = Board.objects.get(slug=board_slug)
     queryset = board.conversations.annotate_attr(board=board)
 
-    help_title = (
-        _(
-            "Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion."
-        ),
-    )
-
     if not user.get_profile().completed_tour:
         return redirect(f"{board.get_absolute_url()}tour")
 
@@ -105,7 +99,6 @@ def list_view(
         "conversations": queryset,
         "title": _(board.title),
         "subtitle": _("Participate voting and creating comments!"),
-        "help_title": help_title,
         "conversations_limit": max_conversation_per_user,
         "board": board,
         "user_boards": user_boards,
