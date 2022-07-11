@@ -67,17 +67,17 @@ Incluíndo o componente em uma pagina
 -------------------------------------
 Para incluir o componente de opinião em uma página basta copiar o script abaixo e substituir as variáveis pelos valores desejados:
 
-* **$CONVERSATION_ID**: Identificador da conversa na EJ.
-* **$THEME**: Tema.
-* **$AUTHENTICATION**: Metodo de autenticação.
+* **CONVERSATION_ID**: Identificador da conversa na EJ.
+* **THEME**: Tema.
+* **AUTHENTICATION**: Metodo de autenticação.
 
-O **$CONVERSATION_ID** e o **$THEME** a serem utilizados podem ser encontrados na url da pagina da ferramenta:
+O **CONVERSATION_ID** e o **THEME** a serem utilizados podem ser encontrados na url da pagina da ferramenta:
 
-.. figure:: ../images/ej-opinion-component-link.png
+.. fgure:: ../images/ej-opinion-component-link.png
 .. figure:: ../images/ej-opinion-component-link1.png
 
 
-A variável ``$AUTHENTICATION`` aceita os seguintes valores:
+A variável ``AUTHENTICATION`` aceita os seguintes valores:
 
 * ``default`` (autenticação por nome e email)
 * ``register`` (autenticação pela tela de registro)
@@ -130,7 +130,7 @@ https://www.npmjs.com/package/ej-conversations
   </style>
 
   <!-- elemento responsável por carregar o componente de opinião na página html -->
-  <ej-conversation host="https://www.ejparticipe.org" cid="$CONVERSATION_ID" theme="$THEME" authenticate-with="$AUTHENTICATION"></ej-conversation>
+  <ej-conversation host="https://www.ejparticipe.org" cid="CONVERSATION_ID" theme="THEME" authenticate-with="AUTHENTICATION"></ej-conversation>
 
 
 
