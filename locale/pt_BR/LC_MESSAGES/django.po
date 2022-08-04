@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-07 20:40-0300\n"
+"POT-Creation-Date: 2022-08-04 19:54-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,7 +17,6 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
-#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -748,11 +747,11 @@ msgstr "Conversa removida dos favoritos."
 msgid "Field cannot be empty!"
 msgstr "Campo não pode estar vazio!"
 
-#: src/ej_conversations/views.py:47
+#: src/ej_conversations/views.py:46
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/views.py:67 src/ej_conversations/views.py:102
+#: src/ej_conversations/views.py:66 src/ej_conversations/views.py:101
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -2567,17 +2566,21 @@ msgstr ""
 "Na sua assinatura atual, você pode criar <span\n"
 " class=\"text-accent bold\">conversas ilimitadas</span>."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:63
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:64
 #, fuzzy, python-format
 msgid ""
-"In the current signature, you can create <span\n"
-"                    class=\"text-accent bold\">%(conversations_limit)s</"
-"span> conversations."
+" In the current signature, you can create <span class=\"text-accent bold\">"
+"%(conversations_limit)s</span> conversations."
 msgstr ""
 "Na sua assinatura atual, você pode criar <span\n"
-" class=\"text-accent bold\">%(conversations_limit)s conversas</span>."
+" class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:70
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:66
+#, fuzzy
+msgid "Request upgrade."
+msgstr "Solicite upgrade."
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -2697,7 +2700,7 @@ msgstr "Modelar e Analisar"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:50
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:38
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:67
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:65
 msgid "Reports"
 msgstr "Relatórios"
 
@@ -3235,7 +3238,7 @@ msgstr ""
 "<br>Nós entraremos em contato em no máximo 24 horas."
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:28
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:54
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:52
 msgid "Plan"
 msgstr "Plano"
 
@@ -3249,7 +3252,7 @@ msgstr ""
 "criação de conversas, algumas ferramentas de coleta e relatórios."
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:34
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:62
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:60
 msgid "RESOURCES"
 msgstr "RECURSOS"
 
@@ -3267,22 +3270,16 @@ msgid "Access to multiple collect channels"
 msgstr "Acesso as ferramentas de coleta para Telegram e Web."
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:45
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:75
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:73
 msgid "This is already your plan"
 msgstr "Este já é o seu plano"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:47
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:77
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:5
-msgid "Request budget"
-msgstr "Requisite um orçamento"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:54
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:52
 #, fuzzy
 msgid "Listen to City yearly"
 msgstr "Ouça a Cidade anual"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:58
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:56
 msgid ""
 "A plan billed yearly that will be aimed for organizations that wants to runs "
 "conversations without voting limit."
@@ -3290,25 +3287,29 @@ msgstr ""
 " Um plano cobrado anualmente, voltado para organizações que desejam realizar "
 "coletas sem limite de votação."
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:64
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:62
 #, fuzzy
 msgid "Unlimited conversations"
 msgstr "Criação de  conversas ilimitadas"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:65
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:63
 #, fuzzy
 msgid "Unlimited votes"
 msgstr "Votos ilimitados nas conversas"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:66
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:64
 #, fuzzy
 msgid "Telegram, email and site integrations"
-msgstr ""
-"Integração para coletas no Telegram, email e site institucional."
+msgstr "Integração para coletas no Telegram, email e site institucional."
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:68
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:66
 msgid "Clustering and persona creation"
 msgstr "Clusterização e criação de personas"
+
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:75
+#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:5
+msgid "Request budget"
+msgstr "Requisite um orçamento"
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:14
 #: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:15
