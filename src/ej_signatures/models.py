@@ -114,6 +114,37 @@ class ListenToCity(Signature):
         ]
 
 
+class ListenToCityYearly(Signature):
+    def __init__(self, user):
+        Signature.__init__(self, user)
+        self.available_tools = []
+
+    def get_conversation_limit(self) -> int:
+        return config.EJ_LISTEN_TO_CITY_YEARLY_SIGNATURE_CONVERSATIONS_LIMIT
+
+    def get_vote_limit(self) -> int:
+        return config.EJ_LISTEN_TO_CITY_YEARLY_SIGNATURE_VOTE_LIMIT
+
+    def get_conversation_tools(self, conversation) -> list:
+        """
+        Returns the list of tools available for ListenToCommunity signature.
+        :arg1: conversation
+        :returns: list of tools
+        """
+
+        whatsapp = []
+        if not self.user.is_superuser:
+            whatsapp.append("whatsapp")
+
+        return [
+            MailingTool(conversation),
+            OpinionComponentTool(conversation),
+            BotsTool(conversation, exclude=whatsapp),
+            MauticTool(conversation, is_active=False),
+            RocketChat(conversation, is_active=False),
+        ]
+
+
 class SignatureFactory:
     """
     Instantiates signature subclasses
@@ -125,8 +156,13 @@ class SignatureFactory:
 
     LISTEN_TO_COMMUNITY = "listen_to_community"
     LISTEN_TO_CITY = "listen_to_city"
+    LISTEN_TO_CITY_YEARLY = "listen_to_city_yearly"
 
-    signatures = {LISTEN_TO_COMMUNITY: ListenToCommunity, LISTEN_TO_CITY: ListenToCity}
+    signatures = {
+        LISTEN_TO_COMMUNITY: ListenToCommunity,
+        LISTEN_TO_CITY: ListenToCity,
+        LISTEN_TO_CITY_YEARLY: ListenToCityYearly,
+    }
 
     @staticmethod
     def get_user_signature(user) -> Signature:
@@ -141,4 +177,5 @@ class SignatureFactory:
         return [
             (SignatureFactory.LISTEN_TO_COMMUNITY, _("Listen to community")),
             (SignatureFactory.LISTEN_TO_CITY, _("Listen to city")),
+            (SignatureFactory.LISTEN_TO_CITY_YEARLY, _("Listen to city yearly")),
         ]

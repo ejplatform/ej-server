@@ -28,14 +28,14 @@
     </div>
     <div onclick="toggleStatisticsMenu()" id="bg-modal" class="hide-board-statistics"></div>
     {%- if board.conversations.count() == 0 %}
-        <div class="helptext board-helptext">{{ help_title }}</div>
+        <div class="helptext board-helptext">{{ _("Welcome to EJ. This is your personal board. Board is where your conversations will be available. Press 'New conversation' to starts collecting yours audience opinion.") }}</div>
     {% endif %}
     <div class="cards-divider hide-board-statistics">
         <div class="cards-divider-header">
             <div class="close-btn">
                 <i onclick="toggleStatisticsMenu()" class="fas fa-times"></i>
             </div>
-            <h2>Estatísticas do mural</h2>
+            <h2>{{ _("Board statistics") }}</h2>
         </div>
         <div class="cards-divider-body">
             {% with value=board.statistics()["votes"], title=_('Total votes') %}
@@ -55,9 +55,18 @@
 
     </div>
     {% if not (request.user.is_staff or request.user.is_superuser) %} 
-        <div class="helptext">{% trans %}In the current signature, you can create <span
-                class="text-accent">{{conversations_limit}}</span> conversations.{% endtrans %}{{ '
-            ' }}</div>
+        {% if conversations_limit > 1000000 %}
+            <div class="helptext">{% trans %}In the current signature, you can create <span
+                 class="text-accent bold">unlimited</span> conversations.{% endtrans %}{{ '
+                ' }}</div>
+        {% else %}
+            <div class="helptext">
+                 {% trans %} In the current signature, you can create <span class="text-accent bold">{{conversations_limit}}</span> conversations.{% endtrans %}
+                <a href="{{ url('boards:signatures-list', board.slug) }}">
+                    <span class="text-accent bold signature-link">{{_("Request upgrade.")}}</span>
+                </a>
+            </div>
+        {% endif %}
     {% endif %}
 
     {%- if request.user.has_perm('ej.can_edit_board', board) and request.user.has_perm('ej.can_add_conversation') %}

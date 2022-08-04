@@ -13,8 +13,8 @@
                     {{_("free")}}
                 {% elif signature == "listen_to_community"%}
                     {{_("Listen to community")}}
-                {% elif signature == "listen_to_city"%}
-                    {{_("Listen to city")}}
+                {% elif signature == "listen_to_city_yearly"%}
+                    {{_("Listen to city yearly")}}
                 {% else %}
                     {{_("Custom Plan")}}
                 {% endif %}
@@ -29,55 +29,54 @@
                 </div>
                 <div class="signatures-card__descr">
                     <p>{{_('A free usage plan from EJ. The idea is to allow the user to experience the platform, create a conversation, collect comments and votes and track reports.')}}</p>
-                    <p>
-                        <h5>{{_('RESOURCES')}}</h5>
-                        - {{_('Three conversation creation limit')}}.<br>
-                        - {{_('Creation limit of five thousand votes')}}.<br>
-                        - {{_('Reports')}}.<br>
-                        - {{_('Access to multiple collect channels')}}.<br>
-                        - {{_('Clustering and persona creation')}}.
-                    </p>
                 </div>
+                <div class="signatures-card__features">
+                    <h5>{{_('RESOURCES')}}</h5>
+                    <ul>
+                        <li>{{_('Three conversation creation limit')}}.</li>                        
+                        <li>{{_('Creation limit of five thousand votes')}}.</li>
+                        <li>{{_('Reports')}}.</li>
+                        <li>{{_('Access to multiple collect channels')}}</li>
+                    </ul>
+                </div>
+            {% if signature == 'listen_to_community'%}
                 <button
                     class="signatures-card__button" disabled>
-                    {% if signature == 'listen_to_community'%}
                         {{_('This is already your plan')}}
-                    {% else %}
-                        {{_('Request budget')}}
-                    {% endif %}
                 </button>
-            </div>
+            {% endif %}
+        </div>
 
             <div class="signatures-card--blue">
                 <div class="signatures-card__title">
-                    {{_('Plan')}} {{_('Custom Plan')}}
+                    {{_('Plan')}} {{_('Listen to City yearly')}}
                 </div>
                 <div class="signatures-card__descr">
                     <p>
-                        {{_('A plan that will be aimed at organizations that have specific demands, for example:
-                            Want persona/clustering support but don\'t need unlimited votes
-                            or any other feature of the Hear Humanity or Hear the City plans.')}}
-                    </p>
-                    <p>
-                        <h5>{{_('RESOURCES')}}</h5>
-                        - {{_('Chat integration with Telegram participants')}}.<br>
-                        - {{_('Unlimited conversations')}}.<br>
-                        - {{_('Unlimited votes')}}.<br>
-                        - {{_('WhatsApp, Telegram, email and site integrations')}}.<br>
-                        - {{_('Reports')}}.<br>
-                        - {{_('Clustering and persona creation')}}.
+                        {{_('A plan billed yearly that will be aimed for organizations that wants to runs conversations without voting limit.')}}
                     </p>
                 </div>
+                <div class="signatures-card__features">
+                    <h5>{{_('RESOURCES')}}</h5>
+                    <ul>
+                        <li>{{_('Unlimited conversations')}}.</li>
+                        <li>{{_('Unlimited votes')}}.</li>
+                        <li>{{_('Telegram, email and site integrations')}}</li>
+                        <li>{{_('Reports')}}.</li>
+                        <li>{{_('Clustering and persona creation')}}.</li>
+                    </ul>
+                </div>
                 <button
-                    {% if signature != 'custom'%} onclick="toggleModal('form-modal')" {% endif%}
+                    {% if signature != 'listen_to_city_yearly'%} onclick="toggleModal('form-modal')" {% endif%}
                     class="signatures-card__button">
-                    {% if signature == 'custom'%}
+                    {% if signature == 'listen_to_city_yearly'%}
                         {{_('This is already your plan')}}
                     {% else %}
                         {{_('Request budget')}}
                     {% endif %}
                 </button>
             </div>
+        </div>
         </section>
     </div>
 

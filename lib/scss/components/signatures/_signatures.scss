@@ -52,12 +52,19 @@
             &__descr {
                 align-self: center;
 
+            }
+
+            &__features {
                 h5 {
                     font-family: "Raleway", sans-serif;
                     color: $color-black-alternative;
                     font-weight: bold;
                     font-size: .75rem;
-                    margin: 0;
+                    margin: 0 0 1rem 0;
+                }
+
+                li {
+                    line-height: 1.5rem;
                 }
             }
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-02 17:07-0300\n"
+"POT-Creation-Date: 2022-08-04 19:54-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,7 +17,6 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
-#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -202,7 +201,7 @@ msgstr "Identificador já existe."
 msgid "You cannot change this value"
 msgstr "Você não pode mudar este valor"
 
-#: src/ej_boards/routes.py:107 src/ej_conversations/views.py:88
+#: src/ej_boards/routes.py:107
 msgid ""
 "Welcome to EJ. This is your personal board. Board is where your "
 "conversations will be available. Press 'New conversation' to starts "
@@ -706,7 +705,7 @@ msgstr ""
 msgid "Your vote has been computed :-)"
 msgstr "Seu voto foi computado :-)"
 
-#: src/ej_conversations/tests/test_api.py:106
+#: src/ej_conversations/tests/test_api.py:109
 msgid "Authentication credentials were not provided."
 msgstr ""
 
@@ -752,7 +751,7 @@ msgstr "Campo não pode estar vazio!"
 msgid "Public conversations"
 msgstr "Conversas públicas"
 
-#: src/ej_conversations/views.py:66 src/ej_conversations/views.py:107
+#: src/ej_conversations/views.py:66 src/ej_conversations/views.py:101
 msgid "Participate voting and creating comments!"
 msgstr "Participe com votos e comentários!"
 
@@ -1172,14 +1171,19 @@ msgstr "perfil"
 msgid "Signatures"
 msgstr "Planos"
 
-#: src/ej_signatures/models.py:142
+#: src/ej_signatures/models.py:178
 msgid "Listen to community"
 msgstr "Ouça a Comunidade"
 
-#: src/ej_signatures/models.py:143
+#: src/ej_signatures/models.py:179
 #, fuzzy
 msgid "Listen to city"
 msgstr "Ouça a Cidade"
+
+#: src/ej_signatures/models.py:180
+#, fuzzy
+msgid "Listen to city yearly"
+msgstr "Ouça a Cidade anual"
 
 #: src/ej_tools/forms.py:40 src/ej_tools/forms.py:52
 msgid "Theme"
@@ -2528,6 +2532,11 @@ msgstr "Salvar e gerenciar personas"
 msgid "Save and moderate comments"
 msgstr "Salvar e moderar comentários"
 
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:38
+#, fuzzy
+msgid "Board statistics"
+msgstr "Estatísticas"
+
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:41
 #, fuzzy
 msgid "Total votes"
@@ -2548,16 +2557,30 @@ msgstr "Conversas hospedadas"
 msgid "Signature model"
 msgstr "Modelo de assinatura"
 
-#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:58
-#, fuzzy, python-format
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:59
+#, fuzzy
 msgid ""
 "In the current signature, you can create <span\n"
-"                class=\"text-accent\">%(conversations_limit)s</span> "
-"conversations."
+"                 class=\"text-accent bold\">unlimited</span> conversations."
 msgstr ""
-"Na sua assinatura atual, você pode criar %(conversations_limit)s conversas."
+"Na sua assinatura atual, você pode criar <span\n"
+" class=\"text-accent bold\">conversas ilimitadas</span>."
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:64
+#, fuzzy, python-format
+msgid ""
+" In the current signature, you can create <span class=\"text-accent bold\">"
+"%(conversations_limit)s</span> conversations."
+msgstr ""
+"Na sua assinatura atual, você pode criar <span\n"
+" class=\"text-accent bold\">%(conversations_limit)s</span> conversas."
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:66
+#, fuzzy
+msgid "Request upgrade."
+msgstr "Solicite upgrade."
+
+#: src/ej_conversations/jinja2/ej_conversations/conversation-list.jinja2:73
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
@@ -2676,8 +2699,8 @@ msgid "Model and Analyze"
 msgstr "Modelar e Analisar"
 
 #: src/ej_conversations/jinja2/ej_conversations/includes/menu-detail.jinja2:50
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:36
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:67
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:38
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:65
 msgid "Reports"
 msgstr "Relatórios"
 
@@ -3202,7 +3225,6 @@ msgid "free"
 msgstr "gratuito"
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:19
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:53
 #, fuzzy
 msgid "Custom Plan"
 msgstr "Customizado"
@@ -3216,7 +3238,7 @@ msgstr ""
 "<br>Nós entraremos em contato em no máximo 24 horas."
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:28
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:53
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:52
 msgid "Plan"
 msgstr "Plano"
 
@@ -3229,74 +3251,65 @@ msgstr ""
 "Nosso plano de uso gratuito. Te permite experimentar nossos recursos de "
 "criação de conversas, algumas ferramentas de coleta e relatórios."
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:33
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:62
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:34
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:60
 msgid "RESOURCES"
 msgstr "RECURSOS"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:34
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:36
 #, fuzzy
 msgid "Three conversation creation limit"
 msgstr "Limite de criação de <b>três conversas</b>"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:35
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:37
 msgid "Creation limit of five thousand votes"
 msgstr "Limite de criação de <b>cinco mil votos</b>"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:37
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:39
 msgid "Access to multiple collect channels"
 msgstr "Acesso as ferramentas de coleta para Telegram e Web."
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:38
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:68
-msgid "Clustering and persona creation"
-msgstr "Clusterização e criação de personas"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:44
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:75
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:45
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:73
 msgid "This is already your plan"
 msgstr "Este já é o seu plano"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:46
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:77
-#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:5
-msgid "Request budget"
-msgstr "Requisite um orçamento"
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:57
-msgid ""
-"A plan that will be aimed at organizations that have specific demands, for "
-"example:\n"
-"                            Want persona/clustering support but don't need "
-"unlimited votes\n"
-"                            or any other feature of the Hear Humanity or "
-"Hear the City plans."
-msgstr ""
-"O plano de uso construído pela nossa equipe especificamente para as suas "
-"necessidades. Pensaremos juntos quais recursos e estratégias poderemos "
-"aplicar para potencializar sua comunicação digital. "
-
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:63
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:52
 #, fuzzy
-msgid "Chat integration with Telegram participants"
-msgstr ""
-"Integração com o Rocket.Chat para comunicação segmentada com os "
-"participantes da conversa"
+msgid "Listen to City yearly"
+msgstr "Ouça a Cidade anual"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:64
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:56
+msgid ""
+"A plan billed yearly that will be aimed for organizations that wants to runs "
+"conversations without voting limit."
+msgstr ""
+" Um plano cobrado anualmente, voltado para organizações que desejam realizar "
+"coletas sem limite de votação."
+
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:62
 #, fuzzy
 msgid "Unlimited conversations"
 msgstr "Criação de  conversas ilimitadas"
 
-#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:65
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:63
 #, fuzzy
 msgid "Unlimited votes"
-msgstr "Votos ilimitados"
+msgstr "Votos ilimitados nas conversas"
+
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:64
+#, fuzzy
+msgid "Telegram, email and site integrations"
+msgstr "Integração para coletas no Telegram, email e site institucional."
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:66
-msgid "WhatsApp, Telegram, email and site integrations"
-msgstr ""
-"Integração para coletas no WhatsApp, Telegram, email e site institucional."
+msgid "Clustering and persona creation"
+msgstr "Clusterização e criação de personas"
+
+#: src/ej_signatures/jinja2/ej_signatures/signatures-list.jinja2:75
+#: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:5
+msgid "Request budget"
+msgstr "Requisite um orçamento"
 
 #: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:14
 #: src/ej_signatures/jinja2/ej_signatures/signatures-modals.jinja2:15
@@ -3606,7 +3619,8 @@ msgid "When should I use webchat?"
 msgstr "Quando devo utilizar o webchat?"
 
 #: src/ej_tools/jinja2/ej_tools/webchat.jinja2:36
-msgid "How can I integrate webchat into my website?"
+#, fuzzy
+msgid "How can I Integrate webchat into my website?"
 msgstr "Como posso integrar o webchat ao meu site?"
 
 #: src/ej_tools/jinja2/ej_tools/whatsapp.jinja2:26
@@ -3632,14 +3646,12 @@ msgstr ""
 msgid "Share the participation link to start the collection."
 msgstr "Compartilhe a chamada de participação para iniciar a coleta."
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:8
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:5
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:9
 #, fuzzy
 msgid "Opinion Bot"
 msgstr "Bot de Opinião"
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:9
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:6
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:10
 #, fuzzy
 msgid ""
 "Collect your audience's opinion using our guided bot, also known as Duda. "
@@ -3648,41 +3660,35 @@ msgstr ""
 "Colete a opinião do seu público utilizando o nosso bot guiado. Permite que o "
 "usuário vote nos comentários da conversa via chat."
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:10
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:7
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:11
 #, fuzzy
 msgid "Select one of the bots to start collecting"
 msgstr "Selecione um dos bots para iniciar a coleta"
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:12
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:9
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:13
 #, fuzzy
 msgid "Collect with:"
 msgstr "Coletar com:"
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:23
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:20
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:24
 #: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:21
 #, fuzzy
 msgid "Copied to clipboard!"
 msgstr "Copiado para a área de transferência!"
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:27
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:24
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:28
 #: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:18
 #, fuzzy
 msgid "Share Bot"
 msgstr "Compartilhar Bot"
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:34
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:31
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:35
 #: src/ej_tools/jinja2/ej_tools/webchat/webchat-preview-card.jinja2:12
 #, fuzzy
 msgid "Starts conversation"
 msgstr "Iniciar coleta"
 
-#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:40
-#: src/ej_tools/jinja2/ej_tools/telegram/opinion_bot.jinja2:37
+#: src/ej_tools/jinja2/ej_tools/chatbots/opinion_bot.jinja2:41
 #, fuzzy
 msgid "When should I use the opinion bot?"
 msgstr "Quando eu devo utilizar o bot de opinião?"
@@ -4041,6 +4047,32 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#, fuzzy
+#~ msgid "unlimited"
+#~ msgstr "Votos ilimitados"
+
+#, fuzzy
+#~ msgid "Chat integration with Telegram participants"
+#~ msgstr ""
+#~ "Integração com o Rocket.Chat para comunicação segmentada com os "
+#~ "participantes da conversa"
+
+#, fuzzy
+#~ msgid "Listen to City"
+#~ msgstr "Ouça a Cidade"
+
+#~ msgid ""
+#~ "A plan that will be aimed at organizations that have specific demands, "
+#~ "for example:\n"
+#~ "                            Want persona/clustering support but don't "
+#~ "need unlimited votes\n"
+#~ "                            or any other feature of the Hear Humanity or "
+#~ "Hear the City plans."
+#~ msgstr ""
+#~ "O plano de uso construído pela nossa equipe especificamente para as suas "
+#~ "necessidades. Pensaremos juntos quais recursos e estratégias poderemos "
+#~ "aplicar para potencializar sua comunicação digital. "
 
 #, fuzzy
 #~ msgid "Channels"
@@ -5246,9 +5278,6 @@ msgstr "Autenticação"
 #~ "Teste e documento os estilos EJ. Útil para designers ajustarem as "
 #~ "variáveis\n"
 #~ "\t\t    de CSS para o tema."
-
-#~ msgid "Statistics"
-#~ msgstr "Estatísticas"
 
 #~ msgid "Generic information about the current instance of the EJ platform."
 #~ msgstr "Informação genérica sobre a instância atual do EJ Platform."
