@@ -23,7 +23,7 @@ The recomended way to run EJ is with Docker. With it
 you can quickly start the development server using the
 commands::
 
-    $ pip3 install invoke==1.4.1 --user
+    $ pip3 install invoke==2.0.0 --user
     $ inv docker-up
     $ inv docker-logs
 
