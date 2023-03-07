@@ -1,6 +1,18 @@
 <form action="{{conversation.patch_url('conversation-tools:mailing')}}" method="post" class="tools-settings-form" name="mailingForm">
   <div class="title-theme">
     <h4>
+      {{form.template_type.label}}
+    </h4>
+    <span class="helptext">
+      {{_("Choose a marketing tool to send your template.")}}
+    </span>
+  </div>
+  <section>
+    {{form.template_type}}
+  </section>
+
+  <div class="title-theme">
+    <h4>
       {{form.theme.label}}
     </h4>
     <span class="helptext">

@@ -75,24 +75,38 @@ class TemplateGenerator:
         conversation_id = self.conversation.id
         comment_id = self.comment.id
         statics_domain = get_host_with_schema(self.request)
+        email_tag = MarketingTool.generate_email_tag(self.template_type)
+
         if self.vote_domain == statics_domain:
             try:
                 board_slug = self.conversation.board.slug
-                url = "{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign"
+                url = "{}/{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign{}"
                 return url.format(
-                    self.vote_domain, board_slug, conversation_id, conversation_slug, comment_id
+                    self.vote_domain, board_slug, conversation_id, conversation_slug, comment_id, email_tag
                 )
             except:
-                url = "{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign"
-                return url.format(self.vote_domain, conversation_id, conversation_slug, comment_id)
+                url = "{}/conversations/{}/{}?comment_id={}&action=vote&origin=campaign{}"
+                return url.format(
+                    self.vote_domain, conversation_id, conversation_slug, comment_id, email_tag
+                )
         else:
-            url = "{}/?cid={}&comment_id={}"
-            return url.format(self.vote_domain, conversation_id, comment_id)
+            url = "{}/?cid={}&comment_id={}&action=vote&origin=campaign{}"
+            return url.format(self.vote_domain, conversation_id, comment_id, email_tag)
 
     def _get_vote_domain(self):
         if self.request.POST.get("custom-domain"):
             return self.request.POST.get("custom-domain")
         return get_host_with_schema(self.request)
+
+
+class MarketingTool:
+    # Manage email marketing tags
+    def generate_email_tag(template_type):
+        if template_type == "mailchimp":
+            return "&email=*%EMAIL%*"
+        elif template_type == "mautic":
+            return "&email=|EMAIL|"
+        raise ValueError(f"Template type invalid")
 
 
 class BaseCssGenerator:

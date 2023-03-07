@@ -1,7 +1,8 @@
 import pytest
 import mock
+from pytest import raises
 from ej_conversations.mommy_recipes import ConversationRecipes
-from ej_tools.mailing import TemplateGenerator
+from ej_tools.mailing import TemplateGenerator, MarketingTool
 from ej_tools.forms import MailingToolForm
 
 
@@ -10,25 +11,57 @@ class TestTemplateGenerator(ConversationRecipes):
         self.REQUEST_META = {"HTTP_X_FORWARDED_PROTO": "http", "HTTP_HOST": "ejplatform.local"}
         self.REQUEST_POST = {"custom-domain": "http://ejplatform.local"}
 
-    def test_generate_vote_url(self, mk_user, conversation_db):
+    def test_generate_vote_url_with_mautic(self, mk_user, conversation_db):
         request = mock.Mock()
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
         user = mk_user(email="test@domain.com")
         comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
         form_data = {"template_type": "mautic"}
+        email_tag = MarketingTool.generate_email_tag(form_data["template_type"])
         generator = TemplateGenerator(conversation_db, request, form_data)
         vote_url = generator._get_voting_url()
         expected_url = (
             "http://ejplatform.local/{}/conversations/{}/{}"
-            "?comment_id={}&action=vote&origin=campaign".format(
-                conversation_db.board.slug, conversation_db.id, conversation_db.slug, comment_1.id
+            "?comment_id={}&action=vote&origin=campaign{}".format(
+                conversation_db.board.slug,
+                conversation_db.id,
+                conversation_db.slug,
+                comment_1.id,
+                email_tag,
             )
         )
 
         assert vote_url == expected_url
 
-    def test_generate_vote_url_with_board(self, mk_board, mk_conversation, mk_user):
+    def test_generate_vote_url_with_mailchimp(self, mk_user, conversation_db):
+        request = mock.Mock()
+        request.META = self.REQUEST_META
+        request.POST = self.REQUEST_POST
+        user = mk_user(email="test@domain.com")
+        comment_1 = conversation_db.create_comment(user, "comment 1", status="approved", check_limits=False)
+        form_data = {"template_type": "mailchimp"}
+        email_tag = MarketingTool.generate_email_tag(form_data["template_type"])
+        generator = TemplateGenerator(conversation_db, request, form_data)
+        vote_url = generator._get_voting_url()
+        expected_url = (
+            "http://ejplatform.local/{}/conversations/{}/{}"
+            "?comment_id={}&action=vote&origin=campaign{}".format(
+                conversation_db.board.slug,
+                conversation_db.id,
+                conversation_db.slug,
+                comment_1.id,
+                email_tag,
+            )
+        )
+
+        assert vote_url == expected_url
+
+    def test_generate_vote_url_with_invalid_template(self):
+        with raises(ValueError):
+            MarketingTool.generate_email_tag("invalid")
+
+    def test_generate_vote_url_with_board_using_mailchimp(self, mk_board, mk_conversation, mk_user):
         request = mock.Mock()
         request.META = self.REQUEST_META
         request.POST = self.REQUEST_POST
@@ -38,13 +71,37 @@ class TestTemplateGenerator(ConversationRecipes):
         comment_1 = conversation.create_comment(user, "comment 1", "approved")
         board.add_conversation(conversation)
         form_data = {"template_type": "mautic"}
+        email_tag = MarketingTool.generate_email_tag(form_data["template_type"])
         generator = TemplateGenerator(conversation, request, form_data)
         vote_url = generator._get_voting_url()
 
         expected_url = (
             "http://ejplatform.local/{}/conversations/{}/{}"
-            "?comment_id={}&action=vote&origin=campaign".format(
-                board.slug, conversation.id, conversation.slug, comment_1.id
+            "?comment_id={}&action=vote&origin=campaign{}".format(
+                board.slug, conversation.id, conversation.slug, comment_1.id, email_tag
+            )
+        )
+
+        assert vote_url == expected_url
+
+    def test_generate_vote_url_with_board_using_mailchimp(self, mk_board, mk_conversation, mk_user):
+        request = mock.Mock()
+        request.META = self.REQUEST_META
+        request.POST = self.REQUEST_POST
+        board = mk_board()
+        user = mk_user(email="test@domain.com")
+        conversation = mk_conversation(author=user)
+        comment_1 = conversation.create_comment(user, "comment 1", "approved")
+        board.add_conversation(conversation)
+        form_data = {"template_type": "mautic"}
+        email_tag = MarketingTool.generate_email_tag(form_data["template_type"])
+        generator = TemplateGenerator(conversation, request, form_data)
+        vote_url = generator._get_voting_url()
+
+        expected_url = (
+            "http://ejplatform.local/{}/conversations/{}/{}"
+            "?comment_id={}&action=vote&origin=campaign{}".format(
+                board.slug, conversation.id, conversation.slug, comment_1.id, email_tag
             )
         )
 
