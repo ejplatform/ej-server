@@ -1,13 +1,11 @@
 <ul id="id_template_type" style="list-style: none;">
     {% for _, lst, __ in widget.optgroups %}
         {% set params = lst[0] %}
-        {% if params.value != 'mailchimp' %}
-            <li title="{{ params.value }}">
-                <input type="radio"{% if params.selected %} checked{% endif %} name="template_type" id="id_template_type_{{ params.value }}" value="{{ params.value }}">
-                <label for="id_template_type_{{ params.value }}">
-                    {{ params.label }}
-                </label>
-            </li>
-        {% endif %}
+        <li title="{{ params.value }}">
+            <input type="radio"{% if params.selected %} checked{% endif %} name="template_type" id="id_template_type_{{ params.value }}" value="{{ params.value }}">
+            <label for="id_template_type_{{ params.value }}">
+                {{ params.label }}
+            </label>
+        </li>
     {% endfor %}
 </ul>
