@@ -129,13 +129,18 @@ class OpinionComponentTool(AbstractTool):
             + "Allows you to vote, comment and view groups directly on html pages, "
             + "without impacting the experience of those who already access their networks and platforms."
         )
-        self.link: str = conversation.patch_url("conversation-tools:opinion-component")
+        self.link: str = conversation.patch_url(
+            "conversation-tools:opinion-component"
+        )
         self.about: str = "/docs/user-guides/pt-br/tools-opinion-component.html"
         self.is_active = is_active
 
     def get_preview_token(self, request, conversation):
         author_token = None
-        if request.user.is_authenticated and request.user.id == conversation.author.id:
+        if (
+            request.user.is_authenticated
+            and request.user.id == conversation.author.id
+        ):
             try:
                 author_token = Token.objects.get(user=conversation.author)
             except Exception as e:
@@ -150,8 +155,12 @@ class RocketChat(AbstractTool):
         self.description: str = _(
             "Rocket.Chat instance for segmented communication with conversation participants."
         )
-        self.link: str = reverse("boards:dataviz-communication", kwargs=conversation.get_url_kwargs())
-        self.about: str = "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
+        self.link: str = reverse(
+            "boards:dataviz-communication", kwargs=conversation.get_url_kwargs()
+        )
+        self.about: str = (
+            "/docs/user-guides/pt-br/tools-chatbot.html#rocket-chat"
+        )
         self.is_active = is_active
 
 

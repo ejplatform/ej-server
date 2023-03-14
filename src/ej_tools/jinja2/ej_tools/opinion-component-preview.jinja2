@@ -46,5 +46,5 @@ font-weight: 400;
 {% if conversation_author_token %}
 	<ej-conversation host={{host}} cid={{conversation.id}} theme={{theme}} conversation-author-token={{conversation_author_token}} authenticate-with="default"></ej-conversation>			
 {% else %}
-	<ej-conversation host={{host}} cid={{conversation.id}} theme={{theme}} authenticate-with="default"></ej-conversation>			
+	<ej-conversation host={{host}} cid={{conversation.id}} theme={{theme}} authenticate-with="register"></ej-conversation>			
 {% endif %}
