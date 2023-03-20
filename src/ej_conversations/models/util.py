@@ -27,9 +27,7 @@ def make_clean(cls, commit=True, **kwargs):
 
 def patch_user_model(model):
     def conversations_with_votes(user):
-        return models.Conversation.objects.filter(
-            comments__votes__author=user
-        ).distinct()
+        return models.Conversation.objects.filter(comments__votes__author=user).distinct()
 
     model.conversations_with_votes = property(conversations_with_votes)
 
@@ -68,15 +66,9 @@ def statistics(conversation, cache=True):
         ),
         # Comment counts
         "comments": conversation.comments.aggregate(
-            approved=Count(
-                "status", filter=Q(status=models.Comment.STATUS.approved)
-            ),
-            rejected=Count(
-                "status", filter=Q(status=models.Comment.STATUS.rejected)
-            ),
-            pending=Count(
-                "status", filter=Q(status=models.Comment.STATUS.pending)
-            ),
+            approved=Count("status", filter=Q(status=models.Comment.STATUS.approved)),
+            rejected=Count("status", filter=Q(status=models.Comment.STATUS.rejected)),
+            pending=Count("status", filter=Q(status=models.Comment.STATUS.pending)),
             total=Count("status"),
         ),
         # Participants count
@@ -98,19 +90,13 @@ def statistics(conversation, cache=True):
             ),
         },
         "channel_votes": conversation.votes.aggregate(
-            webchat=Count(
-                "channel", filter=Q(channel=VoteChannels.RASA_WEBCHAT)
-            ),
+            webchat=Count("channel", filter=Q(channel=VoteChannels.RASA_WEBCHAT)),
             telegram=Count("channel", filter=Q(channel=VoteChannels.TELEGRAM)),
             whatsapp=Count("channel", filter=Q(channel=VoteChannels.WHATSAPP)),
-            opinion_component=Count(
-                "channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)
-            ),
+            opinion_component=Count("channel", filter=Q(channel=VoteChannels.OPINION_COMPONENT)),
             unknown=Count("channel", filter=Q(channel=VoteChannels.UNKNOWN)),
             ej=Count("channel", filter=Q(channel=VoteChannels.EJ)),
-            rocketchat=Count(
-                "channel", filter=Q(channel=VoteChannels.ROCKETCHAT)
-            ),
+            rocketchat=Count("channel", filter=Q(channel=VoteChannels.ROCKETCHAT)),
         ),
         "channel_participants": conversation.votes.aggregate(
             webchat=Count(
@@ -138,9 +124,7 @@ def statistics(conversation, cache=True):
                 filter=Q(channel=VoteChannels.UNKNOWN),
                 distinct="author",
             ),
-            ej=Count(
-                "author", filter=Q(channel=VoteChannels.EJ), distinct="author"
-            ),
+            ej=Count("author", filter=Q(channel=VoteChannels.EJ), distinct="author"),
             rocketchat=Count(
                 "author",
                 filter=Q(channel=VoteChannels.ROCKETCHAT),
@@ -154,16 +138,12 @@ def statistics_for_user(conversation, user):
     """
     Get information about user.
     """
-    approved_comments_count = conversation.comments.filter(
-        status=Comment.STATUS.approved
-    ).count()
+    approved_comments_count = conversation.comments.filter(status=Comment.STATUS.approved).count()
     given_votes = (
         0
         if user.id is None
         else (
-            models.Vote.objects.filter(
-                comment__conversation_id=conversation.id, author=user
-            )
+            models.Vote.objects.filter(comment__conversation_id=conversation.id, author=user)
             .exclude(choice=0)
             .count()
         )
@@ -185,8 +165,7 @@ def set_date_range(start_date, end_date):
     """
     date_range = end_date - start_date
     initial_values = [
-        {"date": start_date + datetime.timedelta(days=i), "value": 0}
-        for i in range(date_range.days + 1)
+        {"date": start_date + datetime.timedelta(days=i), "value": 0} for i in range(date_range.days + 1)
     ]
     return initial_values
 
