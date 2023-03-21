@@ -103,7 +103,7 @@ class MarketingTool:
     # Manage email marketing tags
     def generate_email_tag(template_type):
         if template_type == "mailchimp":
-            return "&email=*%EMAIL%*"
+            return "&email=*|EMAIL|*"
         elif template_type == "mautic":
             return "&email=|EMAIL|"
         raise ValueError(f"Template type invalid")
