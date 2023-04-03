@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-04 19:54-0300\n"
+"POT-Creation-Date: 2023-03-30 21:22-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
+#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -411,14 +412,14 @@ msgstr "{n} votos criados"
 msgid "Opinion Bots"
 msgstr "Bot de Opinião"
 
-#: src/ej_conversations/decorators.py:12 src/ej_tools/tools.py:125
+#: src/ej_conversations/decorators.py:12 src/ej_tools/tools.py:126
 #: src/ej_tools/views.py:74 src/ej_tools/views.py:100
 #, fuzzy
 msgid "Opinion component"
 msgstr "Componente de opinião"
 
 #: src/ej_conversations/decorators.py:13 src/ej_dataviz/views_dataviz.py:74
-#: src/ej_tools/tools.py:148
+#: src/ej_tools/tools.py:149
 msgid "Rocket.Chat"
 msgstr "Rocket.Chat"
 
@@ -1397,7 +1398,7 @@ msgstr ""
 "Platforma EJ, é uma plataforma de consultas de opinião com foco em Estado e "
 "Organizações. Gostaríamos da sua participação na seguinte discussão: "
 
-#: src/ej_tools/tools.py:80 src/ej_tools/tools.py:159 src/ej_tools/views.py:217
+#: src/ej_tools/tools.py:80 src/ej_tools/tools.py:160 src/ej_tools/views.py:217
 #: src/ej_tools/views.py:270
 msgid "Mautic"
 msgstr ""
@@ -1421,7 +1422,7 @@ msgstr ""
 "Colete opiniões usando os chatbots da EJ. Permite coletar a opinião de "
 "usuários do Telegram."
 
-#: src/ej_tools/tools.py:127
+#: src/ej_tools/tools.py:128
 msgid ""
 "Conduct opinion collections without your audience having to access EJ "
 "directly. Allows you to vote, comment and view groups directly on html "
@@ -1432,7 +1433,7 @@ msgstr ""
 "a EJ Permite votar, comentar e visualizar os grupos diretamente em páginas "
 "html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
-#: src/ej_tools/tools.py:150
+#: src/ej_tools/tools.py:151
 msgid ""
 "Rocket.Chat instance for segmented communication with conversation "
 "participants."
@@ -1440,24 +1441,24 @@ msgstr ""
 "Integração com o Rocket.Chat para comunicação segmentada com os "
 "participantes da conversa."
 
-#: src/ej_tools/tools.py:160
+#: src/ej_tools/tools.py:161
 msgid "MailChimp"
 msgstr ""
 
-#: src/ej_tools/tools.py:164
+#: src/ej_tools/tools.py:165
 #, fuzzy
 msgid "Mailchimp campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:165
+#: src/ej_tools/tools.py:166
 msgid "Uses a mautic campaign "
 msgstr "Usa uma campanha do mautic"
 
-#: src/ej_tools/tools.py:170 src/ej_tools/views.py:46
+#: src/ej_tools/tools.py:171 src/ej_tools/views.py:46
 msgid "Mailing campaign"
 msgstr "Campanha de email"
 
-#: src/ej_tools/tools.py:172
+#: src/ej_tools/tools.py:173
 msgid ""
 "Generates a html template of this conversation, for mailing marketing "
 "campaigns."
@@ -3384,11 +3385,18 @@ msgid "Pool command: "
 msgstr "Comando da enquete: "
 
 #: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:7
+#, fuzzy
+msgid "Choose a marketing tool to send your template."
+msgstr ""
+"Escolha uma ferramenta de marketing para que o template compatível seja "
+"gerado."
+
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:19
 #: src/ej_tools/jinja2/ej_tools/opinion-component.jinja2:38
 msgid "Customize the collection component with our color options."
 msgstr "Personalize o componente de coleta com nossas opções de cores."
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:21
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:33
 msgid ""
 "Redirect your participant to a page with the integrated opinion component. "
 "The vote given in the email will be processed automatically by the component."
@@ -3397,28 +3405,28 @@ msgstr ""
 "integrado. O voto dado no email será processado automaticamente pelo "
 "componente."
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:41
 msgid "Custom fields"
 msgstr "Campos personalizáveis"
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:35
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:47
 #, fuzzy
 msgid "Changes fields like comment and title."
 msgstr "Altere campos como comentário e título."
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:47
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:53
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:59
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:65
 #, fuzzy
 msgid "Download Template"
 msgstr "Baixar template"
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:49
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:55
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:61
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:67
 #, fuzzy
 msgid "Download"
 msgstr "Download"
 
-#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:51
+#: src/ej_tools/jinja2/ej_tools/form-mailing.jinja2:63
 msgid "Create comments to use this tool."
 msgstr "Crie comentários para usar essa ferramenta."
 
@@ -3461,7 +3469,7 @@ msgstr ""
 #: src/ej_tools/jinja2/ej_tools/mailing.jinja2:40
 #, fuzzy
 msgid "When should I use the email template?"
-msgstr "Quando eu devo utilizar o bot de enquetes?"
+msgstr "Quando eu devo utilizar o template de email?"
 
 #: src/ej_tools/jinja2/ej_tools/mautic-connections.jinja2:3
 msgid ""
@@ -4638,11 +4646,6 @@ msgstr "Autenticação"
 
 #~ msgid "If you want a specific comment for the e-mail template, choose here"
 #~ msgstr "Caso queira um comentário específico para votação, escolha aqui"
-
-#~ msgid "Select a marketing tool to generate a compatible template"
-#~ msgstr ""
-#~ "Escolha uma ferramenta de marketing para que o template compatível seja "
-#~ "gerado."
 
 #~ msgid "Caso queira um título diferente para o e-mail, digite aqui"
 #~ msgstr "If you want a custom title for the e-mail template, enter here"
