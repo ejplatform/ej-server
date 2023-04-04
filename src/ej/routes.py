@@ -94,7 +94,6 @@ def service_worker(request):
 #
 # Static pages
 #
-urlpatterns.register(lambda: {}, "docs/", name="documentation", template="pages/docs.jinja2")
 urlpatterns.register(flat_page_route("rules"), "rules/")
 urlpatterns.register(flat_page_route("faq"), "faq/")
 urlpatterns.register(flat_page_route("about-us"), "about-us/")

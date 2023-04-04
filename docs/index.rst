@@ -1,5 +1,5 @@
-Welcome to EJ documentation!
-============================
+Bem vinda à documentação da Empurrando Juntas.
+===============================================
 
 .. toctree::
    :caption: Guia de desenvolvimento
