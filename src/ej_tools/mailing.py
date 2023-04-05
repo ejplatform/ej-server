@@ -57,9 +57,9 @@ class TemplateGenerator:
     def _render_jinja_template(self):
         root = os.path.dirname(os.path.abspath(__file__))
         templates_dir = os.path.join(root, "./jinja2/ej_tools")
-        print(templates_dir)
         env = Environment(loader=FileSystemLoader(templates_dir))
-        template = env.get_template("{}_mailing_template.jinja2".format(self.template_type))
+        host = get_host_with_schema(self.request)
+        template = env.get_template("mailing_template.jinja2".format(self.template_type))
         return template.render(
             conversation_title=self.conversation.text,
             comment_content=self.comment.content,
@@ -68,6 +68,9 @@ class TemplateGenerator:
             statics_domain=get_host_with_schema(self.request),
             tags=self.conversation.tags.all(),
             palette_css=self._get_palette_css(),
+            conversation_n_comments=self.conversation.n_comments,
+            votes_conversation=self.conversation.n_votes,
+            host=host,
         )
 
     def _get_voting_url(self):
