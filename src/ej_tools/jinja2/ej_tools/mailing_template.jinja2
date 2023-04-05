@@ -1,0 +1,45 @@
+<html lang="pt-br" style="line-height: 1.4666666667; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; min-height: 100%; background-image: url({{host}}/static/img/background2.png); background-repeat: round;">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta charset="utf-8">
+    <title>EJ Platform</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+
+  <body class="" style='box-sizing: border-box; font-size: 36px; font-weight: 400 !important; font-family: "Raleway", sans-serif; width: 100vw; display: flex; flex-flow: column; height: 100vh; overflow: hidden; margin: 0; padding: 45px 0;'>
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); box-sizing: border-box; font-size: 18px; max-width: 700px; width: 100% !important; z-index: 3; background-color: #E7E7E7; color: #000; margin: auto; padding: 80px 80px 80px 75px;">
+      <div style="margin-bottom: 19px; font-weight: 700; font-size: 16px; line-height: 24px; gap: 38px;">
+        <i class="fa fa-comments fa-lg" style="margin-right: 12px;"></i> {{conversation_n_comments}}
+        <img src="{{host}}/static/img/icons/check-to-slot-solid.svg" width="25px" height="17.5px" style="margin: 0 12px 0 38px;">{{votes_conversation}}
+      </div>
+      <h1 style="font-size: 28px !important; font-weight: 200 !important; text-transform: none; box-sizing: border-box; max-width: 700px; color: #000 !important; margin: 0 auto; padding: 0 0 32px;">{{conversation_title}}</h1>
+      <div class="progress" style="display: flex;gap: 14px; margin-bottom: 24px;">
+        <div style="position: relative; height: 8px; width: 100px; background: white; border-radius: 12px; border: 1px solid black;"></div>
+        <span style="font-style: normal; font-weight: 700; font-size: 12px; line-height: 14px; text-transform: uppercase;">1 de {{conversation_n_comments}} comentários</span>
+      </div>
+      <span style="color: #000; font-weight: 400; font-size: 20px; line-height: 23px;">{{comment_content}}</span>
+      <div style="display: flex; margin-top: 75px; gap: 49px; justify-content: center;">
+        <div style="width: 23%; height: 38px; text-align: center; display: flex; align-items: center; justify-content: center; color: white; background: rgba(24, 174, 0, 0.8); border-radius: 5px; gap: 11px;">
+          <i class="fa fa-check" style="font-size: 22px"></i>
+          <a style="text-decoration:none; color: white; font-weight: 700; font-size: 16px; line-height: 19px;" 
+            href="{{vote_url}}&choice=agree"> concordo
+          </a>
+        </div>
+        <div style="height: 38px; text-align: center; display: flex; align-items: center; justify-content: center; background: transparent; border-radius: 5px; gap: 11px;">
+          <i class="fa fa-arrow-right" style="font-size: 22px"></i>
+          <a style="text-decoration:none; color: black; font-weight: 700; font-size: 16px; line-height: 19px;" 
+            href="{{vote_url}}&choice=agree"> pular
+          </a>
+        </div>
+        <div style="width: 23%; height: 38px; text-align: center; display: flex; align-items: center; justify-content: center; color: white; background: #C70000; border-radius: 5px; gap: 11px;">
+          <i class="fa fa-times" style="font-size: 22px"></i>
+          <a style="text-decoration:none; color: white; font-weight: 700; font-size: 16px; line-height: 19px;" 
+            href="{{vote_url}}&choice=agree"> discordo
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
