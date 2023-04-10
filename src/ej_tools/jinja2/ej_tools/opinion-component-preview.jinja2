@@ -1,50 +1,10 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/ej-conversations/dist/conversations/conversations.esm.js" type="module" ></script>
-				
-<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-					
-<link href="{{host}}/static/css/fontawesome-all.min.css" rel="stylesheet">
-<style>
-		/* https://github.com/ionic-team/stencil/issues/2072 */
-@font-face {
-font-family: Folio;
-font-style: normal;
-font-weight: 400;
-src: url(https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/folio_bold_condensed.ttf);
-}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/v4-font-face.min.css" integrity="sha512-p0AmrzKP8l63xoFw9XB99oaYa40RUgDuMpdkrzFhi4HPHzO3bzyN2qP6bepe43OP3yj9+eGQEJGIGPcno1JdPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://unpkg.com/ej-conversations/dist/conversations/conversations.css">
 
-@font-face {
-font-family: Helvetica;
-font-style: normal;
-font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/helvetica_neue_lts_roman.otf');
-}
 
-@font-face {
-font-family: 'Font Awesome 5 Free';
-font-style: normal;
-font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/fa-regular-400.ttf');
-}
-
-@font-face {
-font-family: 'Font Awesome 5 Free';
-font-style: normal;
-font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/fa-brands-400.ttf');
-}
-
-@font-face {
-font-family: 'Font Awesome 5 Free';
-font-style: normal;
-font-weight: 400;
-	src: url('https://unpkg.com/ej-conversations/dist/conversations/assets/fonts/fa-solid-900.ttf');
-}
-
-</style>
-
-{% if conversation_author_token %}
-	<ej-conversation host={{host}} cid={{conversation.id}} theme={{theme}} conversation-author-token={{conversation_author_token}} authenticate-with="default"></ej-conversation>			
-{% else %}
-	<ej-conversation host={{host}} cid={{conversation.id}} theme={{theme}} authenticate-with="register"></ej-conversation>			
-{% endif %}
+<ej-conversation conversation-author-token="" host={{host}} cid={{conversation.id}}></ej-conversation>
