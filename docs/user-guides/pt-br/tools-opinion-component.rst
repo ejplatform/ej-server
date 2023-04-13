@@ -75,7 +75,7 @@ Para integrar o componente de opinião em uma página HTML, copie e cole o *snip
     <script src="https://unpkg.com/ej-conversations/dist/conversations/conversations.esm.js" type="module" ></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/v4-font-face.min.css" integrity="sha512-p0AmrzKP8l63xoFw9XB99oaYa40RUgDuMpdkrzFhi4HPHzO3bzyN2qP6bepe43OP3yj9+eGQEJGIGPcno1JdPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://unpkg.com/ej-conversations/dist/conversations/conversations.css">
-    <ej-conversation conversation-author-token="" host=HOST cid=CONVERSATION_ID></ej-conversation>
+    <ej-conversation conversation-author-token="" host=HOST cid=CONVERSATION_ID background-image=""></ej-conversation>
 
 Com o *snippet* copiado para a página, substitua no código copiado as variáveis `HOST` e `CONVERSATION_ID` pelos valores desejados:
 
@@ -87,9 +87,33 @@ O **CONVERSATION_ID** pode ser encontrado na url da conversa criada na EJ. No ex
 .. fgure:: ../images/ej-opinion-component-link.png
 .. figure:: ../images/ej-opinion-component-link1.png
 
+É possível customizar a imagem de fundo padrão utilizada pelo componente. Esta customização é feita pela variável `background-image`, que
+deve receber a URL pública para a imagem que será utilizada como background. Por exemplo:
 
-Feita a configuração, o browser irá carregar o componente e o visitante poderá iniciar sua participação na conversa escolhida.
-Para mais informações técnicas, acesse o `repositório do projeto <https://gitlab.com/pencillabs/ej/conversation-component>`_.
+
+.. code-block:: html
+   :caption: *snippet* html para integração com background customizado
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/ej-conversations/dist/conversations/conversations.esm.js" type="module" ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/v4-font-face.min.css" integrity="sha512-p0AmrzKP8l63xoFw9XB99oaYa40RUgDuMpdkrzFhi4HPHzO3bzyN2qP6bepe43OP3yj9+eGQEJGIGPcno1JdPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/ej-conversations/dist/conversations/conversations.css">
+    <ej-conversation
+      conversation-author-token=""
+      host="https://ejplatform.pencillabs.com.br"
+      cid="81"
+      background-image="https://gitlab.com/pencillabs/ej/ej-application/uploads/696e35bf872219f58196f94c0b7bd22c/tela-enquete.png"
+    ></ej-conversation>
+
+Este snippet irá carregar o componente com a imagem de fundo customizada.
+
+.. figure:: ../images/opinion-component-custom-background.png
+
+
+Para mais informações técnicas sobre o componente de opinião, acesse o `repositório do projeto <https://gitlab.com/pencillabs/ej/conversation-component>`_.
 
 
 Correções de css na pagina do componente
