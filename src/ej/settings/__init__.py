@@ -110,11 +110,10 @@ class Conf(
             }
         }
 
-    CORS_ORIGIN_ALLOW_ALL = True
-    CORS_ORIGIN_WHITELIST = [
-        "http://localhost",
+    CORS_ALLOWED_ORIGINS = [
+        "https://debates.nic.br",
+        "https://wordpress.pencillabs.com.br",
         "https://agentesdacidadania.org.br",
-        "https://ejplatform.pencillabs.com.br",
     ]
 
     ALLOWED_HOSTS = ["*"]
