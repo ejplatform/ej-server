@@ -59,7 +59,7 @@ def test(ctx, verbose=False, lf=False, cov=False):
     if cov:
         opts += " --cov"
     ctx.run(
-        f"pytest {opts}",
+        f"pytest -x {opts}",
         env={
             "EJ_THEME": "default",
             "EJ_BASE_URL": "localhost",

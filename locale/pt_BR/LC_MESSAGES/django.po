@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-30 21:22-0300\n"
+"POT-Creation-Date: 2023-04-14 11:35-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,7 +17,6 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
-#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -41,23 +40,6 @@ msgstr "Tamanho da fonte"
 #: src/ej/components/menu.py:138
 msgid "Toggle Contrast"
 msgstr "Alto contraste"
-
-#: src/ej/components/menu.py:146 src/ej/components/menu.py:148
-#: src/ej/components/menu.py:158 src/ej/components/menu.py:160
-msgid "About"
-msgstr "Sobre"
-
-#: src/ej/components/menu.py:149 src/ej/components/menu.py:161
-msgid "Frequently Asked Questions"
-msgstr "Perguntas frequentes"
-
-#: src/ej/components/menu.py:150 src/ej/components/menu.py:162
-msgid "Usage terms"
-msgstr "Termos de uso"
-
-#: src/ej/components/menu.py:163
-msgid "Admin panel"
-msgstr "Painel de administração"
 
 #: src/ej/forms.py:134
 msgid "Choose a file"
@@ -93,24 +75,11 @@ msgstr "Seu progresso: {pc} por cento"
 msgid "Your progress: {n} of {total}"
 msgstr "Seu progresso: {n} de {total}"
 
-#: src/ej/routes.py:57 src/ej_conversations/apps.py:8
-#: src/ej_conversations/models/conversation.py:105
-msgid "Conversations"
-msgstr "Conversas"
-
-#: src/ej/routes.py:58 src/ej_dataviz/roles.py:158
-msgid "Votes"
-msgstr "Votos"
-
-#: src/ej/routes.py:59
-msgid "Comments"
-msgstr "Comentários"
-
-#: src/ej/routes.py:149
+#: src/ej/routes.py:116
 msgid "User Guides"
 msgstr "Guias de Usuário"
 
-#: src/ej/routes.py:150
+#: src/ej/routes.py:117
 msgid "Development Guides"
 msgstr "Guias de Desenvolvimento"
 
@@ -125,11 +94,6 @@ msgstr "Não faz parte do EJ ainda?"
 #: src/ej/settings/options.py:33
 msgid "Welcome!"
 msgstr "Boas vindas!"
-
-#: src/ej/utils/flatpages.py:33
-#, python-brace-format
-msgid "Page {slug} not found"
-msgstr "Página {slug} não encontrada"
 
 #: src/ej_boards/apps.py:7 src/ej_boards/models.py:51
 msgid "Boards"
@@ -402,6 +366,11 @@ msgstr "{n} comentários criados"
 #, python-brace-format
 msgid "Created {n} votes"
 msgstr "{n} votos criados"
+
+#: src/ej_conversations/apps.py:8
+#: src/ej_conversations/models/conversation.py:105
+msgid "Conversations"
+msgstr "Conversas"
 
 #: src/ej_conversations/decorators.py:9 src/ej_conversations/decorators.py:10
 #: src/ej_conversations/decorators.py:11 src/ej_tools/tools.py:94
@@ -836,6 +805,10 @@ msgstr "Total"
 #: src/ej_dataviz/roles.py:157
 msgid "User"
 msgstr "Usuário"
+
+#: src/ej_dataviz/roles.py:158
+msgid "Votes"
+msgstr "Votos"
 
 #: src/ej_dataviz/roles.py:166
 msgid ""
@@ -1430,7 +1403,7 @@ msgid ""
 "networks and platforms."
 msgstr ""
 "Realize coletas de opinião sem que seu público tenha que acessar diretamente "
-"a EJ Permite votar, comentar e visualizar os grupos diretamente em páginas "
+"a EJ. Permite votar, comentar e visualizar os grupos diretamente em páginas "
 "html, sem impactar na experiência de quem já acessa suas redes e plataformas."
 
 #: src/ej_tools/tools.py:151
@@ -1703,7 +1676,7 @@ msgstr "Foto de perfil"
 msgid "Profile"
 msgstr "Perfil"
 
-#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:29
+#: src/ej/templates/jinja2/ej/includes/profile-menu.jinja2:25
 #: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:39
 #: src/ej_profiles/jinja2/ej_profiles/includes/menu.jinja2:13
 #: src/ej_users/jinja2/account/index.jinja2:17
@@ -2585,6 +2558,17 @@ msgstr "Solicite upgrade."
 #, fuzzy
 msgid "New conversation"
 msgstr "Nova conversa"
+
+#: src/ej_conversations/jinja2/ej_conversations/comments/detail.jinja2:7
+#: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:8
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments-card.jinja2:2
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/comments.jinja2:4
+#: src/ej_profiles/jinja2/ej_profiles/contributions.jinja2:6
+#: src/ej_profiles/jinja2/ej_profiles/detail.jinja2:25
+#: src/ej_tools/jinja2/ej_tools/edit-comments.jinja2:29
+#: src/ej_tools/jinja2/ej_tools/show-comments.jinja2:41
+msgid "Comments"
+msgstr "Comentários"
 
 #: src/ej_conversations/jinja2/ej_conversations/conversation-moderate.jinja2:12
 msgid ""
@@ -4055,6 +4039,21 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "About"
+#~ msgstr "Sobre"
+
+#~ msgid "Frequently Asked Questions"
+#~ msgstr "Perguntas frequentes"
+
+#~ msgid "Usage terms"
+#~ msgstr "Termos de uso"
+
+#~ msgid "Admin panel"
+#~ msgstr "Painel de administração"
+
+#~ msgid "Page {slug} not found"
+#~ msgstr "Página {slug} não encontrada"
 
 #, fuzzy
 #~ msgid "unlimited"

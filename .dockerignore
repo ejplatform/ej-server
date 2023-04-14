@@ -24,6 +24,7 @@ lib/.ipynb_checkpoints/
 lib/dist/
 lib/build/
 lib/.cache/
+lib/node_modules/
 
 .ipynb_checkpoints/
 .scannerwork/

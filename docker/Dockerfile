@@ -1,7 +1,4 @@
-FROM python:3.7.10
-ARG tag
-ARG env
-# Install debian dependencies
+FROM python:3.7.10 as base
 RUN apt-get update \
     && apt-get install -y \
     curl \
@@ -13,15 +10,22 @@ RUN apt-get update \
     libdpkg-perl \
     make \
     gettext
-# Move ej nginx conf to nginx volume
 RUN touch /etc/apt/preferences.d/nodejs && \
     echo "Package: nodejs\nPin: origin deb.nodesource.com\nPin-Priority: 1001" > /etc/apt/preferences.d/nodejs
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt install nodejs -y && npm install -g yarn webpack@4.6.0
+RUN curl -sSL https://install.python-poetry.org | python3 -
 COPY ./ /ej-application
 WORKDIR ej-application
-RUN pip install poetry
-# https://github.com/pypa/setuptools/pull/3207/commits/6e462c7a18c32089bfd4e8c6cb0f3382b7f25c7a
-RUN poetry run pip install 'setuptools==61.2.0'
-RUN poetry lock --no-update
-RUN poetry install
+
+# Installs only production dependencies
+from base as baseProd
+RUN /root/.local/bin/poetry run pip install 'setuptools==61.2.0' \
+    && /root/.local/bin/poetry lock --no-update \
+    && /root/.local/bin/poetry install --without dev
+
+# Installs all dependencies.
+from baseProd as baseDev
+RUN /root/.local/bin/poetry run pip install 'setuptools==61.2.0' \
+    && /root/.local/bin/poetry lock --no-update \
+    && /root/.local/bin/poetry install --only dev

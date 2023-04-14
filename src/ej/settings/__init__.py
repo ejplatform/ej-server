@@ -2,7 +2,6 @@ import logging
 import os
 
 from boogie.configurations import DjangoConf, env
-from .dramatiq import DramatiqConf
 from .apps import InstalledAppsConf
 from .constance import ConstanceConf
 from .email import EmailConf
@@ -21,7 +20,6 @@ class Conf(
     ThemesConf,
     ConstanceConf,
     MiddlewareConf,
-    DramatiqConf,
     SecurityConf,
     LoggingConf,
     PathsConf,

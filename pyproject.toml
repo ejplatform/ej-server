@@ -30,49 +30,80 @@ numpy = "==1.18"
 scipy = "^1.2"
 pandas = "^1.2"
 scikit-learn = "^1.0"
-pillow = "^5.4"
 matplotlib = "^3.0"
-dramatiq = "^1.4"
 argon2-cffi = "^19.1"
 markdown = "^3.0"
-bleach = "^3.1"
-Faker = "^1.0"
-redis = "^3.1"
-invoke = "==1.4.1"
-bs4 = "^0.0.1"
+invoke = "2.0.0"
 wordcloud = "^1.5"
 stop-words = "^2018.7"
-djangorestframework = "^3.12"
-django-debug-toolbar = "3.2.0"
-openpyxl = "^2.6"
+djangorestframework = "3.12.4"
 django-cors-headers = "^3.3.0"
 babel = "^2.9.0"
 sphinx = "^1.8"
 psycopg2 = "==2.8.6"
 sphinx-rtd-theme = "^0.5.2"
 dj-rest-auth = ">=2.1.11"
+toml = "^0.10.0"
 slack-sdk = "^3.15.2"
+libsass = "^0.19.0"
+gunicorn = "^19.9"
+bleach = "3.3.1"
+jinja2 = "2.11.3"
 
 [tool.poetry.dev-dependencies]
+bs4 = "^0.0.1"
 mock = "^2.0"
 factory-boy = "^2.11"
 model_mommy = "^1.6"
-pytest = "^6.0.0"
-pytest-cov = "^2.6"
+pytest = "==7.0.0"
 pytest-django = "^3.4"
-pytest-splinter = "^2.0.1"
-pytest-pythonpath = "^0.7.3"
-splinter = "^0.10.0"
-selenium = "^3.141"
-codecov = "^2.0"
 black = {version = "^22.3.0", allow-prereleases = true}
 ipython = "^7.2"
-libsass = "^0.19.0"
-gunicorn = "^19.9"
 watchdog = "^0.9.0"
-toml = "^0.10.0"
 pre-commit = "^1.17"
 notebook = "^6.0"
+pillow = "^5.4"
+django-debug-toolbar = "3.2.0"
+
+[tool.poetry.group.ci.dependencies]
+argon2-cffi = "^19.1"
+coreapi = "^2.3"
+pillow = "^5.4"
+jinja2 = "2.11.3"
+django-constance = {version = "^2.3", extras = ["database"]}
+django-cors-headers = "^3.3.0"
+rules = "<2.0"
+dj-rest-auth = ">=2.1.11"
+invoke = "2.0.0"
+bleach = "3.3.1"
+hyperpython = "^1.1.1"
+django-debug-toolbar = "3.2.0"
+mock = "^2.0"
+model_mommy = "^1.6"
+pytest = "==7.0.0"
+pytest-django = "^3.4"
+django = "==3.2"
+django-boogie = {git = "https://github.com/pencil-labs/django-boogie.git", rev = "b1aad3c618e6fccee011ece056dd2fbfeb25c661"}
+django-allauth = "0.44.0"
+django-taggit = "^1.1.0"
+django-autoslug = "^1.9"
+django-jsonfield = "^1.0"
+django-environ = "^0.4.5"
+django-extensions = "^2.1"
+django-bulk-update = "^2.2"
+django-manager-utils = "^1.4"
+django-polymorphic = "^2.0"
+django-pandas = "^0.5.1"
+django-filter = "^1.1"
+django-model-utils = {git = "https://github.com/jazzband/django-model-utils.git", rev = "8e19699b0f8edbb93863de5c72256017080f2af0"}
+numpy = "==1.18"
+scipy = "^1.2"
+pandas = "^1.2"
+scikit-learn = "^1.0"
+matplotlib = "^3.0"
+markdown = "^3.0"
+sidekick = "==0.5.2"
+slack-sdk = "^3.15.2"
 
 [tool.black]
 line-length = 108  # Strict maximum of 120
@@ -103,14 +134,13 @@ build-backend = "poetry.masonry.api"
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "ej.settings"
 django_find_project = true
-python_paths = ["src/"]
-testpaths = ["src/"]
-norecursedirs = [".tox/", "lib/"]
+pythonpath = "src"
+testpaths = "src"
+norecursedirs = [".tox", "lib"]
 addopts = "--nomigrations"
 filterwarnings = [
-    "error",
-    "ignore::UserWarning",
-    "ignore::DeprecationWarning",
-    "ignore::django.utils.deprecation.RemovedInDjango41Warning",
-    "ignore::django.utils.deprecation.RemovedInDjango40Warning",
-]
+   "error",
+   "ignore::UserWarning",
+   "ignore::DeprecationWarning",
+   "ignore::django.utils.deprecation.RemovedInDjango41Warning",
+   "ignore::django.utils.deprecation.RemovedInDjango40Warning"]

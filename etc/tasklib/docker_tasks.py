@@ -1,5 +1,5 @@
 import os
-
+from functools import reduce
 from invoke import task
 
 from .base import su_docker, runner
@@ -17,28 +17,30 @@ __all__ = [
 
 
 @task
-def docker_up(ctx, dry_run=False):
+def docker_up(ctx, dry_run=False, d=False):
     """
     Executes EJ on url http://localhost:8000
     """
     do = runner(ctx, dry_run, pty=True)
     file = "docker/docker-compose.yml"
-    compose = f"docker-compose -f {file}"
-    do(f"{compose} up  -d")
+
+    compose = f"docker-compose -f {file} -d" if d else f"docker-compose -f {file}"
+    do(f"{compose} up")
 
 
 @task
-def docker_build(ctx, dry_run=False, no_cache=False):
+def docker_build(ctx, dry_run=False, no_cache=False, prod=False):
     """
     Build EJ web server image;
+    By default, this command will install all EJ dependencies.
     """
     do = runner(ctx, dry_run, pty=True)
-    file = "docker/docker-compose.yml"
-    compose = f"docker-compose -f {file}"
-    if no_cache:
-        do(f"{compose} build  --no-cache")
-    else:
-        do(f"{compose} build")
+    argsList = []
+    argsList.append("--target baseProd") if prod else argsList.append("--target baseDev")
+    argsList.append("--no-cache") if no_cache else False
+    args: str = reduce(lambda x, y: x + " " + y, argsList)
+
+    do(f"docker build {args} -f docker/Dockerfile -t docker_server .")
 
 
 @task
@@ -56,7 +58,7 @@ def docker_test(ctx, dry_run=False, build=False):
     Runs EJ tests;
     """
     do = runner(ctx, dry_run, pty=True)
-    do(f"docker exec --user=root -it  server /bin/bash -c 'source /root/.bashrc && inv test'")
+    do(f"docker exec --user=root -it  server /bin/bash -c 'source /root/.bashrc && poetry run inv test'")
 
 
 @task

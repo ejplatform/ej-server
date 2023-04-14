@@ -29,7 +29,7 @@ run_tests:
         - cd ej-application
         - pip install poetry
         - poetry run pip install 'setuptools==61.2.0'
-        - poetry install
+        - poetry install --only ci
         - poetry run inv test
     tags:
         - osf

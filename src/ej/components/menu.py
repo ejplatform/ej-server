@@ -140,42 +140,8 @@ page_menu.ACCESSIBILITY = thunk(
     )
 )
 
-#: About menu
-page_menu._ABOUT = thunk(
-    lambda: menu_section(
-        _("About"),
-        [
-            link(_("About"), href="about-us"),
-            link(_("Frequently Asked Questions"), href="faq"),
-            link(_("Usage terms"), href="usage"),
-        ],
-        is_optional=True,
-    )
-)
-
-page_menu._ABOUT_WITH_ADMIN = thunk(
-    lambda: menu_section(
-        _("About"),
-        [
-            link(_("About"), href="about-us"),
-            link(_("Frequently Asked Questions"), href="faq"),
-            link(_("Usage terms"), href="usage"),
-            link(_("Admin panel"), href="admin:index"),
-        ],
-        is_optional=True,
-    )
-)
-
-page_menu.ABOUT = (
-    lambda request=None: page_menu._ABOUT_WITH_ADMIN()
-    if request and request.user.is_staff
-    else page_menu._ABOUT()
-)
-
 #: Default menu
-page_menu.DEFAULT_MENU_SECTIONS = lambda request: Block(
-    [page_menu.ABOUT(request), page_menu.ACCESSIBILITY()]
-)
+page_menu.DEFAULT_MENU_SECTIONS = lambda request: Block([page_menu.ACCESSIBILITY()])
 
 #: Links
 page_menu.links = menu_links

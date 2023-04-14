@@ -5,14 +5,11 @@ from boogie.router import Router
 from django.conf import settings
 from constance import config
 from django.contrib.auth import get_user_model
-from django.contrib.flatpages.models import FlatPage
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from sidekick import import_later, once
-
-from ej.utils.flatpages import flat_page_route
 
 conversations = import_later("ej_conversations.models:Conversation")
 log = logging.getLogger("ej")
@@ -37,27 +34,6 @@ def home(request):
         "conversations": once(lambda: conversations.objects.promoted()[:2]),
         "profile": once(lambda: get_user_profile(request)),
         **home_page_ns,
-    }
-
-
-@urlpatterns.route("info/")
-def info(request):
-    from ej_conversations.models import Conversation, Comment, Vote
-
-    if not request.user.is_superuser:
-        raise Http404
-
-    count = lambda x: x.objects.count()
-    return {
-        # Generic info
-        "user_count": count(get_user_model()),
-        "flatpages": FlatPage.objects.values_list("url"),
-        # Conversations
-        "conversations_counts": {
-            _("Conversations"): count(Conversation),
-            _("Votes"): count(Vote),
-            _("Comments"): count(Comment),
-        },
     }
 
 
@@ -90,14 +66,6 @@ def info_environ(request):
 def service_worker(request):
     return render(request, "js/sw.js", {}, content_type="application/javascript")
 
-
-#
-# Static pages
-#
-urlpatterns.register(flat_page_route("rules"), "rules/")
-urlpatterns.register(flat_page_route("faq"), "faq/")
-urlpatterns.register(flat_page_route("about-us"), "about-us/")
-urlpatterns.register(flat_page_route("usage"), "usage/")
 
 #
 # Static data

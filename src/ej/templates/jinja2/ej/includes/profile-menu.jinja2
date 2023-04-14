@@ -1,8 +1,8 @@
 <nav class="menu-profile-section divider">
     <div class="user-profile-info">
         {% if request.user.profile|default(None) %}
-        <img class="profile-avatar" src="{{ request.user.profile.image_url }}" 
-        alt="{{ _('Profile picture') }}">  
+        <img class="profile-avatar" src="{{ request.user.profile.image_url }}"
+        alt="{{ _('Profile picture') }}">
         {% else %}
             <img class="profile-avatar" src="{{ static('img/icons/navbar_profile.svg') }}"
                 alt="{{ _('Profile picture') }}">
@@ -17,10 +17,6 @@
     <ul>
         <li><a href="{{ url('profile:detail')}}">{{ _('Profile') }}</a></li>
     </ul>
-</nav>
-
-<nav class="menu-profile-section divider">
-{{ page_menu.ABOUT(request)}}
 </nav>
 
 <nav class="menu-profile-section divider menu-profile-logout">
