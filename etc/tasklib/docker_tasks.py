@@ -36,7 +36,7 @@ def docker_build(ctx, dry_run=False, no_cache=False, prod=False):
     """
     do = runner(ctx, dry_run, pty=True)
     argsList = []
-    argsList.append("--target baseProd") if prod else argsList.append("--target baseDev")
+    argsList.append("--target baseprod") if prod else argsList.append("--target basedev")
     argsList.append("--no-cache") if no_cache else False
     args: str = reduce(lambda x, y: x + " " + y, argsList)
 

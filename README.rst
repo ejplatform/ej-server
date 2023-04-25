@@ -31,7 +31,7 @@ This will deploy EJ using **docker/docker-compose.yml** file.
 Every change made on the repository will be reflected inside the
 `docker_server` container.
 
-If you are creating a clean EJ instance, you can populate de database
+If you are creating a clean EJ instance, you can populate the database
 with some fake data::
 
     $ inv docker-exec "poetry run inv db-fake"

@@ -19,13 +19,9 @@ COPY ./ /ej-application
 WORKDIR ej-application
 
 # Installs only production dependencies
-from base as baseProd
-RUN /root/.local/bin/poetry run pip install 'setuptools==61.2.0' \
-    && /root/.local/bin/poetry lock --no-update \
-    && /root/.local/bin/poetry install --without dev
+FROM base as baseprod
+RUN /root/.local/bin/poetry install --without dev
 
 # Installs all dependencies.
-from baseProd as baseDev
-RUN /root/.local/bin/poetry run pip install 'setuptools==61.2.0' \
-    && /root/.local/bin/poetry lock --no-update \
-    && /root/.local/bin/poetry install --only dev
+FROM baseprod as basedev
+RUN /root/.local/bin/poetry install --only dev
