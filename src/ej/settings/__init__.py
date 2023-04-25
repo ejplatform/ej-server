@@ -65,7 +65,10 @@ class Conf(
     # MANAGER CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
     MANAGERS = ADMINS = [
-        ("Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra", "bruno@hacklab.com.br"),
+        (
+            "Bruno Martin, Luan Guimarães, Ricardo Poppi, Henrique Parra",
+            "bruno@hacklab.com.br",
+        ),
         ("Laury Bueno", "laury@hacklab.com.br"),
         ("David Carlos", "davidcarlos@pencillabs.com.br"),
     ]
@@ -114,6 +117,7 @@ class Conf(
         "https://debates.nic.br",
         "https://wordpress.pencillabs.com.br",
         "https://agentesdacidadania.org.br",
+        "http://192.168.0.248:3333",
     ]
 
     ALLOWED_HOSTS = ["*"]
