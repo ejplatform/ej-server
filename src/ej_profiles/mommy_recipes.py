@@ -13,7 +13,7 @@ class ProfileRecipes(EjRecipes):
 
     def get_data(self, request):
         data = super().get_data(request)
-        profile = self.profile.make(user=data.user)
+        profile = data.user.get_profile()
         return record(data, profile=profile)
 
 
