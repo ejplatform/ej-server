@@ -3,8 +3,7 @@ Componente de opinião
 ######################
 
 O componente de opinião é um projeto desenvolvido separadamente do código principal da EJ.
-Seu objetivo integrar a jornada de participação em sites e plataformas de terceiros. Em resumo,
-o componente funciona da seguinte forma:
+Seu objetivo integrar a jornada de participação em sites e plataformas de terceiros. O componente funciona da seguinte forma:
 
 1. Usuário da EJ cria uma nova conversa (ou seleciona uma já existente).
 2. Usuário da EJ integra o componente de opinião em uma página externa, como um site ou blog.
@@ -77,7 +76,7 @@ Para integrar o componente de opinião em uma página HTML, copie e cole o *snip
     <link rel="stylesheet" href="https://unpkg.com/ej-conversations/dist/conversations/conversations.css">
     <ej-conversation conversation-author-token="" host=HOST cid=CONVERSATION_ID background-image=""></ej-conversation>
 
-Com o *snippet* copiado para a página, substitua no código copiado as variáveis `HOST` e `CONVERSATION_ID` pelos valores desejados:
+Com o *snippet* copiado para a página, substitua no código copiado as variáveis :code:`HOST` e :code:`CONVERSATION_ID` pelos valores desejados:
 
 * **CONVERSATION_ID**: Identificador da conversa na EJ, por exemplo, "`56`".
 * **HOST**: URL para a plataforma EJ, por exemplo, "`https://ejplatform.org <https://ejplatform.org>`_".
@@ -113,8 +112,13 @@ Este snippet irá carregar o componente com a imagem de fundo customizada.
 .. figure:: ../images/opinion-component-custom-background.png
 
 
-Para mais informações técnicas sobre o componente de opinião, acesse o `repositório do projeto <https://gitlab.com/pencillabs/ej/conversation-component>`_.
+Configuração de CORS
+--------------------
 
+Para que o componente possa fazer requisições na API da EJ a partir de um domínio externo, é preciso adiciona-lo
+na variável **CORS_ALLOWED_ORIGINS**, definida no arquivo :code:`src/ej/settings/__init__.py`.
+Do contrário, o componente irá acusar acusar erro de `Cross-Origin Resource Sharing <https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS>`_,
+sempre que tentar requisitar informações na API da EJ a partir do domínio que estiver integrado.
 
 Correções de css na pagina do componente
 ----------------------------------------
@@ -133,3 +137,5 @@ O componente fará o melhor possível para carregar bem enquadrado e responsivo,
   }
 
   .. _Divi: https://www.elegantthemes.com/gallery/divi/
+
+Para mais informações técnicas sobre o componente de opinião, acesse o `repositório do projeto <https://gitlab.com/pencillabs/ej/conversation-component>`_.
