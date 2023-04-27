@@ -41,11 +41,6 @@ class User(AbstractUser):
     class Meta:
         swappable = "AUTH_USER_MODEL"
 
-    # def save(self, *args, **kwargs):
-    #     log.info("profile successfully created")
-    #     super().save(*args, **kwargs)
-    #     self.get_profile()
-
     @staticmethod
     def create_user_default_board(instance):
         from ej_boards.models import Board
