@@ -11,7 +11,9 @@ PHONE_NUMBER = "61982734758"
 class TestGetRoutesProfile(BoardRecipes):
     def test_phone_number_endpoint(self, mk_user):
         user = mk_user(email="someemail@domain.com")
-        Profile.objects.create(user=user, phone_number=PHONE_NUMBER)
+        profile = user.get_profile()
+        profile.phone_number = PHONE_NUMBER
+        profile.save()
         token = Token.objects.create(user=user)
         api = APIClient()
         api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
@@ -23,7 +25,9 @@ class TestGetRoutesProfile(BoardRecipes):
 
     def test_set_phone_number_endpoint(self, mk_user):
         user = mk_user(email="someemail@domain.com")
-        Profile.objects.create(user=user, phone_number=PHONE_NUMBER)
+        profile = user.get_profile()
+        profile.phone_number = PHONE_NUMBER
+        profile.save()
         token = Token.objects.create(user=user)
         api = APIClient()
         api.credentials(HTTP_AUTHORIZATION="Token " + token.key)
