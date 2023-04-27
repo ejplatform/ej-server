@@ -1,12 +1,12 @@
 image: python:3.7
 stages:
     - prepare
-    - style
-    - test
+    - check_code_style
+    - run_tests
     - deploy
 
 variables:
-    GITLAB_EJ_TOKEN: 'gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct'
+    GITLAB_EJ_TOKEN: "gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct"
 
 install_dependencies:
     stage: prepare
@@ -16,25 +16,24 @@ install_dependencies:
         - osf
 
 check_style:
-  before_script:
-    - pip install black==22.3.0
-  stage: style
-  script:
-    - black --check .
+    stage: check_code_style
+    before_script:
+        - pip install black==22.3.0
+    script:
+        - black --check .
 
 run_tests:
-    stage: test
+    stage: run_tests
     script:
         - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://$GITLAB_EJ_TOKEN@gitlab.com/pencillabs/ej/ej-application.git'
         - cd ej-application
         - pip install poetry
-        - poetry run pip install 'setuptools==61.2.0'
         - poetry install --only ci
         - poetry run inv test
     tags:
         - osf
 
-deploy_to_dev:
+build_dev_images:
     stage: deploy
     script:
         - /bin/sh -c 'git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git'
@@ -46,14 +45,14 @@ deploy_to_dev:
     tags:
         - osf
 
-deploy_to_prod:
+deploy_to_dev:
     stage: deploy
     script:
         - /bin/sh -c 'git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
-        - bin/pencilctl build ej -e prod -b prod -c prod --no-cache --push
+        - bin/pencilctl deploy ej -e dev -c prod
     only:
         refs:
-            - prod
+            - develop
     tags:
         - osf
