@@ -44,15 +44,3 @@ build_dev_images:
             - develop
     tags:
         - osf
-
-deploy_to_dev:
-    stage: deploy
-    script:
-        - /bin/sh -c 'git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git'
-        - cd core
-        - bin/pencilctl deploy ej -e dev -c prod
-    only:
-        refs:
-            - develop
-    tags:
-        - osf
