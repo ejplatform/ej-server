@@ -1,4 +1,3 @@
-image: python:3.7
 stages:
     - prepare
     - check_code_style
@@ -9,6 +8,7 @@ variables:
     GITLAB_EJ_TOKEN: "gitlab+deploy-token-533883:51xTbvyHGmEfeZZUxUct"
 
 install_dependencies:
+    image: python:3.7
     stage: prepare
     script:
         - apt update && apt install -y bash git curl
@@ -16,6 +16,7 @@ install_dependencies:
         - osf
 
 check_style:
+    image: python:3.7
     stage: check_code_style
     before_script:
         - pip install black==22.3.0
@@ -23,6 +24,7 @@ check_style:
         - black --check .
 
 run_tests:
+    image: python:3.7
     stage: run_tests
     script:
         - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://$GITLAB_EJ_TOKEN@gitlab.com/pencillabs/ej/ej-application.git'
@@ -34,8 +36,10 @@ run_tests:
         - osf
 
 build_dev_images:
+    image: docker
     stage: deploy
     script:
+        - apt update && apt install -y bash git
         - /bin/sh -c 'git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git'
         - cd core
         - bin/pencilctl build ej -e dev -b develop -c prod --no-cache --push
