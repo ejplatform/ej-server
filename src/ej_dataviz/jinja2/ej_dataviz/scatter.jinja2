@@ -1,79 +1,13 @@
-{% extends 'base.jinja2' %}
-{% set main_class = 'measure-wide margin-xauto pad-x2' %}
+{% extends 'ej_dataviz/report/base.jinja2' %}
 {% block menu %}{% include 'ej_conversations/includes/menu-detail.jinja2' %}{% endblock %}
+{% set main_class = 'report-container measure-wide margin-xauto' %}
+{% set main_class = "report-container" %}
 
 
-{% block content %}
-    <h1 class="h2 center text-accent">{{ _('Opinion profiles') }}</h1>
-    <p class="center">
-        {% trans %}Each point in the plot represents a different user. Users who vote similarly get closer{% endtrans %}</p>
-
-    <p class="text-6 center bold text-brand lowercase margin-b1">{{ _('Select a filter bellow') }}</p>
-    <div class="categories" id="scatter-categories">
-        <i class="fa fa-chevron-left"></i>
-        <span onclick="organizeBy(this, 3)" is-selected>{{ _('Opinions') }}</span>
-        <span onclick="organizeBy(this, 0)">{{ gender_field }}</span>
-        <span onclick="organizeBy(this, 1)">{{ race_field }}</span>
-        <span onclick="organizeBy(this, 2)">{{ _('State') }}</span>
-        <i class="fa fa-chevron-right"></i>
-    </div>
-
-    <div id="scatter-container">
-        <div class="size-y6p col flex-center"><p>{{ _('Loading data...') }}</p></div>
-    </div>
-    <p class="center measure margin-xauto">
-        <a href="{{ pca_link }}" target="_blank">{{ _('PCA plot') }}</a>:{{ ' ' }}
-        {% trans %}Similar opinions are represented by nearby points, while users with different opinions are
-            represented by points far apart.{% endtrans %}
-    </p>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js" defer></script>
-    <script defer>
-        window.addEventListener('load', function () {
-            // Load main data from json.
-            $.ajax('pca.json').then(function (data) {
-                // Prepare container
-                var $container = $("#scatter-container");
-
-                // Check if data is valid
-                if (data.error) {
-                    $container.html('<div class="pad-3 margin-3 bg-accent rounded-3"><h3 class="text-white" id="error"></h3></div>');
-                    $container.find("#error").text(data.message);
-                    return;
-                }
-
-                // Init chart
-                var dom = $container[0],
-                    chart = echarts.init(dom);
-                dom['chart'] = chart;
-                chart.visualMap = data.visualMap;
-                chart.option = data.option;
-                chart.option.tooltip.formatter = function (e) {
-                    var name = e.data[2],
-                        gender = e.data[3],
-                        race = e.data[4],
-                        state = e.data[5],
-                        cluster = e.data[6];
-                    state = (state && chart.organizeBy === 2)? ' (' + state + ')': '';
-                    return (
-                        '<strong>' + name + state + '</strong>'
-                    );
-                };
-                chart.option.visualMap = [data.visualMap[data.visualMap.length - 1]];
-                chart.setOption(chart.option, true);
-                chart.resize();
-            });
-        });
-
-        function organizeBy(elem, idx) {
-            // Change selected element
-            $('#scatter-categories').find('[is-selected]').attr('is-selected', null);
-            $(elem).attr('is-selected', '');
-
-            var chart = $('#scatter-container')[0].chart;
-            chart.organizeBy = idx;
-            chart.option.visualMap = [chart.visualMap[idx]];
-            chart.setOption(chart.option, true);
-        }
-    </script>
+{% block report %}
+    <section class="conversation-dashboard" >
+        <div id="" class="padding-top-0 conversation-dashboard scatter flex wrap">
+            {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+        </div>
+    </section>
 {% endblock %}
