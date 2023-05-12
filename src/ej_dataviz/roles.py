@@ -1,6 +1,5 @@
 from django.apps import apps
 from django.contrib.auth import get_user_model
-from django.conf.urls import url
 from django.utils.translation import gettext as _
 from hyperpython import html, div
 from hyperpython.components import html_table, html_map, fa_icon
@@ -30,8 +29,10 @@ def conversation_download_data(conversation, *, which, formats=None, cluster=Non
 
     format_lst = []
     for format, name in (formats or DEFAULT_FORMATS).items():
-        path = url(f"{which}.{format}", votes_data, **url_kwargs)
-        format_lst.append((format, name, path))
+        request_kwargs = conversation.get_url_kwargs().copy()
+        request_kwargs.update({"fmt": format})
+        request_kwargs.update(url_kwargs)
+        format_lst.append((name, which, request_kwargs))
 
     return {"conversation": conversation, "formats": format_lst}
 

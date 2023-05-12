@@ -140,7 +140,8 @@ def users(request, conversation_id, **kwargs):
 # Votes raw data
 # ------------------------------------------------------------------------------
 @can_view_report_details
-def votes_data(request, conversation, fmt, **kwargs):
+def votes_data(request, conversation_id, fmt, **kwargs):
+    conversation = Conversation.objects.get(pk=conversation_id)
     check_promoted(conversation, request)
     filename = conversation.slug + "-votes"
     votes = conversation.votes
