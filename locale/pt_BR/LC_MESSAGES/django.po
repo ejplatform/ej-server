@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ej\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-14 11:35-0300\n"
+"POT-Creation-Date: 2023-05-09 19:29-0300\n"
 "PO-Revision-Date: 2022-04-12 13:55-0300\n"
 "Last-Translator: David Carlos <davidcarlos@pencillabs.com.br>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -17,6 +17,7 @@ msgstr ""
 "X-Loco-Parser: loco_parse_po\n"
 
 #: build/docs/_sources/development-guides/pt-br/translations.rst.txt:64
+#: build/docs/_sources/i18n/pt-br/dev-docs/translations.rst.txt:64
 msgid "This string should be translated"
 msgstr ""
 
@@ -2069,9 +2070,10 @@ msgid "Configure opinion groups"
 msgstr "Configurar grupos de opinião"
 
 #: src/ej_clusters/jinja2/ej_clusters/index.jinja2:10
+#, fuzzy
 msgid ""
 "We use votes to classify different users according to their opinions. Users "
-"who vote similarly tend to be in the same group"
+"who vote similarly tend to be in the same group."
 msgstr ""
 "Usamos os votos para classificar usuários de acordo com suas opiniões. "
 "Usuários que votam de forma parecida, tendem a estar no mesmo grupo"
@@ -2771,45 +2773,6 @@ msgstr "Comentários com menos de três caracteres não serão adicionados."
 msgid "No comments left"
 msgstr "Não há mais comentários"
 
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:7
-msgid "Opinion profiles"
-msgstr "Perfis de opinião"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:9
-msgid ""
-"Each point in the plot represents a different user. Users who vote similarly "
-"get closer"
-msgstr ""
-"Cada ponto no gráfico representa um usuário diferente. Usuários que votam de "
-"forma parecida, ficam mais próximos"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:11
-msgid "Select a filter bellow"
-msgstr "Selecione um filtro abaixo"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:14
-msgid "Opinions"
-msgstr "Opiniões"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:30
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:22
-msgid "Loading data..."
-msgstr "Carregando dados..."
-
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:25
-msgid "PCA plot"
-msgstr "Gráfico PCA"
-
-#: src/ej_dataviz/jinja2/ej_dataviz/scatter.jinja2:26
-msgid ""
-"Similar opinions are represented by nearby points, while users with "
-"different opinions are\n"
-"            represented by points far apart."
-msgstr ""
-"Opiniões parecidas são representadas por pontos próximos, enquanto usuários "
-"com opiniões diferentes são\n"
-"            representadas por pontos distantes."
-
 #: src/ej_dataviz/jinja2/ej_dataviz/includes/datatables.jinja2:8
 #, fuzzy
 msgid "No data available"
@@ -3040,6 +3003,10 @@ msgstr "Opinião"
 #, fuzzy
 msgid "There is no groups for this conversation."
 msgstr "Não há grupos para esta conversa."
+
+#: src/ej_dataviz/jinja2/ej_dataviz/report/includes/scatter.jinja2:30
+msgid "Loading data..."
+msgstr "Carregando dados..."
 
 #: src/ej_dataviz/jinja2/ej_dataviz/report/includes/time-chart.jinja2:4
 #, fuzzy
@@ -4039,6 +4006,34 @@ msgstr "Mudar a senha"
 #, fuzzy
 msgid "Authentication"
 msgstr "Autenticação"
+
+#~ msgid "Opinion profiles"
+#~ msgstr "Perfis de opinião"
+
+#~ msgid ""
+#~ "Each point in the plot represents a different user. Users who vote "
+#~ "similarly get closer"
+#~ msgstr ""
+#~ "Cada ponto no gráfico representa um usuário diferente. Usuários que votam "
+#~ "de forma parecida, ficam mais próximos"
+
+#~ msgid "Select a filter bellow"
+#~ msgstr "Selecione um filtro abaixo"
+
+#~ msgid "Opinions"
+#~ msgstr "Opiniões"
+
+#~ msgid "PCA plot"
+#~ msgstr "Gráfico PCA"
+
+#~ msgid ""
+#~ "Similar opinions are represented by nearby points, while users with "
+#~ "different opinions are\n"
+#~ "            represented by points far apart."
+#~ msgstr ""
+#~ "Opiniões parecidas são representadas por pontos próximos, enquanto "
+#~ "usuários com opiniões diferentes são\n"
+#~ "            representadas por pontos distantes."
 
 #~ msgid "About"
 #~ msgstr "Sobre"

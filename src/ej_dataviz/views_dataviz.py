@@ -93,8 +93,8 @@ def scatter(request, conversation_id, **kwargs):
         "race_field": names.get("race", _("Race")),
         "conversation": check_promoted(conversation, request),
         "pca_link": _("https://en.wikipedia.org/wiki/Principal_component_analysis"),
+        "json_data": clusters(request, conversation),
     }
-
     return render(request, "ej_dataviz/scatter.jinja2", render_context)
 
 
