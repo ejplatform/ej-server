@@ -27,6 +27,8 @@ check_style:
         - pip install black==22.3.0
     script:
         - black --check .
+    tags:
+        - osf
 
 run_tests:
     stage: run_tests
