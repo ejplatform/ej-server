@@ -43,7 +43,7 @@ run_tests:
         - osf
 
 build_dev_image:
-    stage: deploy
+    stage: build
     image:
         name: docker
         pull_policy: if-not-present
