@@ -2,6 +2,7 @@ stages:
     - prepare
     - check_code_style
     - run_tests
+    - build
     - deploy
 
 variables:
@@ -37,7 +38,7 @@ run_tests:
 
 build_dev_image:
     stage: deploy
-    image: docker
+    image: build
     script:
         - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
@@ -45,7 +46,21 @@ build_dev_image:
         - bin/pencilctl build ej -e dev -b develop -c prod --no-cache --push
     only:
         refs:
-            - development
+            - develop
+    tags:
+        - osf
+
+build_prod_image:
+    stage: build
+    image: docker
+    script:
+        - apk update && apk add git
+        - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
+        - cd core
+        - bin/pencilctl build ej -e dev -b prod -c prod --no-cache --push
+    only:
+        refs:
+            - prod
     tags:
         - osf
 
@@ -59,6 +74,6 @@ deploy_to_dev:
         - bin/pencilctl deploy ej -e dev -c prod
     only:
         refs:
-            - development
+            - develop
     tags:
         - osf
