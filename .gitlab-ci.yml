@@ -10,7 +10,9 @@ variables:
 
 install_dependencies:
     stage: prepare
-    image: python:3.7
+    image:
+        name: python:3.7
+        pull_policy: if-not-present
     script:
         - apt update && apt install -y bash git curl
     tags:
@@ -18,7 +20,9 @@ install_dependencies:
 
 check_style:
     stage: check_code_style
-    image: python:3.7
+    image:
+        name: python:3.7
+        pull_policy: if-not-present
     before_script:
         - pip install black==22.3.0
     script:
@@ -26,7 +30,9 @@ check_style:
 
 run_tests:
     stage: run_tests
-    image: python:3.7
+    image:
+        name: python:3.7
+        pull_policy: if-not-present
     script:
         - /bin/sh -c 'git clone -b $CI_COMMIT_REF_NAME https://$GITLAB_EJ_TOKEN@gitlab.com/pencillabs/ej/ej-application.git'
         - cd ej-application
@@ -38,7 +44,9 @@ run_tests:
 
 build_dev_image:
     stage: deploy
-    image: build
+    image:
+        name: docker
+        pull_policy: if-not-present
     script:
         - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
@@ -52,7 +60,9 @@ build_dev_image:
 
 build_prod_image:
     stage: build
-    image: docker
+    image:
+        name: docker
+        pull_policy: if-not-present
     script:
         - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
@@ -66,7 +76,9 @@ build_prod_image:
 
 deploy_to_dev:
     stage: deploy
-    image: docker
+    image:
+        name: docker
+        pull_policy: if-not-present
     script:
         - apk update && apk add git
         - git clone -b stable --depth=1 https://$GITLAB_INFRA_TOKEN@gitlab.com/pencillabs/infraestructure/core.git
