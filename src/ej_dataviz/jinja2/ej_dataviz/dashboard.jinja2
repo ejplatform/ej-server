@@ -24,16 +24,18 @@
         {% with participants_statistics = conversation.statistics().get('participants') %}
             {% include 'ej_dataviz/report/includes/participants.jinja2' %}
         {% endwith %}
-        
+
         {% include 'ej_dataviz/report/includes/clusters.jinja2' %}
-        {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+        <div class="conversation-dashboard scatter flex wrap">
+            {% include 'ej_dataviz/report/includes/scatter.jinja2' %}
+        </div>
         {% with comments_statistics = conversation.statistics().get('comments') %}
             {% include 'ej_dataviz/report/includes/comments.jinja2' %}
         {% endwith %}
         <div class="conversation-dashboard scatter flex wrap">
-            {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %} 
+            {% include 'ej_dataviz/report/includes/word-cloud-card.jinja2' %}
         </div>
-          
+
     </section>
 
 {% endblock %}
