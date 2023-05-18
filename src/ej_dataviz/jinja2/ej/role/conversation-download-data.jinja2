@@ -1,7 +1,7 @@
 <div class="margin-t3"> 
     <ul class="list-reset margin-x3">
-        {%- for format, name, url in formats -%}
-            <li style="padding-left:0;"><a href="{{ url }}">
+        {%- for name, path, request_kwargs in formats -%}
+            <li style="padding-left:0;"><a href="{{ url(path, **request_kwargs) }}">
                 <span id="format-name">{{ name }}</span></a>
             </li>
         {% endfor %}
