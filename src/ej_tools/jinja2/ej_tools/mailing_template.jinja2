@@ -1,56 +1,203 @@
 <style>
+
 body {
     margin: 0;
 }
+
 body > * {
     font-family: sans-serif, serif !important;
     width: 100%;
 }
+
+.base {
+    box-sizing: border-box; 
+    font-size: 36px; 
+    font-weight: 400 !important; 
+    font-family: "Raleway", sans-serif; 
+    min-width: 74vw; 
+    height: 100vh; 
+    overflow: hidden; 
+    padding: 45px 0; 
+    background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png); 
+    background-repeat: round;
+}
+
+.card {
+    box-sizing: border-box; 
+    font-size: 18px; 
+    max-width: 700px; 
+    width: 100% !important; 
+    z-index: 3; 
+    background-color: #E7E7E7; 
+    color: #000; 
+    margin: auto; 
+    padding: 80px 80px 14px 75px;
+}
+
+.card__conversation--statistic {
+    margin-bottom: 19px; 
+    font-weight: 700; 
+    font-size: 16px; 
+    line-height: 24px; 
+    gap: 38px;
+}
+
+.card__conversation--statistic--comments {
+    margin: 0 7px 0 0;
+    width: 25px; 
+    height: 20px;
+}
+
+.card__conversation--statistic--votes {
+    margin: 0 7px 0 38px;
+    width: 23px;
+    height: 20px;
+}   
+
+.card__conversation--title {
+    font-size: 28px !important; 
+    font-weight: 200 !important; 
+    text-transform: none; 
+    box-sizing: border-box; 
+    max-width: 700px; 
+    color: #000 !important; 
+    margin: 0 auto; 
+    padding: 0 0 32px;
+    font-family: 'Lexend Exa';
+}
+
+.card__conversation--progress {
+    margin-bottom: 24px;
+}
+
+.card__conversation--progress--bar {
+    border-right: 10px solid transparent;
+}
+
+.card__conversation--progress--bar--content {
+    position: relative; 
+    height: 8px; 
+    width: 100px; 
+    background: white; 
+    border-radius: 12px; 
+    border: 1px solid black;
+}
+
+.card__conversation--progress--comments {
+    font-style: normal; 
+    font-weight: 700; 
+    font-size: 12px; 
+    line-height: 14px; 
+    text-transform: uppercase;
+}
+
+.card__conversation--comment-title {
+    color: #000; 
+    font-weight: 400; 
+    font-size: 20px; 
+    line-height: 23px;
+}
+
+.card__buttons-section {
+   margin-top: 75px; 
+}
+
+.card__buttons-section p.disclaimer {
+    font-style: italic; 
+    font-size: 12px !important; 
+    font-weight: 500; 
+    color: #777777 !important; 
+    margin-top: 70px !important; 
+    text-align: center !important;
+}
+
+.card__buttons-section--standard {
+    font-weight: bold; 
+    text-transform: lowercase; 
+    width: 100%; 
+    margin: 0; 
+    padding: 0;
+}
+
+.card__buttons-section--standard a.black {
+    color: #000 !important;
+    text-decoration: unset;
+}
+
+.card__buttons-section--standard a.white {
+    color: #fff !important;
+    text-decoration: unset;
+}
+
+.card__buttons-section--standard--center {
+    width: 33%; 
+    text-align: center;
+}
+
+.card__buttons-section--standard--style {
+    border-radius: .5rem; 
+    padding: 6px;
+}
+
+.card__buttons-section--agree {
+    color: #fff; 
+    background: rgba(24, 174, 0, 0.8); 
+}
+
+.card__buttons-section--skip {
+    color: #000; 
+}
+
+.card__buttons-section--disagree {
+    background: #C70000; 
+}
+
 </style>
 
 <table cellspacing="0" cellpadding="0" border="0">
     <tbody>
         <tr>
-            <td class="mcnTextContent" style='box-sizing: border-box; font-size: 36px; font-weight: 400 !important; font-family: "Raleway", sans-serif; min-width: 74vw; height: 100vh; overflow: hidden; padding: 45px 0; background-image: url(https://gitlab.com/pencillabs/ej/ej-application/uploads/7b6e5e342b8d0606c2dbc4041e4eda79/tela-enquete2.png); background-repeat: round;'>
-                <div style="box-sizing: border-box; font-size: 18px; max-width: 700px; width: 100% !important; z-index: 3; background-color: #E7E7E7; color: #000; margin: auto; padding: 80px 80px 14px 75px;">
-                    <div style="margin-bottom: 19px; font-weight: 700; font-size: 16px; line-height: 24px; gap: 38px;">
-                        <span>comentários: </span> {{conversation_n_comments}}
-                        <!-- <img src="{{host}}/static/img/icons/check-to-slot-solid.svg" width="25px" height="17.5px" style="margin: 0 12px 0 38px;">{{votes_conversation}} -->
-                        <span>votos: </span> {{votes_conversation}}
+            <td class="mcnTextContent base">
+                <div class="card">
+                    <div class="card__conversation--statistic">
+                        <img class="card__conversation--statistic--comments" src="{{host}}/static/img/icons/comments-solid.png">
+                        {{conversation_n_comments}}
+                        <img class="card__conversation--statistic--votes" src="{{host}}/static/img/icons/check-to-slot-solid.png"> 
+                        {{votes_conversation}}
                     </div>
-                    <h1 style="font-size: 28px !important; font-weight: 200 !important; text-transform: none; box-sizing: border-box; max-width: 700px; color: #000 !important; margin: 0 auto; padding: 0 0 32px;">{{conversation_title}}</h1>
-                    <div style="margin-bottom: 24px;">
+                    <h1 class="card__conversation--title">{{conversation_title}}</h1>
+                    <div class="card__conversation--progress">
                         <table>
                             <tr>
-                                <td style="border-right: 10px solid transparent;">
-                                    <div style="position: relative; height: 8px; width: 100px; background: white; border-radius: 12px; border: 1px solid black;"></div>
+                                <td class="card__conversation--progress--bar">
+                                    <div class="card__conversation--progress--bar--content"></div>
                                 </td>
-                                <td style="font-style: normal; font-weight: 700; font-size: 12px; line-height: 14px; text-transform: uppercase;">1 de {{conversation_n_comments}} comentários</td>
+                                <td class="card__conversation--progress--comments">1 de {{conversation_n_comments}} comentários</td>
                             </tr>
                         </table>
                     </div>
-                    <span style="color: #000; font-weight: 400; font-size: 20px; line-height: 23px;">{{comment_content}}</span>
-                    <div style="margin-top: 75px;">
-                        <table style="font-weight: bold; text-transform: lowercase; width: 100%; margin: 0; padding: 0;">
+                    <span class="card__conversation--comment-title">{{comment_content}}</span>
+                    <div class="card__buttons-section">
+                        <table class="card__buttons-section--standard">
                             <tr>
-                                <td style="width: 33%; text-align: center;">
-                                    <div style="color: white; background: rgba(24, 174, 0, 0.8); border-radius: .5rem; padding: 6px;">
-                                        <a style="color: white; text-decoration: unset;" href="{{vote_url}}&choice=agree"> concordar </a>
+                                <td class="card__buttons-section--standard--center">
+                                    <div class="card__buttons-section--agree card__buttons-section--standard--style">
+                                        <a class="white" href="{{vote_url}}&choice=agree"> concordar </a>
                                     </div>
                                 </td>
-                                <td style="width: 33%; text-align: center;">
-                                    <div style="color: black; border-radius: .5rem; padding: 6px;">
-                                        <a style="color: black; text-decoration: unset;" href="{{vote_url}}&choice=agree"> pular </a>
+                                <td class="card__buttons-section--standard--center">
+                                    <div class="card__buttons-section--skip card__buttons-section--standard--style">
+                                        <a class="black" href="{{vote_url}}&choice=agree"> pular </a>
                                     </div>
                                 </td>
-                                <td style="width: 33%; text-align: center;">
-                                    <div style="background: #C70000; border-radius: .5rem; padding: 6px;">
-                                        <a style="color: white; text-decoration: unset;" href="{{vote_url}}&choice=agree"> discordar </a>
+                                <td class="card__buttons-section--standard--center">
+                                    <div class="card__buttons-section--disagree card__buttons-section--standard--style">
+                                        <a class="white" href="{{vote_url}}&choice=agree"> discordar </a>
                                     </div>
                                 </td>
                             </tr>
                         </table>
-                        <p style="font-style: italic; font-size: 12px; font-weight: 500; color: #777777; margin-top: 70px; text-align: center;">Os comentários acima representam a visão dos participantes</p>
+                        <p class="disclaimer">Os comentários acima representam a visão dos participantes</p>
                     </div>
                 </div>
             </td>
