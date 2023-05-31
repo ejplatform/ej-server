@@ -7,6 +7,7 @@
 
     <div class="title-export">
         <h1 class="h2 text-accent">{{ _('Users report') }}</h1>
+        {{ export_modal(can_view_detail, conversation, "users_data", conversation.slug) }}
     </div>
     <div id="order-participants">
         <span id="divider">|</span>
@@ -28,9 +29,9 @@
             <a onclick="updateSortFilter('desc', event.target, 'sort-down-icon')"><i id="sort-up-icon" class="fa fa-sort-up fa-lg"></i></a>
         </span>
     </div>
-    
+
     {{ conversation|role('participants-stats-table') }}
-    
+
     <script>
         let currentOrder = 0;
         const TABLE_COLUMN_COUNT = 7;
@@ -59,6 +60,6 @@
             const orderFilter = document.getElementById('order-participants');
             document.getElementById("participants-table-report_length").append(orderFilter);
         });
-    
+
     </script>
 {% endblock %}

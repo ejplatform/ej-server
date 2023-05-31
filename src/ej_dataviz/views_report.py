@@ -25,6 +25,7 @@ from .utils import (
     get_cluster_or_404,
     data_response,
     get_user_data,
+    comments_data_common,
     vote_data_common,
     OrderByOptions,
 )
@@ -37,7 +38,6 @@ pd = import_later("pandas")
 @can_access_dataviz
 def comments_report(request, conversation_id, **kwargs):
     conversation = Conversation.objects.get(pk=conversation_id)
-    check_promoted(conversation, request)
     can_view_detail = request.user.has_perm("ej.can_view_report_detail", conversation)
     clusters = get_clusters(conversation)
     clusters_main_comments = [get_cluster_main_comments(cluster) for cluster in clusters]
@@ -59,7 +59,6 @@ def comments_report(request, conversation_id, **kwargs):
 @can_access_dataviz
 def comments_report_pagination(request, conversation_id, **kwargs):
     conversation = Conversation.objects.get(pk=conversation_id)
-    check_promoted(conversation, request)
     clusters = get_clusters(conversation)
 
     page = request.GET.get("page", 1)
@@ -142,7 +141,6 @@ def users(request, conversation_id, **kwargs):
 @can_view_report_details
 def votes_data(request, conversation_id, fmt, **kwargs):
     conversation = Conversation.objects.get(pk=conversation_id)
-    check_promoted(conversation, request)
     filename = conversation.slug + "-votes"
     votes = conversation.votes
     return vote_data_common(votes, filename, fmt)
@@ -154,7 +152,6 @@ def votes_data(request, conversation_id, fmt, **kwargs):
 def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
     if not request.user.has_perm("ej.can_view_report_detail", conversation):
         return JsonResponse({"error": "You don't have permission to view this data."})
-    check_promoted(conversation, request)
     cluster = get_cluster_or_404(cluster_id, conversation)
     filename = conversation.slug + f"-{slugify(cluster.name)}-votes"
     return vote_data_common(cluster.votes.all(), filename, fmt)
@@ -163,6 +160,14 @@ def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
 # ==============================================================================
 # Comments raw data
 # ------------------------------------------------------------------------------
+@can_access_dataviz
+def comments_data(request, conversation_id, fmt, **kwargs):
+    conversation = Conversation.objects.get(pk=conversation_id)
+    comments = conversation.comments
+    votes = conversation.votes
+    filename = conversation.slug + "-comments"
+    return comments_data_common(comments, votes, filename, fmt)
+
 
 # ==============================================================================
 # Users raw data
@@ -170,7 +175,6 @@ def votes_data_cluster(request, conversation, fmt, cluster_id, **kwargs):
 @can_access_dataviz
 def users_data(request, conversation_id, fmt, **kwargs):
     conversation = Conversation.objects.get(pk=conversation_id)
-    check_promoted(conversation, request)
     filename = conversation.slug + "-users"
     df = get_user_data(conversation)
     try:
