@@ -1,5 +1,5 @@
 <div class="comment-report-title comment-report-align">
-    <span class="report-title text-accent"> 
+    <span class="report-title text-accent">
         {{_('All comments')}}
     </span>
     <div class="filter">
@@ -38,6 +38,7 @@
         </span>
     </div>
     <div class="filter__input filter__input--blue">
+        {{ export_modal(can_view_detail, conversation, "comments_data", conversation.slug) }}
         <i class="fas fa-search"></i>
         <input type="search" onkeypress="updateSearch(event.target.value)">
     </div>

@@ -74,4 +74,9 @@ urlpatterns = [
         views_report.users_data,
         name="users_data",
     ),
+    path(
+        report_url + "data/comments.<fmt>",
+        views_report.comments_data,
+        name="comments_data",
+    ),
 ]

@@ -201,7 +201,9 @@ def data_response(data: pd.DataFrame, fmt: str, filename: str, translate=True):
 
 
 def get_user_data(conversation):
-    df = conversation.users.statistics_summary_dataframe(extend_fields=("id", *EXPOSED_PROFILE_FIELDS))
+    df = conversation.users.statistics_summary_dataframe(
+        extend_fields=("id", *EXPOSED_PROFILE_FIELDS), conversation=conversation
+    )
     df = df[
         [
             "email",

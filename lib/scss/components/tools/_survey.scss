@@ -23,7 +23,7 @@
 }
 
 @media (max-width: 875px) {
-  
+
   .group-comments-content {
       width: 100% !important;
       height: 100vh;
@@ -51,7 +51,7 @@
     table-layout:fixed;
     border: 1px solid #C4C4C4;
   }
-    
+
   td, th {
     border-bottom: 1px solid #C4C4C4;
     padding: 0.5rem;
@@ -177,10 +177,11 @@
 
 
 .close-report {
-    color: $color-theme-report-light-gray;
+    color: $color-black;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    margin: 0 .5rem;
 }
 
 .close-report:hover,

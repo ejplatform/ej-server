@@ -1,32 +1,38 @@
 {% macro export_modal(can_view_detail, conversation, type_data, _id, cluster=None) %}
 
-<div class="export-button">
-  <a data-toggle="modal" id="export-btn-{{type_data}}-{{_id}}"><i class="fas fa-cloud-download-alt"></i>{{_("Export")}}</a>
-
-  <div id="export-modal-{{type_data}}-{{_id}}" class="modal-report">
-      <div class="modal-content">
-        <span class="close-report" id="{{type_data}}-{{_id}}" onclick='closeExportDropdown(this)'>&times;</span>
-          {% if can_view_detail %}{{ conversation|role('download-data', which=type_data, cluster=cluster) }}{% endif %}
-      </div>
+<div class="export-button" id="export-btn-{{type_data}}-{{_id}}">
+  <div>
+      <a data-toggle="modal">
+        <i class="fas fa-cloud-download-alt"></i>
+      </a>
+    <div id="export-modal-{{type_data}}-{{_id}}" class="modal-report">
+        <div class="modal-content">
+            <span class="close-report" id="{{type_data}}-{{_id}}" onclick='closeExportDropdown(this)'>&times;</span>
+            {% if can_view_detail %}{{ conversation|role('download-data', which=type_data, cluster=cluster) }}{% endif %}
+        </div>
+    </div>
   </div>
-
+  <div>
+      <span class="export-button__title">{{_("Export")}}</span>
+  </div>
 </div>
 
 
 <script>
-var exportBtn = document.getElementById("export-btn-{{type_data}}-{{_id}}");
-console.log("button: ", exportBtn);
 function closeExportDropdown(closeIcon) {
-  exportOptions = closeIcon.parentElement.parentElement;
-  exportOptions.classList.toggle("show-options");
+  const modal = document.getElementById("export-modal-{{type_data}}-{{_id}}");
+  modal.classList.remove("show-options");
 }
 
 function openExportDropdown(event) {
-  var exportOptions = event.target.nextElementSibling;
-  exportOptions.classList.toggle("show-options");
+    if (event.target.classList[0] != "close-report") {
+        const modal = document.getElementById("export-modal-{{type_data}}-{{_id}}");
+        modal.classList.toggle("show-options");
+    }
 }
 
-exportBtn.onclick = openExportDropdown
+var exportBtn = document.getElementById("export-btn-{{type_data}}-{{_id}}");
+exportBtn.onclick = openExportDropdown;
 </script>
 
 {% endmacro %}
