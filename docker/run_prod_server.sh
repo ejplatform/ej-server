@@ -11,10 +11,10 @@ poetry=/root/.local/bin/poetry
 $poetry run inv db
 
 # install js dependencies
-(cd lib && npm i && $poetry inv build-assets)
+(cd lib && npm i)
 
-# compile sass files
-$poetry run inv sass
+# prepare all assets (js, css)
+$poetry run inv build-assets
 
 # generate translations
 $poetry run inv i18n
@@ -26,5 +26,5 @@ $poetry run inv docs
 # runs django collectstatic command
 $poetry run inv collect
 
-# runs develop server
-$poetry run inv run
+# runs production server
+$poetry run inv gunicorn

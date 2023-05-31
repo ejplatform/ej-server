@@ -11,10 +11,10 @@ poetry=/root/.local/bin/poetry
 $poetry run inv db
 
 # install js dependencies
-(cd lib && npm i && $poetry inv build-assets)
+(cd lib && npm i)
 
-# compile sass files
-$poetry run inv sass
+# prepare all assets (js, css)
+$poetry run inv build-assets
 
 # generate translations
 $poetry run inv i18n

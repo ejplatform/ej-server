@@ -19,8 +19,7 @@ def build_assets(ctx):
     # Build CSS
     for theme in config["tool"]["ej"]["conf"]["themes"]:
         print(f"\nBuilding theme: {theme!r}")
-
-        sass(ctx, theme, suffix=f"-{theme}", minify=True)
+        sass(ctx, theme, suffix=f"{theme}", minify=True)
 
     # Build Javascript
     # Parcel already minifies and 'minify' doesn't seem to be helping much.
@@ -112,7 +111,7 @@ def js(ctx, watch=False, minify=False):
 
 
 @task(help={**HELP_MESSAGES, "suffix": "Append suffix to resulting file names."})
-def sass(ctx, theme=None, watch=False, background=False, suffix="", minify=False):
+def sass(ctx, theme=None, watch=False, background=False, suffix="default", minify=False):
     """
     Run Sass compiler
     """
@@ -129,9 +128,9 @@ def sass(ctx, theme=None, watch=False, background=False, suffix="", minify=False
         root_url = f'file://{directory / "lib/build/css/"}'
         for file in ("main", "hicontrast"):
             try:
-                css_path = directory / f"lib/build/css/{file}{suffix}.css"
-                css_min_path = directory / f"lib/build/css/{file}{suffix}.min.css"
-                map_path = directory / f"lib/build/css/{file}{suffix}.css.map"
+                css_path = directory / f"lib/build/css/{file}-{suffix}.css"
+                css_min_path = directory / f"lib/build/css/{file}-{suffix}.min.css"
+                map_path = directory / f"lib/build/css/{file}-{suffix}.css.map"
                 css, sourcemap = sass.compile(
                     filename=str(root / f"{file}.scss"),
                     source_map_filename=str(map_path),
